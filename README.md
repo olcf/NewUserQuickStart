@@ -4,9 +4,9 @@
 </center>
 <br>
 
-# OLCF Summit Quick-Start Guide
+# COVID-19 Summit Quick Start
 
-This document is intended to serve as a quick-start guide for new Summit users based recent OLCF training events. It includes links to slides and recordings from the events as well as links to relevant OLCF documentation. The ideal learning sequence would be to start with recording at the top of the list and work toward the bottom (possibly skipping the Python and Machine Learning sections). Addition topics not included below can also be found in the [OLCF Training Archive](https://docs.olcf.ornl.gov/training/training_archive.html#). 
+This document is intended to serve as a quick-start guide for new Summit users associated with COVID-19 projects. It is based on recent OLCF training events and includes links to slides and recordings from the events as well as links to relevant OLCF documentation. The ideal learning sequence would be to start with recording at the top of the list and work toward the bottom (possibly skipping the Python and Machine Learning sections). Addition topics not included below can also be found in the [OLCF Training Archive](https://docs.olcf.ornl.gov/training/training_archive.html#). 
 
 <hr>
 
