@@ -14,7 +14,7 @@ This document is intended to serve as a quick-start guide for new Summit users .
 
 * OLCF Overview for New Users (2020-02-26) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/02/Best-Practices-202002.pdf), [Recording](https://vimeo.com/405885960), [Event](https://www.olcf.ornl.gov/calendar/userconcall-feb2020/)
 
-* Summit Tips and Tricks (2020-06-03)- [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/02/Summit_Tips_and_Tricks_2020-06-03.pdf),[Recording](https://vimeo.com/427798547)
+* Summit Tips and Tricks (2020-06-03)- [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/02/Summit_Tips_and_Tricks_2020-06-03.pdf), [Recording](https://vimeo.com/427798547)
 
 * Related OLCF Documentation
 
