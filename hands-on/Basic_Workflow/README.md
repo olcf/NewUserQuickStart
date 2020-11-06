@@ -13,7 +13,7 @@ for(int i=0; i<N; i++)
 ```
 
 ## Step 1: Setting Up Your Programming Environment
-Many software packages and scientific libraries are pre-installed on Ascent for users to take advantage of. Several packages are loaded by default when a user logs in to the system and additional packages can be loaded using environment modules. To see which packages are currently loaded in your environment, run the following command:
+Many software packages and scientific libraries are pre-installed on Summit for users to take advantage of. Several packages are loaded by default when a user logs in to the system and additional packages can be loaded using environment modules. To see which packages are currently loaded in your environment, run the following command:
 
 ```
 $ module list
