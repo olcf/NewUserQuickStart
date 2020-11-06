@@ -51,7 +51,7 @@ This document is intended to serve as a quick-start guide for new Summit users .
 
 ### Programming Environment
 
-* Programming Environment (2019-02-11) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2019/02/SMT_Feb_programming_environment.pdf), [Recording](https://vimeo.com/346452383), [Event](https://www.olcf.ornl.gov/calendar/summit-training-workshop-february-2019/) 
+* Programming Environment (2020-03-06) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/06/20200603_summit_workshop_programming_environment.pdf), [Recording](https://vimeo.com/427796661), [Event](https://www.olcf.ornl.gov/calendar/2020-olcf-user-meeting/)
 
 * Python on Summit (2020-03-06) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/06/20200603_summit_workshop_python.pdf), [Recording](https://vimeo.com/427794043), [Event](https://www.olcf.ornl.gov/calendar/2020-olcf-user-meeting/)
 
