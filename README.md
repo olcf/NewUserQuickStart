@@ -12,9 +12,9 @@ This document is intended to serve as a quick-start guide for new Summit users .
 
 ### Best Practices / Getting Started
 
-* OLCF Overview for New Users (2020-06-03) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/02/OLCF_Overview_for_New_Users_2020_User_Meeting.pdf), [Recording](https://vimeo.com/427792537)
+* OLCF Overview for New Users (2020-06-03) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/02/OLCF_Overview_for_New_Users_2020_User_Meeting.pdf), [Recording](https://vimeo.com/427792537), [Event](https://www.olcf.ornl.gov/calendar/2020-olcf-user-meeting/)
 
-* Summit Tips and Tricks (2020-06-03)- [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/02/Summit_Tips_and_Tricks_2020-06-03.pdf), [Recording](https://vimeo.com/427798547)
+* Summit Tips and Tricks (2020-06-03)- [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/02/Summit_Tips_and_Tricks_2020-06-03.pdf), [Recording](https://vimeo.com/427798547), [Event](https://www.olcf.ornl.gov/calendar/2020-olcf-user-meeting/)
 
 * Related OLCF Documentation
 
@@ -53,7 +53,7 @@ This document is intended to serve as a quick-start guide for new Summit users .
 
 * Programming Environment (2019-02-11) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2019/02/SMT_Feb_programming_environment.pdf), [Recording](https://vimeo.com/346452383), [Event](https://www.olcf.ornl.gov/calendar/summit-training-workshop-february-2019/) 
 
-* Python on Summit (2019-02-11) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2019/02/STW_Feb_20190211_summit_workshop_python.pdf), [Recording](https://vimeo.com/346452419), [Event](https://www.olcf.ornl.gov/calendar/summit-training-workshop-february-2019/)
+* Python on Summit (2020-03-06) - [Slides](https://www.olcf.ornl.gov/wp-content/uploads/2020/06/20200603_summit_workshop_python.pdf), [Recording](https://vimeo.com/427794043), [Event](https://www.olcf.ornl.gov/calendar/2020-olcf-user-meeting/)
 
 * Related OLCF Documentation
 
