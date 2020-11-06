@@ -1,8 +1,8 @@
-# Basic Workflow to Run a Job on Ascent/Summit
+# Basic Workflow to Run a Job on Summit
 
-The basic workflow for running programs on HPC systems is 1) set up your programming environment - i.e., the software you need, 2) compile the code - i.e., turn the human-readable programming language into machine code, 3) request access to one or more compute nodes, and 4) launch your executable on the compute node(s) you were allocated. In this challenge, you will perform these basic steps to see how it works.
+The basic workflow for running programs on HPC systems is 1) set up your programming environment - i.e., the software you need, 2) compile the code - i.e., turn the human-readable programming language into machine code, 3) request access to one or more compute nodes, and 4) launch your executable on the compute node(s) you were allocated. In this exercise, you will perform these basic steps to see how it works.
 
-For this challenge you will compile and run a vector addition program written in C. It takes two vectors (A and B), adds them element-wise, and writes the results to vector C:
+For this exercise you will compile and run a vector addition program written in C. It takes two vectors (A and B), adds them element-wise, and writes the results to vector C:
 
 ```c
 // Add vectors (C = A + B)
@@ -32,10 +32,10 @@ $ module load pgi
 Now that you've set up your programming environment for the code used in this challenge, you can go ahead and compile the code. First, make sure you're in the `Basic_Workflow/` directory:
 
 ```
-$ cd ~/SC20_HandsOn_with_Summit/challenges/Basic_Workflow
+$ cd ~/OLCF-New-User-quick-start/hands-on/Basic_Workflow
 ```
 
-> NOTE: The path above assumes you cloned the repo in your `/ccsopen/home/username` directory.
+> NOTE: The path above assumes you cloned the repo in your `/ccs/home/username` directory.
 
 Then compile the code. To do so, you'll use the provided `Makefile`, which is a file containing the set of commands to automate the compilation process. To use the `Makefile`, issue the following command:
 
