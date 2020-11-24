@@ -23,9 +23,8 @@ This document is intended to serve as a quick-start guide for new Summit users .
 	* [Summit User Guide](https://docs.olcf.ornl.gov/systems/summit_user_guide.html#summit-user-guide)
 
 * Hands-On Exercises 
-
-        * [Basic Workflow on Summit]()
-	* [Job Launcher Overview]()
+        * [Basic Workflow on Summit](/hands-on/Basic_Workflow)
+	* [Job Launcher Overview](/hands-on/jsrun_Job_Launcher)
 	
 	
 
