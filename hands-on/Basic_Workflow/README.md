@@ -45,9 +45,27 @@ $ make
 
 Based on the commands contained in the `Makefile`, an executable named `run` will be created.
 
+
 ## Steps 3-4: Request Access to Compute Nodes and Run the Program
 
-In order to run the executable on Ascent's compute nodes, you need to request access to a compute node and then launch the job on the node. The request and launch can be performed using the single batch script, `submit.lsf`. If you open this script, you will see several lines starting with `#BSUB`, which are the commands that request a compute node and define your job (i.e., give me 1 compute node for 10 minutes, charge project `PROJID` for the time, and name the job and output file `add_vec_cpu`). You will also see a `jsrun` command within the script, which launches the executable (`run`) on the compute node you were given. 
+In order to run the executable on Summit's compute nodes, you need to request access to a compute node and then launch the job on the node. The request and launch can be performed using the single batch script, `submit.lsf`. If you open this script, you will see several lines starting with `#BSUB`, which are the commands that request a compute node and define your job (i.e., give me 1 compute node for 10 minutes, charge project `PROJID` for the time, and name the job and output file `add_vec_cpu`). You will also see a `jsrun` command within the script, which launches the executable (`run`) on the compute node you were given. 
+
+ In the example script you will replace "Your_Project_ID" with your project ID which will be of the form ABC001. 
+To see a full description of the BSUB options and jsrun options see [The Summit Users Guide](https://docs.olcf.ornl.gov/systems/summit_user_guide.html#batch-scripts)
+```
+#!/bin/bash
+
+#BSUB -P Your_Project_ID
+#BSUB -J add_vec_cpu
+#BSUB -o add_vec_cpu.%J
+#BSUB -nnodes 1
+#BSUB -W 10
+
+date
+
+jsrun -n1 -c1 -g1 -a1 ./run
+
+```
 
 The flags given to `jsrun` define the resources (i.e., cpu cores, gpus) available to your program and the processes/threads you want to run on those resources (for more information on using the `jsrun` job launcher, please see challenge [jsrun\_Job\_Launcher](../jsrun_Job_Launcher)).
 
