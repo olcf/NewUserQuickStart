@@ -75,7 +75,7 @@ Then copy the `submit.lsf` file into the `Hello_jsrun/` directory:
 ```c
 $ cp ../submit.lsf .
 ```
-Be sure to edit sumbit.lsf to include you project ID in the "#BSUB -P Your_Project_ID" Line. 
+Be sure to edit sumbit.lsf to include your project ID in the "#BSUB -P Your_Project_ID" line of submit.lsf. 
 
 
 ## Job Step Viewer
