@@ -54,37 +54,48 @@ The first step to contructing a `jsrun` command is to define the resource sets y
 <br>
 There is another flag we'll cover as well, but for now, let's just move forward with these.
 
-## Hello_jsrun
-
-To demonstrate the use of `jsrun`, we will use a simple "Hello, World!" type program that prints out information about the resources being used in a job. To follow along, you can clone the `Hello_jsrun` repository within this challenge's directory:
-
-```c
-$ git clone https://code.ornl.gov/t4p/Hello_jsrun.git
-```
-
-After cloning, move into the directory, load the cuda module, and compile with `make`:
-
-```c
-$ cd Hello_jsrun
-$ module load cuda
-$ make
-```
-
-Then copy the `submit.lsf` file into the `Hello_jsrun/` directory:
-
-```c
-$ cp ../submit.lsf .
-```
-Be sure to edit sumbit.lsf to include your project ID in the "#BSUB -P Your_Project_ID" line of submit.lsf. 
-
-
 ## Job Step Viewer
 
-The [Job Step Viewer](https://jobstepviewer.olcf.ornl.gov/) provides a graphical view of an application's runtime layout on Summit. It allows users to preview and quickly iterate with multiple jsrun options to understand and optimize job launch. It is a convenient tool that allows you to visualize and verify you are configuring your `jsrun` options in the way you expect.
+To demonstrate the use of `jsrun`, we will use a tool called [Job Step Viewer](https://jobstepviewer.olcf.ornl.gov/). Job Step Viewer provides a graphical view of the mapping of processes and threads to the CPUs and GPUs on Summit nodes. It allows users to preview and quickly iterate with multiple jsrun options to understand and optimize job launch. It is a convenient tool that allows you to visualize and verify you are configuring your `jsrun` options in the way you expect.
 
-We recommend attempting Job Step Viewer Challenge in conjunction with this challenge. You should go through the first example or two following this section to get an understanding of how the `jsrun` command works, then re-run the examples, integrating the Job Step Viewer into your submission script. Then you can continue to use the Viewer as you go through the remaining examples and visualize your submissions as you go.
+To use Job Step Viewer, you must first load the module for it:
 
-## Example 1
+```
+$ module load job-step-viewer
+```
+
+Job Step Viewer is implemented as a wrapper around `jsrun`, so you can use it to launch an executable as usual (for example):
+
+```
+$ jsrun -n1 -c1 -g1 -a1 ./a.out
+```
+
+Or, you can use it without an executable (for example):
+
+```
+$ jsrun -n1 -c1 -g1 -a1
+```
+
+In both cases, you would receive a unique URL that can be viewed in an internet browser (Mac users can Cmd-click it to open). The node(s) you were allocated will be highlighted in green (or possibly red) similar to the following image:
+
+<br>
+<center>
+<img src="images/jsviewer_4.png" style="width:80%">
+</center>
+<br>
+
+Green nodes indicate the node is being used by the `jsrun` launch. Nodes highlighted in red are allocated to your job, but not being used by this invocation of `jsrun`. For example, if you _allocate_ two nodes with `bsub` but only _launch_ your job on one core or GPU with `jsrun`, one of the allocated nodes will be sitting idle and will show as red on the top-down view. Clicking on one of the nodes in your allocation will bring up a diagram of the node showing the mapping of resource sets, processes, and threads to the CPUs and GPUs. Here is an example:
+
+<br>
+<center>
+<img src="images/jsviewer_5.png" style="width:80%">
+</center>
+<br>
+
+## Examples
+In the following examples we will use Job Step Viewer to learn more about `jsrun` and test our understanding.
+
+### Example 1
 
 As a first example, let's try to create the layout shown in the image below. Here, we are essentially splitting up the resources on our node among 6 resource sets, where each resource set is shown as a different color and contains 7 physical CPU cores and 1 GPU. Recall that in the M[T] numbering scheme, M represents the MPI rank ID and T represents the OpenMP thread ID. So, for example, 2[0] represents MPI rank 2 - OpenMP thread 0. Based on the image, this means that each resource set contains 1 MPI rank and 1 OpenMP thread. 
 
@@ -101,31 +112,16 @@ So you should edit the `submit.lsf` file to read
 ```c
 export OMP_NUM_THREADS=1
 
-jsrun -n6 -c7 -g1 -a1 ./hello_jsrun | sort
+jsrun -n6 -c7 -g1 -a1
 ```
 
-After running this code with `bsub submit.lsf`, you should find the following information in the output file `testing_jsrun.JOBID`:
+> NOTE: In these examples, we're using the `jsrun` wrapper provided by Job Step Viewer, which is why no executable is given in the command.
 
+After running this code with `bsub submit.lsf`, you should find the a unique URL in the output file `testing_jsrun.JOBID`. By following the link, you'll see a diagram representing Ascent's 18 compute nodes. Click the green node (or click the "Nodes Used" dropdown) to see the process placement from your job. The diagram should be very similar to the image above. 
 
-```
----------- MPI Ranks: 6, OpenMP Threads: 1, GPUs per Resource Set: 1 ----------
-MPI Rank 000, OMP_thread 00 on HWThread 001 of Node h49n16 - RT_GPU_id 0 : GPU_id 0 
-MPI Rank 001, OMP_thread 00 on HWThread 029 of Node h49n16 - RT_GPU_id 0 : GPU_id 1 
-MPI Rank 002, OMP_thread 00 on HWThread 058 of Node h49n16 - RT_GPU_id 0 : GPU_id 2 
-MPI Rank 003, OMP_thread 00 on HWThread 089 of Node h49n16 - RT_GPU_id 0 : GPU_id 3 
-MPI Rank 004, OMP_thread 00 on HWThread 117 of Node h49n16 - RT_GPU_id 0 : GPU_id 4 
-MPI Rank 005, OMP_thread 00 on HWThread 145 of Node h49n16 - RT_GPU_id 0 : GPU_id 5
-```
+> NOTE: The exact hardware thread that a process/thread lands on will vary between runs and is expected, but the physical core should be the same.
 
-As you can see from the output, the program prints the MPI rank ID and the OpenMP thread ID as well as the hardware thread each rank/thread ran on, the GPU(s) each rank/thread had available to it, and the hostname of the compute node. So, for example, MPI rank 0 (and its OpenMP thread 0) ran on hardware thread 001 with GPU 0 available to it, and the hostname of the compute node was h49n16. This corresponds to the "red" resource set shown in the image above. Looking at the rest of the output shows that we have successfully produced the results shown in the image.
-
-**ADDITIONAL DETAILS:** 
-
-* The actual hardware thread (within a physical core) that an MPI rank runs on will vary from run to run.
-* In the output, `GPU_id` represents the node-level GPU ID (numbered 0-5) as shown in the image. 
-* In the output, `RT_GPU_id` represents the GPU ID as seen from the CUDA runtime. Basically, within each resource set, the runtime numbers its GPUs starting from 0, which is why `RT_GPU_id` is 0 for all rows above.
-
-## Example 2
+### Example 2
 
 For the next example, let's run the same program but use 2 OpenMP threads to create the layout shown in the image below. Although this example is very similar to the first one, it will help point out a subtlety that might otherwise be overlooked.
 
@@ -139,7 +135,7 @@ To create this layout, we will first try to simply change the number of OpenMP t
 
 ```c
 $ export OMP_NUM_THREADS=2
-$ jsrun -n6 -c7 -g1 -a1 ./hello_jsrun | sort
+$ jsrun -n6 -c7 -g1 -a1
 ```
 
 Then submit the job to run on a compute node with the following command:
@@ -148,25 +144,11 @@ Then submit the job to run on a compute node with the following command:
 $ bsub submit.lsf
 ```
 
-After the job completes, you should see output similar to that below in the `testing_jsrun.JOBID` file.
+By following the link in the output file, we can see that each MPI rank now has 2 OpenMP threads as intended. However, both OpenMP threads are running on hardware threads of the same physical core instead of on separate physical cores as shown in our image above.
 
-```
----------- MPI Ranks: 6, OpenMP Threads: 2, GPUs per Resource Set: 1 ----------
-MPI Rank 000, OMP_thread 00 on HWThread 001 of Node h49n16 - RT_GPU_id 0 : GPU_id 0 
-MPI Rank 000, OMP_thread 01 on HWThread 002 of Node h49n16 - RT_GPU_id 0 : GPU_id 0 
-MPI Rank 001, OMP_thread 00 on HWThread 029 of Node h49n16 - RT_GPU_id 0 : GPU_id 1 
-MPI Rank 001, OMP_thread 01 on HWThread 030 of Node h49n16 - RT_GPU_id 0 : GPU_id 1 
-MPI Rank 002, OMP_thread 00 on HWThread 057 of Node h49n16 - RT_GPU_id 0 : GPU_id 2 
-MPI Rank 002, OMP_thread 01 on HWThread 056 of Node h49n16 - RT_GPU_id 0 : GPU_id 2 
-MPI Rank 003, OMP_thread 00 on HWThread 088 of Node h49n16 - RT_GPU_id 0 : GPU_id 3 
-MPI Rank 003, OMP_thread 01 on HWThread 091 of Node h49n16 - RT_GPU_id 0 : GPU_id 3 
-MPI Rank 004, OMP_thread 00 on HWThread 117 of Node h49n16 - RT_GPU_id 0 : GPU_id 4 
-MPI Rank 004, OMP_thread 01 on HWThread 119 of Node h49n16 - RT_GPU_id 0 : GPU_id 4 
-MPI Rank 005, OMP_thread 00 on HWThread 145 of Node h49n16 - RT_GPU_id 0 : GPU_id 5 
-MPI Rank 005, OMP_thread 01 on HWThread 146 of Node h49n16 - RT_GPU_id 0 : GPU_id 5 
-```
+> NOTE: Hardware threads 0-3 are all on the same physical CPU core. Your (incorrect) results should show OpenMP threads 0 and 1 of MPI rank 0 ran on two of these hardware threads.
 
-From the output, we can see that each MPI rank now has 2 OpenMP threads as intended. However, both OpenMP threads are running on the same physical core instead of on separate physical cores as shown in our image above. For example, OpenMP threads 0 and 1 of MPI rank 0, ran on hardware threads 001 and 002, which are both on the same physical core. So why did this happen? Each resource set has 7 physical cores available to it, so how do we use them? This brings us to a new flag:
+So why did this happen? Each resource set has 7 physical cores available to it, so how do we use them? This brings us to a new flag:
 
 <br>
 
@@ -184,30 +166,12 @@ If we want to run each OpenMP thread on its own physical core, we would need to 
 
 ```c
 $ export OMP_NUM_THREADS=2
-$ jsrun -n6 -c7 -g1 -a1 -bpacked:2 ./hello_jsrun | sort
+$ jsrun -n6 -c7 -g1 -a1 -bpacked:2
 ```
 
-After running the job (`bsub submit.lsf`), you should see the following output:
+After running the job (`bsub submit.lsf`), you should now see the expected output. Success!
 
-```c
----------- MPI Ranks: 6, OpenMP Threads: 2, GPUs per Resource Set: 1 ----------
-MPI Rank 000, OMP_thread 00 on HWThread 001 of Node h49n16 - RT_GPU_id 0 : GPU_id 0 
-MPI Rank 000, OMP_thread 01 on HWThread 004 of Node h49n16 - RT_GPU_id 0 : GPU_id 0 
-MPI Rank 001, OMP_thread 00 on HWThread 029 of Node h49n16 - RT_GPU_id 0 : GPU_id 1 
-MPI Rank 001, OMP_thread 01 on HWThread 032 of Node h49n16 - RT_GPU_id 0 : GPU_id 1 
-MPI Rank 002, OMP_thread 00 on HWThread 057 of Node h49n16 - RT_GPU_id 0 : GPU_id 2 
-MPI Rank 002, OMP_thread 01 on HWThread 060 of Node h49n16 - RT_GPU_id 0 : GPU_id 2 
-MPI Rank 003, OMP_thread 00 on HWThread 088 of Node h49n16 - RT_GPU_id 0 : GPU_id 3 
-MPI Rank 003, OMP_thread 01 on HWThread 092 of Node h49n16 - RT_GPU_id 0 : GPU_id 3 
-MPI Rank 004, OMP_thread 00 on HWThread 117 of Node h49n16 - RT_GPU_id 0 : GPU_id 4 
-MPI Rank 004, OMP_thread 01 on HWThread 120 of Node h49n16 - RT_GPU_id 0 : GPU_id 4 
-MPI Rank 005, OMP_thread 00 on HWThread 145 of Node h49n16 - RT_GPU_id 0 : GPU_id 5 
-MPI Rank 005, OMP_thread 01 on HWThread 148 of Node h49n16 - RT_GPU_id 0 : GPU_id 5
-```
-
-Success! Now, from the hardware thread IDs, we can see that each OpenMP thread ran on a different physical core as we intended.
-
-## Example 3
+### Example 3
 
 For our next example, we will split the resources on our node among 2 resource sets, with 1 resource set per socket. The desired layout will look like the image below. Here, we can see that each resource set contains 21 physical cores (`-c21`), 3 GPUs (`-g3`), and 3 MPI ranks (`-a3`; each with 1 OpenMP thread).
 
@@ -219,27 +183,14 @@ For our next example, we will split the resources on our node among 2 resource s
 
 <br>
 
-Based on what we've learned so far, we might try the following commands to create this layout:
+To create this layout, you should use the following commands:
 
 ```c
 $ export OMP_NUM_THREADS=1
-$ jsrun -n2 -c21 -g3 -a3 -bpacked:1 ./hello_jsrun | sort
-
+$ jsrun -n2 -c21 -g3 -a3 -bpacked:1
 ```
 
-This results in the following output:
-
-```c
----------- MPI Ranks: 6, OpenMP Threads: 1, GPUs per Resource Set: 3 ----------
-MPI Rank 000, OMP_thread 00 on HWThread 000 of Node h50n12 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
-MPI Rank 001, OMP_thread 00 on HWThread 004 of Node h50n12 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
-MPI Rank 002, OMP_thread 00 on HWThread 009 of Node h50n12 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
-MPI Rank 003, OMP_thread 00 on HWThread 089 of Node h50n12 - RT_GPU_id 0 1 2 : GPU_id 3 4 5 
-MPI Rank 004, OMP_thread 00 on HWThread 092 of Node h50n12 - RT_GPU_id 0 1 2 : GPU_id 3 4 5 
-MPI Rank 005, OMP_thread 00 on HWThread 096 of Node h50n12 - RT_GPU_id 0 1 2 : GPU_id 3 4 5
-```
-
-From the output, we can see that we have created our 2 resource sets (each with 21 physical cores and 3 GPUs), and that MPI ranks 0, 1, 2 are on hardware threads 002, 004, and 009, repsectively and have access to GPUs 0, 1, 2 (i.e., are on the first socket), and that MPI ranks 3, 4, 5 are on hardware threads 089, 092, 096, respectively and have access to GPUs 3, 4, 5 (i.e., are on the second socket). Success!
+Success! 
 
 ## Summary of Options Covered Here
 
@@ -257,7 +208,7 @@ While this is not intended to be a comprehensive tutorial on `jsrun`, hopefully 
 
 <br>
 
-These flags will give most users the ability to create the resource layouts they desire but, as mentioned above, this is only a sub-set of the functionality available with `jsrun`. 
+These flags will give most users the ability to create the resource layouts they desire but, as mentioned above, this is only a sub-set of the functionality available with `jsrun`. If you like to know more, you can check out the man page: `man jsrun`.
 
 ## Examples to Try on Your Own
 

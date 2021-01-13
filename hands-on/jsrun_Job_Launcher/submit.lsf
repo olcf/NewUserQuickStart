@@ -1,12 +1,14 @@
 #!/bin/bash
 
-#BSUB -P Your_Project_ID
+#BSUB -P GEN146
 #BSUB -W 10
 #BSUB -nnodes 1
 #BSUB -J testing_jsrun
 #BSUB -o testing_jsrun.%J
 #BSUB -e testing_jsrun.%J
 #BSUB -alloc_flags "gpumps"
+
+module load job-step-viewer
 
 # -n 			(number of resource sets)
 # -c 			(number of physical CPU cores per resource set)
@@ -21,5 +23,5 @@
 # number of OpenMP threads
 export OMP_NUM_THREADS=1
 
-# Here, you should only edit the flags between jsrun and ./hello_jsrun
-jsrun -n1 -c1 -a1 -g1 ./hello_jsrun | sort
+# jsrun command to modify (see key above for flags)
+jsrun -n1 -c1 -g1 -a1
