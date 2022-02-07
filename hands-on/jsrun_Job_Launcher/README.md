@@ -1,6 +1,11 @@
 # `jsrun` Job Launcher
 
-When running programs on a workstation, most of the time you can simply execute `./a.out` and wait for the results. On most HPC clusters, you must use a "batch scheduler" to request one or more compute nodes to run on and a "job launcher" to execute your program on the compute node(s) you were allocated. In this challenge, you will learn the basics of how to launch jobs on Summit with IBM's `jsrun` job launcher.
+In this module, you will review/learn the basics of how to launch jobs on Summit with IBM's `jsrun` job launcher. At the end there are exercises that ask you to create a few different job layouts for a test-case and check your work with the "jobstep-viewer", a graphical aid that takes your jsrun command and maps its tasks on a picture of the node.
+ 
+The question of what task layout you should be using for optimum performance is something that should be tested for each application and its starting conditions. 
+
+The first step to is to visualize how you think the job's tasks should be distributed on the node.
+
 
 ## Summit Nodes
 
@@ -15,6 +20,7 @@ Each Summit node contains 2 IBM Power9 CPUs and 6 NVIDIA V100 GPUs (1 CPU and 3 
 <br>
 
 ## Resource Sets
+
 
 Resource sets are a central theme when discussing `jsrun`, so we should begin by defining them. 
 
