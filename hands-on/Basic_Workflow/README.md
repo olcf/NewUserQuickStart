@@ -63,7 +63,7 @@ To see a full description of the BSUB options and jsrun options see [The Summit 
 
 date
 
-jsrun -n1 -c1 -g1 -a1 ./run
+jsrun -n1 -c1 -a1 ./run
 
 ```
 
