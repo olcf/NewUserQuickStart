@@ -8,4 +8,4 @@
 
 date
 
-jsrun -n1 -c1 -g1 -a1 ./run
+jsrun -n1 -c1 -a1 ./run
