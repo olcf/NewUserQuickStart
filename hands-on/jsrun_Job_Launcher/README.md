@@ -2,7 +2,7 @@
 
 In this module, you will review/learn the basics of how to launch jobs on Summit with IBM's `jsrun` job launcher. At the end there are exercises that ask you to create a few different job layouts for a test-case and check your work with the "jobstep-viewer", a graphical aid that takes your jsrun command and maps its tasks on a picture of the node.
  
-The question of what task layout you should be using for optimum performance is something that should be tested for each application and its starting conditions. 
+The question of what task layout you should be using for optimum performance is something that should be tested for each configeration of your application. 
 
 The first step to is to visualize how you think the job's tasks should be distributed on the node.
 
