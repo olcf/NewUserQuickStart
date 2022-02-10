@@ -1,10 +1,13 @@
 # `jsrun` Job Launcher
 
-In this module, you will review/learn the basics of how to launch jobs on Summit with IBM's `jsrun` job launcher. At the end there are exercises that ask you to create a few different job layouts for a test-case and check your work with the "jobstep-viewer", a graphical aid that takes your jsrun command and maps its tasks on a picture of the node.
- 
-The question of what task layout you should be using for optimum performance is something that should be tested for each configeration of your application. 
+In this module, you will review/learn the basics of how to launch jobs on Summit with IBM's `jsrun` job launcher. At the end there are exercises that ask you to create a few different job layouts for some test-cases. You can check your work with the "job-step-viewer", a graphical aid that takes your jsrun command and maps its tasks on a picture of the node.
 
-The first step to is to visualize how you think the job's tasks should be distributed on the node.
+IBM's jsrun uses the concept of "resource sets" for configuring tasks on the nodes. This allows the user to specify how the node appears to the job. For example, you control the number of GPUs and CPUs a task has access to. It is highly flexible, but it is also a unique method for controlling task layout and will take some getting used to for users who have not used LSF before. 
+
+To set up the right resouce set for a job, users must think about how code expects to interact with the system.
+* How many tasks/threads per GPU?
+* Does each task expect to see a single GPU? Do multiple tasks expect to share a GPU? 
+* Is the code written to internally manage task to GPU workload based on the number of available cores and GPUs?
 
 
 ## Summit Nodes
