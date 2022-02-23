@@ -89,7 +89,7 @@ In both cases, you would receive a unique URL that can be viewed in an internet 
 
 <br>
 <center>
-<img src="images/jsviewer_4.png" style="width:80%">
+<img src="images/summit_jsv.png" style="width:80%">
 </center>
 <br>
 
