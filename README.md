@@ -1,8 +1,3 @@
-<br>
-<center>
-<img src="https://www.olcf.ornl.gov/wp-content/uploads/2018/09/41760664665_3e68cf1c32_k.jpg" style="width:100%">
-</center>
-<br>
 
 # New User Summit Quick Start
 
