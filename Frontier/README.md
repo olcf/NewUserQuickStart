@@ -167,22 +167,23 @@ For this exercise we will create a custom environment called *globus_env* in you
  
 For example on Frontier:
   
-#1. Load the module, if you have not done so already,
+1. Load the module, if you have not done so already,
 ```
 $ module load miniforge3/23.11.0
 ```
-#2 Create "my_env" with Python version X.Y at the desired path
+2 Create "my_env" with Python version X.Y at the desired path
 ```
 $ conda create -p /ccs/proj/<<your_project_id>>/globus_env python=3.10.13
 ```
-#3. Activate "my_env"
-````
+3. Activate "my_env"
+```
 $ source activate /ccs/proj/<<your_project_id>>/globus_env
 ```
  
 Try it yourself. . . .
  
 If you are on Frontier or Odo. It may print a message like this:
+
 ```
 # To activate this environment, use
 #
