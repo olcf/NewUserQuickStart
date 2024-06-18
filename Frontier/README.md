@@ -62,16 +62,16 @@ If your SSH operation succeeds, you should be placed in your home directory on F
  
  
 ## User Guides Overview
-OLCF has users guides for its compute systems, data management tools and polices. They have examples that cover the basics that you need to know to run on out system. Let's start with a hands-on to help you find and navigate those guides.
+OLCF has users guides for its compute systems, data management tools and polices. They have examples that cover the basics that you need to know to run on our system. Let's start with a hands-on to help you find and navigate those guides.
  
  
 ### Hands-on User Guide Cipher
  
 This exercise is designed to help you understand which user guides are available and how to navigate to them. Book ciphers use numbers or instructions representing the positions of words in a text to navigate to words that form secret messages.
  
-For example, if I told you (9,10,6,7,8) and pointed you at the paragraph above, you could form a sentence by finding the 9th, 10th, 6tth 7th and 8th word in that text.
+For example, if you were given (9,10,6,7,8) and pointed at the paragraph above, you could form a sentence by finding the 9th, 10th, 6th 7th and 8th word in that text.
  
-You will use the section headings in the left menu bar of the OLCF User guide at https://docs.olcf.ornl.gov plus the text counting clues given below each to navigate to words that allow you to decipher a tip that is helpful for new users.
+You will use the section headings in the left menu bar of the OLCF Userguide at https://docs.olcf.ornl.gov plus the text counting clues given below each to navigate to words that allow you to decipher a tip that is helpful for new users.
  
 Here are the rules:
  
@@ -83,12 +83,11 @@ Here are the rules:
  
 Key: https://docs.olcf.ornl.gov, Look to the left menu bar. GO!
  
-  1.Systems>Frontier User Guide> Running Jobs>Batch Scripts
-    First word in the Third paragraph.
+  1.Systems> Frontier User Guide> Running Jobs> Batch Scripts
+    First word in the third paragraph.
  
-2.  Systems> Frontier User Guide> Running Jobs>Process and Thread Mapping Examples
+2.  Systems> Frontier User Guide> Running Jobs> Process and Thread Mapping Examples
     Tenth word in the second paragraph.
- 
  
 3.  Systems > Andes User guide>Running Jobs
     Third paragraph, 4th step, fifth word.
@@ -104,7 +103,7 @@ When you are done, raise your virtual hand.
  
 ## Authentication with RSA tokens
  
-In an earlier section, we went over logging into Frontier or Odo using SSH and with your RSA token. Let's talk a bit more about what we're doing here.
+In an earlier section, we covered logging into Frontier or Odo using SSH and with your RSA token. Let's talk a bit more about what we're doing here.
  
 We are using 2-factor authentication via user-selected PINs and RSA securID token. The numbers on the RSA securID token change every 30 seconds. Entering your PIN+tokencode is the only login method available. Using other methods (password, public key, etc) are not allowed.
  
@@ -133,13 +132,9 @@ If you find that you keep entering the PASSCODE correctly but it fails to log yo
  
  
  
- 
- 
- 
- 
 ## Python on OLCF Systems
 In high-performance computing, Python is heavily used to analyze scientific data on the system.
-OLCF has a Python on our Systems guide with in the software guide docs.olcf.ornl.gov>Software>Python on OLCF Systems or. https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems
+OLCF has a "Python on OLCF Systems" guide with in the software guide docs.olcf.ornl.gov> Software> Python on OLCF Systems or, https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems
  
 It tells you how to load the latest versions of python, manage your environment and run python on Summit, Frontier and Andes.
  
@@ -147,7 +142,7 @@ It tells you how to load the latest versions of python, manage your environment 
  
 ### Base Environment
  
-Loading a module does set up a base python environment on each of our systems, but custom packages like numpy and scipy do not come with it on most of our resources. We are going to use the Python Users guide for this exercise. Go to docs.olcf.ornl.gov>Software>Python on OLCF Systems https://docs.olcf.ornl.gov/software/python/index.html#base-environment. Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
+Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise. Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment). Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
  
 For example, for Frontier/Odo you would do.
  
@@ -157,11 +152,11 @@ $ module load miniforge3/23.11.0
 $ conda list
 ```
  
-### Setting up a custom environment
+### Setting up a Custom environment
  
-Suppose you wanted to install the `numpy` package. You could do that in your base environment, but you will likely want to install lots of different custom python packages while you are a user here and likely different version of those packages for different projects. If you that in you base env., that will get messy quickly as packages could conflict with one another. So you will want to setup a custom environment that contains consistent versions of all the packages that you want to use each particular project. This next hands-on walks you through setting up a custom env. that will set us up for a later hands-on about scripting Globus transfers.
+Suppose you wanted to install the `numpy` package. If you do that in your base environment, it could get messy as you instill more pacakages because they could conflict with one another. So you will want to setup a custom environment that contains consistent versions of all the packages that you want to use for each particular project. This next hands-on walks you through setting up a custom env. that we will use later in the training. 
  
-We are going to go to OLCF's python documentation again to follow and hands-on exercise to set up a custom python environment. Open a new browser tab or window and direct your browser to https://docs.olcf.ornl.gov/software/python/index.html#custom-environments. In the tabs under "To create and activate an environment:" follow the instructions for the resources you are on. If you are on Odo, follow the Frontier instructions.
+Open a new browser tab or window and direct it to https://docs.olcf.ornl.gov/software/python/index.html#custom-environments. In the tabs under "To create and activate an environment:" follow the instructions for the resource you are working on. If you are on Odo, follow the Frontier instructions.
  
 For this exercise we will create a custom environment called *globus_env* in your /ccs/proj/<<your_project_id>>. If you are on Odo, you will use /ccsopen/proj/<<your_project_id>>.
  
@@ -194,18 +189,18 @@ If you are on Frontier or Odo. It may print a message like this:
 #     $ conda deactivate
 ```
  
-Avoid using "conda activate" and "conda deactivate" as they can add code blocks to your .bashrc file, causing compatibility when moving between different machines within OLCF with different versions of python. 
+Avoid using "conda activate" and "conda deactivate" as they add code blocks to your .bashrc file, causing compatibility issues when moving between different machines within OLCF with different versions of python. 
  
-Use `source active` to activate your custom environments and  `source deactivate` to deactivate them when you are done using them.
+Use `source active` to activate your custom environments and `source deactivate` to deactivate them when you are done using them.
  
-You must put in a path to the customer env. to activate it. So in this example:
+You must use the path to the custom environment to activate it. For example:
  
  
 ```
 $ source activate /ccs/proj/<your_proeject_ID>/globus_env
 ```
  
-We will do something with this environment in the next hands-on, but let's close it out cleanly to form good habits.
+We will use this environment in the next hands-on, but let's close it out cleanly to form good habits.
  
 ```
 $ source deactivate
@@ -213,7 +208,7 @@ $ source deactivate
 Ignore any warning that popup to use "conda activate".
  
  
-There is much more good information in the OLCF Python user guides, so please check those out!
+There is more good information in the [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment) guide, so please check them out. 
  
  
 ## Globus
