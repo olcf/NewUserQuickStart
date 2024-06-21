@@ -221,6 +221,7 @@ There is more good information in the [Python on OLCF Systems]( https://docs.olc
  
  
 For this exercise we will setup your globus.org username and password. You can skip this if you have a globus ID.
+
 Note: Globus is not controlled by OLCF and its help and login pages and option change without warning. This hands-on is based on Globus pages from 05-02-24. Even if the specific Globus pages chanage, this tutorial should be close to what is needed to get a globus username and password.
  
 ### Hands-on GlobusID
@@ -229,16 +230,16 @@ Note: Globus is not controlled by OLCF and its help and login pages and option c
 2. Select "create GlobusID" and follow the instructions
 3. Remember your globusID and password someplace safe.
  
- 
-1. Go to globus.org and click "Login".
-2. On the glous page you will see that Globus allows you to associate a Google, Git or ORCID ID with your globusID to use for login, but you can only have one external account linked to your globusID. Globus will guide you thought the steps to make that link, if you attempt to login with one of those other IDs. The next instructions will have you use your globusID directly to login for simplicity.
+Now try to log in: 
+
+1. Go to globus.org and click "Login"
   
-2. Find the "use Globus ID" link and use your GlobusID to login. You will only be able to use the Oak Ridge National Laboratory login if you are ORNL staff.
+2.  Find the "use Globus ID" link and use your GlobusID to login. You will only be able to use the Oak Ridge National Laboratory login if you are ORNL staff.
 3. You should see the Globus "File Manager" when you are logged in.
  
 ### Activating a Globus Collection
  
-Activating the OLCF Globus Collections is done using your OLCF User name and Token Code. Think of it ask logging in to an OLCF filesystem.
+Activating the OLCF Globus Collection is done using your OLCF username and Token Passcode. Think of it ask logging in to an OLCF filesystem.
 Endpoints stay activated for three days so you don’t need to enter your credentials for each transfer and you can run a transfer workflow during a simulation.
   
 The OLCF Moderate Collections are called `OLCF DTN (Globus 5)` and OLCF HPSS (Globus 5)"
