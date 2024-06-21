@@ -134,7 +134,7 @@ If you find that you keep entering the PASSCODE correctly but it fails to log yo
  
 ## Python on OLCF Systems
 In high-performance computing, Python is heavily used to analyze scientific data on the system.
-OLCF has a "Python on OLCF Systems" guide with in the software guide docs.olcf.ornl.gov> Software> Python on OLCF Systems or, https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems
+OLCF has a "Python on OLCF Systems" guide within the software guide. To find it, go to [https://docs.olcf.ornl.gov](https://docs.olcf.ornl.gov)> Software> Python on OLCF Systems. [Link](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems).
  
 It tells you how to load the latest versions of python, manage your environment and run python on Summit, Frontier and Andes.
  
@@ -142,7 +142,9 @@ It tells you how to load the latest versions of python, manage your environment 
  
 ### Base Environment
  
-Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise. Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment). Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
+Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise. Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems Base Environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). 
+
+Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
  
 For example, for Frontier/Odo you would do.
  
@@ -152,11 +154,11 @@ $ module load miniforge3/23.11.0
 $ conda list
 ```
  
-### Setting up a Custom environment
+### Setting up a Custom Environment
  
-Suppose you wanted to install the `numpy` package. If you do that in your base environment, it could get messy as you instill more pacakages because they could conflict with one another. So you will want to setup a custom environment that contains consistent versions of all the packages that you want to use for each particular project. This next hands-on walks you through setting up a custom env. that we will use later in the training. 
+Suppose you wanted to install the `numpy` package. If you do that in your base environment, it could get messy as you install more packages. It is a best practice to setup a custom environment that contains consistent versions of all the packages that you want to use for each particular project. This next hands-on walks you through setting up a custom environment that we will use later in the training. 
  
-Open a new browser tab or window and direct it to https://docs.olcf.ornl.gov/software/python/index.html#custom-environments. In the tabs under "To create and activate an environment:" follow the instructions for the resource you are working on. If you are on Odo, follow the Frontier instructions.
+Open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). In the tabs under "To create and activate an environment:" follow the instructions for the resource you are working on. If you are on Odo, follow the Frontier instructions.
  
 For this exercise we will create a custom environment called *globus_env* in your /ccs/proj/<<your_project_id>>. If you are on Odo, you will use /ccsopen/proj/<<your_project_id>>.
  
@@ -199,7 +201,6 @@ You must use the path to the custom environment to activate it. For example:
 ```
 $ source activate /ccs/proj/<your_proeject_ID>/globus_env
 ```
- 
 We will use this environment in the next hands-on, but let's close it out cleanly to form good habits.
  
 ```
@@ -208,7 +209,7 @@ $ source deactivate
 Ignore any warning that popup to use "conda activate".
  
  
-There is more good information in the [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment) guide, so please check them out. 
+There is more good information in the [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment) guide.
  
  
 ## Globus
@@ -220,7 +221,7 @@ There is more good information in the [Python on OLCF Systems]( https://docs.olc
  
  
 For this exercise we will setup your globus.org username and password. You can skip this if you have a globus ID.
-Note: Globus is not controlled by OLCF and its help and login pages and option change without warning. This hands-on is based on Globus pages from 05-02-24. Even if the specific Globus pages chanage, this tutorial should be close to what is needed to get a username and password.
+Note: Globus is not controlled by OLCF and its help and login pages and option change without warning. This hands-on is based on Globus pages from 05-02-24. Even if the specific Globus pages chanage, this tutorial should be close to what is needed to get a globus username and password.
  
 ### Hands-on GlobusID
  
@@ -228,7 +229,6 @@ Note: Globus is not controlled by OLCF and its help and login pages and option c
 2. Select "create GlobusID" and follow the instructions
 3. Remember your globusID and password someplace safe.
  
-Globus does allow you to associate a google , git or ORCID to your globusID to use for login, but you can only have one external account linked to your globusID.
  
 1. Go to globus.org and click "Login".
 2. On the glous page you will see that Globus allows you to associate a Google, Git or ORCID ID with your globusID to use for login, but you can only have one external account linked to your globusID. Globus will guide you thought the steps to make that link, if you attempt to login with one of those other IDs. The next instructions will have you use your globusID directly to login for simplicity.
