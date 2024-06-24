@@ -341,22 +341,26 @@ Either way you will see three directors list in the file manager:
 * world-shared- Workspace on the parallel file system where files can be shared between projects.
  
 5.	You can click on those spaces to see what's in them from the file manager.
+
+If you want to setup a personal Globus collection on your laptop, follow these instructions: https://www.globus.org/globus-connect-personal.
+
+
  
 ## Globus Transfer
 
 Let's move a test file from a Globus test collection into our scratch workspace.
  
-1. Go to the tab that has the Globus file manager in it and find the panels options in the upper right.
+1. Go to the browser tab that has the Globus file manager in it and find the panels options in the upper right.
 
-2. Click on the picture of the double panel. You will have a panels on the left and right that each have collections and path bars.
+2. Click on the picture of the double panel. After that you should have a panels on the left and right that each have collections and path bars.
 
 3. Enter "Globus Tutorial Collection 1" in the right collection bar.
 
-4. You will see a folder called foo.
+4. You will see a folder called "foo".
 
 5. Click "scratch" in the file manager on the left that is connected to the OLCF collections. Then either enter your username in the path or search for it and click on it in the file manager.
 
-6. To move the folder "foo" from the "Globus Tutorial Collection 1" to your OLCF parallel file system scratch area, simply drag and drop Foo from panel to panel. You can also select "foo" and click on the arrows to move it.
+6. To move the folder "foo" from the "Globus Tutorial Collection 1" to your OLCF parallel file system scratch area, simply drag and drop "foo" from panel to panel. You can also select "foo" and click on the arrows to move it.
  
 Globus will notify you when the transfer is complete. 
 
