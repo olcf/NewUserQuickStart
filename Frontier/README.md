@@ -83,19 +83,19 @@ Here are the rules:
  
 Key: https://docs.olcf.ornl.gov, Look to the left menu bar. GO!
  
-  1.Systems> Frontier User Guide> Running Jobs> Batch Scripts
+1. Systems> Frontier User Guide> Running Jobs> Batch Scripts;
     First word in the third paragraph.
  
-2.  Systems> Frontier User Guide> Running Jobs> Process and Thread Mapping Examples
+2.  Systems> Frontier User Guide> Running Jobs> Process and Thread Mapping Examples;
     Tenth word in the second paragraph.
  
-3.  Systems > Andes User guide>Running Jobs
+3.  Systems > Andes User guide>Running Jobs;
     Third paragraph, 4th step, fifth word.
  
-4.  Data Storage and Transfers Guide > Alpine2 IBM Spectrum Scale Filesystem.
+4.  Data Storage and Transfers Guide > Alpine2 IBM Spectrum Scale Filesystem;
     First paragraph, third sentence. Look for the first comma in that sentence, grab the first word after that comma.
  
-5. Data Storage and Transfers Guide > Summary of Storage Areas.
+5. Data Storage and Transfers Guide > Summary of Storage Areas;
     Green “!Tip”Box, First sentence 10th word.
  
  
