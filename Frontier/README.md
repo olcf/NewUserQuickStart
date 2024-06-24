@@ -218,6 +218,7 @@ It tells you how to load the latest versions of python, manage your environment 
  
 Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise. Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems Base Environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). 
 
+#### Hands-on
 Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
  
 For example, for Frontier/Odo you would do.
