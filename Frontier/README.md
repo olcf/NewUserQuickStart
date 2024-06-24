@@ -152,34 +152,40 @@ Frontier (Orion) :
 
 ```
 cd /lustre/orion/[projid]/scratch/[userid]
+ls
 ```
 
 You can also do
 
 ```
 cd $MEMBERWORK/[projid]
-
+ls
 ```
 
 Now let’s look at the project level storage, proj-shared:
 
 ```
-cd /lustre/orion/[projid]/proj-shared/[userid]
+cd /lustre/orion/[projid]/proj-shared/
+ls
+
 ```
 
 You can also do
 ```
-cd $PROJWORK/[projid]/[projid]
+cd $PROJWORK/[projid]/
+ls
 ```
 
 And for sharing between projects
 ```
-cd /lustre/orion/[projid]/world-shared/[userid]
+cd /lustre/orion/[projid]/world-shared/
+ls
 ```
 
 You can also do
 ```
 cd $WORLDWORK/[projid]
+ls
 ```
 
 For Summit (Alpine2) you can look up the paths here:
