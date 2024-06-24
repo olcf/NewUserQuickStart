@@ -266,7 +266,7 @@ cd $WORLDWORK/[projid]
 For Summit (Alpine2) you can look up the paths here:
 [Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html).
 
-However, the forms will be the same except the beginning will of each path will start with:
+However, the paths will be of the same form except the beginning will of each path will start with:
 
 ```
 /gpfs/alpine2/[projid]/
