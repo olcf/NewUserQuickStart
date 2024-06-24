@@ -142,7 +142,7 @@ For details see our [Data Storage and Transfers Guide]( https://docs.olcf.ornl.g
 
 Longer term storge will be available in OLCF’s nearline storge system called Kronos.  The target date for that late July. OLCF is currently in transitioning to Kronos from an archival storage system called HPSS. HPSS will become read-only in August. New projects should refrain from using it. 
 
-See our [2024 Notable System Changes] (https://docs.olcf.ornl.gov/systems/2024_olcf_system_changes.html)
+See our [2024 Notable System Changes](https://docs.olcf.ornl.gov/systems/2024_olcf_system_changes.html)
 
 ## Hands on: Find your Storage Areas
 
