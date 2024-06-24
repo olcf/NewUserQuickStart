@@ -236,11 +236,11 @@ For example on Frontier:
 ```
 $ module load miniforge3/23.11.0
 ```
-2 Create "my_env" with Python version X.Y at the desired path
+2 Create "globus_env" with Python version X.Y at the desired path
 ```
 $ conda create -p /ccs/proj/<<your_project_id>>/globus_env python=3.10.13
 ```
-3. Activate "my_env"
+3. Activate "globus_env"
 ```
 $ source activate /ccs/proj/<<your_project_id>>/globus_env
 ```
@@ -381,21 +381,20 @@ If you are a NERSC user, you can use their collections too, you just need to act
  
 ### GlobusCLI
  
+### GlobusCLI
+ 
 We realize that not everyone will want to use a GUI interface for moving data. Globus offers a few APIs. We will leave it to the use to find examples in Globus's helpful users guides:
  
 https://docs.globus.org/cli/
 https://docs.globus.org/cli/quickstart/
  
-However, users must install Globus CLI themselves to use it and that is best done within a custom python environment.
-So our next hands-on is an example of how to do that.
+However, users must install Globus CLI themselves to use it, and that is best done within a custom python environment. So, our next hands-on is an example of how to do that.
  
 In a previous example we setup a custom environment,`/ccs/proj/<your_proeject_ID>/globus_env` in  the non-purged project-centric storage area on the NFS filesystem. Let's start by reactivating that.
  
- 
 ```
 $ Module load miniforge3
-$ source activate /ccs/proj/<your_proeject_ID>/globus_env<your_proeject_ID>/globus_env
- 
+$ source activate /ccs/proj/<your_proeject_ID>/globus_env 
 ```
  
 Globus recommends using pip to install GlobusCLI
@@ -403,7 +402,7 @@ Globus recommends using pip to install GlobusCLI
 So next let's do that:
  
 ```
-(/ccs/proj/<<your_prog_ID/globus_env) [<<your_User_ID>>@login1.odo ~]$ pip install globus-cli
+(/ccs/proj/<<your_proj_ID/globus_env) [<<your_User_ID>>@login1.odo ~]$ pip install globus-cli
  
 Collecting globus-cli
   Downloading globus_cli-3.28.2-py3-none-any.whl.metadata (2.4 kB)
@@ -425,10 +424,9 @@ Installing collected packages: urllib3, typing-extensions, pyjwt, pycparser, pac
 Successfully installed certifi-2024.2.2 cffi-1.16.0 charset-normalizer-3.3.2 click-8.1.7 cryptography-42.0.5 globus-cli-3.28.2 globus-sdk-3.41.0 idna-3.7 jmespath-1.0.1 packaging-24.0 pycparser-2.22 pyjwt-2.8.0 requests-2.31.0 typing-extensions-4.11.0 urllib3-2.2.1
  
 ```
-You should now have globus cli in an area where all the members of your project can use it. ]]
+You should now have globus cli in an area where all the members of your project can use it. 
  
 If you want test do the globus login and follow the instructions given:
- 
  
 For example, here is the command from my globus_env on Odo:
  
@@ -438,13 +436,18 @@ For example, here is the command from my globus_env on Odo:
  
 ```
  
-It will give you a link and tell you to paste it in your browser. That will lead you to the same login we did for your globes ID from the GOI.
+It will give you a link and tell you to paste it in your browser. That will lead you to the same login we did for your globus ID from the globus web GUI.
   
 You will also have to activate collections from the GUI. But the collections stay active for three days before you need to re-authenticate, so you can still  
 run a workflow with globus using the scripts.
  
-For more data transfer tip see:
-   
+
+
+For more data transfer tips see: [OCLF Data transfer Tutorial]( https://www.olcf.ornl.gov/wp-content/uploads/Data-Transfer.pdf)
+
+And the 
+[OLCF Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html#data-storage-and-transfers)
+
  
 ## Finding and Building Software
  
