@@ -376,10 +376,6 @@ If you are a NERSC user, you can use their collections too, you just need to act
 2. If you are moving files to or from a single disk it will not help the speed to move them in folders. 
 
 3. OLCF's HPSS is retiring in August, but if you are moving files to an HPSS at another center, please tar the files first. HPSS is designed to handle large files better than many small files, and many small files can fill up the cache and block performance for all users.
-
-
- 
-### GlobusCLI
  
 ### GlobusCLI
  
