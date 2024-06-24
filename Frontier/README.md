@@ -342,37 +342,40 @@ Either way you will see three directors list in the file manager:
  
 5.	You can click on those spaces to see what's in them from the file manager.
 
-If you want to setup a personal Globus collection on your laptop, follow these instructions: https://www.globus.org/globus-connect-personal.
+If you want to setup a personal Globus Collection on your laptop, follow these instructions: https://www.globus.org/globus-connect-personal.
 
 
  
 ## Globus Transfer
 
-Let's move a test file from a Globus test collection into our scratch workspace.
- 
+The Department of Energy Energy Sciences Network ( ESnet) has deployed anonymous read-only GridFTP servers for data transfer testing purposes. We are going to use one of those, called "ESnet Denver DTN (Anonymous read only testing)" and its testfiles to do the next two exercises because everyone can get to them from globus.
+
+Let's move a test file from an ESnet test collection into our scratch workspace.
+
 1. Go to the browser tab that has the Globus file manager in it and find the panels options in the upper right.
 
 2. Click on the picture of the double panel. After that you should have a panels on the left and right that each have collections and path bars.
 
-3. Enter "Globus Tutorial Collection 1" in the right collection bar.
+3. Enter "ESnet Denver DTN (Anonymous read only testing)" in the left collection bar.
 
-4. You will see a folder called "foo".
+4. You will see a folders with different sized files and folders listed. We are going to transfer the 10MB file called `10M.dat`.  
 
-5. Click "scratch" in the file manager on the left that is connected to the OLCF collections. Then either enter your username in the path or search for it and click on it in the file manager.
+5. In the right collections bar enter the  “OLCF DTN (Globus 5)”, then either enter the path to your scratch directory `/gpfs/orion/<<your_project_ID>>/scratch/<<your_user_ID>>’ in the path bar or navigate to it by clicking on the folders in the File manager.    
 
-6. To move the folder "foo" from the "Globus Tutorial Collection 1" to your OLCF parallel file system scratch area, simply drag and drop "foo" from panel to panel. You can also select "foo" and click on the arrows to move it.
+6. To move the file "10M.dat" from the "ESnet Denver DTN (Anonymous read only testing)" to your OLCF parallel file system scratch area, simply drag and drop "10M.dat" from panel to panel. You can also select "10M.dat" and click on the arrows to move it.
  
 Globus will notify you when the transfer is complete. 
 
-If you are a NERSC user, you could have used their collections. You can also setup a collection on your laptop.
- 
-A few tips for using Globus
+If you are a NERSC user, you can use their collections too, you just need to activate the collection with your NERSC credentials. 
+
+###A few tips for using Globus
 
 1. If you are moving files from one parallel filesystem to another, it is better to move many files, at once, for example, by moving a folder.  Globus will use the parallel systems to move the files faster. 
 
 2. If you are moving files to or from a single disk it will not help the speed to move them in folders. 
 
 3. OLCF's HPSS is retiring in August, but if you are moving files to an HPSS at another center, please tar the files first. HPSS is designed to handle large files better than many small files, and many small files can fill up the cache and block performance for all users.
+
 
  
 ### GlobusCLI
