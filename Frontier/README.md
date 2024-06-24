@@ -287,7 +287,6 @@ cd /gpfs/alpine2/[projid]/scratch/[userid]
 * Transfers are done by activating “Collections” which are portals in to the OLCF's file systems and to those of participating institutions.
 * Globus is the recommended way to move files between OLCF systems and between OLCF and exterior systems.
  
- 
 For this exercise we will setup your globus.org username and password. You can skip this if you have a globus ID.
 
 Note: Globus is not controlled by OLCF and its help and login pages and option change without warning. This hands-on is based on Globus pages from 05-02-24. Even if the specific Globus pages chanage, this tutorial should be close to what is needed to get a globus username and password.
@@ -302,59 +301,75 @@ Now try to log in:
 
 1. Go to globus.org and click "Login"
   
-2.  Find the "use Globus ID" link and use your GlobusID to login. You will only be able to use the Oak Ridge National Laboratory login if you are ORNL staff.
+2.  Find the "use Globus ID" link and use your GlobusID to login.  The Oak Ridge National Laboratory login is only for ORNL staff.
 3. You should see the Globus "File Manager" when you are logged in.
  
 ### Activating a Globus Collection
  
 Activating the OLCF Globus Collection is done using your OLCF username and Token Passcode. Think of it ask logging in to an OLCF filesystem.
-Endpoints stay activated for three days so you don’t need to enter your credentials for each transfer and you can run a transfer workflow during a simulation.
+
+Collections stay activated for three days so you don’t need to enter your credentials for each transfer and you can run a transfer workflow during a simulation.
   
-The OLCF Moderate Collections are called `OLCF DTN (Globus 5)` and OLCF HPSS (Globus 5)"
-If you are on Odo, you in the OLCF Open enclave. Its Collection is called "NCCS Open DTN (Globus 5)" and is a portal to the open NFS and GPFS filesystems.
+The OLCF Moderate Collection is called “OLCF DTN (Globus 5)”. 
+
+If you are on Odo, you in the OLCF Open enclave and its Collection is called "NCCS Open DTN (Globus 5)" and is a portal to the open NFS and GPFS filesystems.
  
-### Hands-on Globus Collection Activation
 This assumes that you have logged in using steps like those in the Hands-On Globus-ID exercise.  
  
-1. Type "OLCF" in the Collections bar. A list of options for OLCF will form below, Select the `OLCF DTN (Globus 5)` Collection. (If you are doing this training on Odo, look for NCCS Open DTN (globus5) instead.)
-2. If Globus pings you to associate your Globus ID with OCLF credentials, follow the instructions that it gives.
-3. When prompted, sign in with your OLCF UserName and PIN+ PASSCODE. (If you are doing this training from Odo, use the User name and XCAMS password to login)
+1.	Type "OLCF" in the Collections bar. A list of options for OLCF will form below, select the “OLCF DTN (Globus 5)” Collection. (If you are doing this training on Odo, look for NCCS Open DTN (globus5) instead.)
+
+2.	If Globus pings you to associate your Globus ID with OCLF credentials, follow the instructions that it gives.
+
+3.	 When prompted, sign in with your OLCF UserName and PIN+ PASSCODE. (If you are doing this from Odo, use the Username and XCAMS password to login)
  
 You should see the files that you have in /ccs/home/<<your_user_ID>>>
  
-You can reach both Orion Luster and Alpine2 GPFS from the OLCF DTN (Globus 5)Collection. You do so by entering the path to them in the Path bar.
+You can reach both Orion Luster and Alpine2 GPFS from the “OLCF DTN (Globus 5)” Collection. You do so by entering the path to them in the Path bar.
  
-Summit users: Path to Alpine2 /gpfs/alpine2/<your_project_ID>>
+* Summit users: Path to Alpine2 `/gpfs/alpine2/<your_project_ID>>`
  
-Frontier users: Path to Orion /gpfs/orion/<<your_project_ID>>
+* Frontier users: Path to Orion `/gpfs/orion/<<your_project_ID>>`
  
-Odo users: Path to wolf2 /gpfs/wolf2/<<your_project_ID>>
+* Odo users: Path to wolf2 `/gpfs/wolf2/olcf/<<your_project_ID>>`
  
-Enter the path for the resource your are on.
+4.	Enter the path for the resource you are on.
  
 Either way you will see three directors list in the file manager:
-scratch - personal workspace on the parallel file system purged every 90 days.
-proj-shared - Workspace on the parallel file system for you project where everyone on it had access.
-world-shared- Workspace on the parallel file system where files can be shared between projects.
+
+* scratch - personal workspace on the parallel file system purged every 90 days.
+* proj-shared - Workspace on the parallel file system for your project 
+* world-shared- Workspace on the parallel file system where files can be shared between projects.
  
-You can click on those spaces to see what's in them from the file manager.
+5.	You can click on those spaces to see what's in them from the file manager.
  
-Let's move a test file from a Globus test collection in to our scratch workspace.
+## Globus Transfer
+
+Let's move a test file from a Globus test collection into our scratch workspace.
  
 1. Go to the tab that has the Globus file manager in it and find the panels options in the upper right.
-2. Click on the picture of the double panel. The panel that appears on the right will also have collections and path bars.
-3. Enter "Globus Tutoral Collection 1" in the new collection bar.
+
+2. Click on the picture of the double panel. You will have a panels on the left and right that each have collections and path bars.
+
+3. Enter "Globus Tutorial Collection 1" in the right collection bar.
+
 4. You will see a folder called foo.
-5. Click "scratch" in the file manger on the left that is connected to the OLCF collections. Then either enter your username in the path or search for it and click on it in the file manager.
-6. To move the folder "foo" from the Globus test Collection to your OLCF parallel file system scratch area, simply drag and drop Foo from panel to panel. You can also select "foo" and click on the arrows to move it.
+
+5. Click "scratch" in the file manager on the left that is connected to the OLCF collections. Then either enter your username in the path or search for it and click on it in the file manager.
+
+6. To move the folder "foo" from the "Globus Tutorial Collection 1" to your OLCF parallel file system scratch area, simply drag and drop Foo from panel to panel. You can also select "foo" and click on the arrows to move it.
  
-Globus will notify you when the transfer is complete. You have moved a folder from a filesyersm outside OLCF to OLCF. If you are a NERSC user you could have used their collections. You can also setup a collection on your laptop.
+Globus will notify you when the transfer is complete. 
+
+If you are a NERSC user, you could have used their collections. You can also setup a collection on your laptop.
  
 A few tips for using Globus
-1. If you are moving files from one parallel filesystem to another, it is better to move many files at once. Globus will use the parallel systems to move the files faster.
-2. If you are moving files to or form a single disk it will not help the speed to move them in folders.
-3. OLCF's HPSS is retiring this year, but if you are moving files to an HPSS at another center, please tar the files first. HPSS is designed to handle large files better than many small files, and many small files can fill up it cache and block performance for all users.
- 
+
+1. If you are moving files from one parallel filesystem to another, it is better to move many files, at once, for example, by moving a folder.  Globus will use the parallel systems to move the files faster. 
+
+2. If you are moving files to or from a single disk it will not help the speed to move them in folders. 
+
+3. OLCF's HPSS is retiring in August, but if you are moving files to an HPSS at another center, please tar the files first. HPSS is designed to handle large files better than many small files, and many small files can fill up the cache and block performance for all users.
+
  
 ### GlobusCLI
  
