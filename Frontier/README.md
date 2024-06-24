@@ -211,6 +211,15 @@ Ignore any warning that popup to use "conda activate".
  
 There is more good information in the [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment) guide.
  
+## Storage at OLCF 
+
+A storage area for every activity. 
+
+OLCF has a Network Files system (NFS) that you land on when you login. This is a small secure filesystem that is provisoend to hold your most important data. This is the best place for your executables and small important data. 
+
+OLCF also has large parallel filesystems, Orion Lustre for Frotnier and Alpine2 GPFS for Summit. These are the filesystems that you should use to hold your large production data for simulation campains while you are running. They are not the place to store that data perminately though.  
+
+OLCF is currently in trasitioning to a 
  
 ## Globus
  
