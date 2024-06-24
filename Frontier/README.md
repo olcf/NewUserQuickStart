@@ -129,7 +129,75 @@ Sometimes you might encounter a message that looks like "Connection closed by <i
 If your PASSCODE has failed twice i.e. you are being prompted to enter your PASSCODE for the third time in a row, let the tokencode change before you try entering your PASSCODE again (to avoid getting locked out).
  
 If you find that you keep entering the PASSCODE correctly but it fails to log you in, its possible you may have been locked out. Send an email to help@olcf.ornl.gov with the information on what you are seeing. If your account is locked, the OLCF Help Desk can unlock it for you.
- 
+
+## Storage at OLCF 
+
+OLCF has a Network Files system (NFS) that you land on when you login. This is a small secure filesystem that is provisioned to hold your most important data. This is the best place for your executables and small important data. It is backed up. 
+
+OLCF also has large parallel filesystems, Orion Luster for Frontier and Alpine2 GPFS for Summit. These are the filesystems that you should use to hold your large production data for simulation campaigns while you are running. They are not backed up and data older than 90 days are purged. 
+
+OLCF storage systems have different areas designated for induvial user storage and project level storage that is controlled by the file permissions. Please make sure that data that is to be shared with multiple project members in in the project storage. This especially important as people leave your project. 
+
+For details see our [Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html).
+
+Longer term storge will be available in OLCF’s nearline storge system called Kronos.  The target date for that late July. OLCF is currently in transitioning to Kronos from an archival storage system called HPSS. HPSS will become read-only in August. New projects should refrain from using it. 
+
+See our [2024 Notable System Changes] (https://docs.olcf.ornl.gov/systems/2024_olcf_system_changes.html)
+
+## Hands on: Find your Storage Areas
+
+Login to Frontier or Summit and go to your induvial user storage called “scratch”: 
+
+Frontier (Orion) : 
+
+```
+cd /lustre/orion/[projid]/scratch/[userid]
+```
+
+You can also do
+
+```
+cd $MEMBERWORK/[projid]
+
+```
+
+Now let’s look at the project level storage, proj-shared:
+
+```
+cd /lustre/orion/[projid]/proj-shared/[userid]
+```
+
+You can also do
+```
+cd $PROJWORK/[projid]/[projid]
+```
+
+And for sharing between projects
+```
+cd /lustre/orion/[projid]/world-shared/[userid]
+```
+
+You can also do
+```
+cd $WORLDWORK/[projid]
+```
+
+For Summit (Alpine2) you can look up the paths here:
+[Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html).
+
+However, the paths will be of the same form except the beginning will of each path will start with:
+
+```
+/gpfs/alpine2/[projid]/
+```
+
+And Alipne2 does not have the environment varaibles like $MEMEBERWORK” 
+
+
+Summit (Alpine2) example for indivual storage:
+```
+cd /gpfs/alpine2/[projid]/scratch/[userid]
+```
  
  
 ## Python on OLCF Systems
@@ -211,74 +279,7 @@ Ignore any warning that popup to use "conda activate".
  
 There is more good information in the [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment) guide.
  
-## Storage at OLCF 
 
-OLCF has a Network Files system (NFS) that you land on when you login. This is a small secure filesystem that is provisioned to hold your most important data. This is the best place for your executables and small important data. It is backed up. 
-
-OLCF also has large parallel filesystems, Orion Luster for Frontier and Alpine2 GPFS for Summit. These are the filesystems that you should use to hold your large production data for simulation campaigns while you are running. They are not backed up and data older than 90 days are purged. 
-
-OLCF storage systems have different areas designated for induvial user storage and project level storage that is controlled by the file permissions. Please make sure that data that is to be shared with multiple project members in in the project storage. This especially important as people leave your project. 
-
-For details see our [Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html).
-
-Longer term storge will be available in OLCF’s nearline storge system called Kronos.  The target date for that late July. OLCF is currently in transitioning to Kronos from an archival storage system called HPSS. HPSS will become read-only in August. New projects should refrain from using it. 
-
-See our [2024 Notable System Changes] (https://docs.olcf.ornl.gov/systems/2024_olcf_system_changes.html)
-
-## Hands on: Find your Storage Areas
-
-Login to Frontier or Summit and go to your induvial user storage called “scratch”: 
-
-Frontier (Orion) : 
-
-```
-cd /lustre/orion/[projid]/scratch/[userid]
-```
-
-You can also do
-
-```
-cd $MEMBERWORK/[projid]
-
-```
-
-Now let’s look at the project level storage, proj-shared:
-
-```
-cd /lustre/orion/[projid]/proj-shared/[userid]
-```
-
-You can also do
-```
-cd $PROJWORK/[projid]/[projid]
-```
-
-And for sharing between projects
-```
-cd /lustre/orion/[projid]/world-shared/[userid]
-```
-
-You can also do
-```
-cd $WORLDWORK/[projid]
-```
-
-For Summit (Alpine2) you can look up the paths here:
-[Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html).
-
-However, the paths will be of the same form except the beginning will of each path will start with:
-
-```
-/gpfs/alpine2/[projid]/
-```
-
-And Alipne2 does not have the environment varaibles like $MEMEBERWORK” 
-
-
-Summit (Alpine2) example for indivual storage:
-```
-cd /gpfs/alpine2/[projid]/scratch/[userid]
-```
 
 ## Globus
  
