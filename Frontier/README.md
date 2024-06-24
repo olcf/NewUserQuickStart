@@ -312,7 +312,7 @@ Collections stay activated for three days so you don’t need to enter your cred
   
 The OLCF Moderate Collection is called “OLCF DTN (Globus 5)”. 
 
-If you are on Odo, you in the OLCF Open enclave and its Collection is called "NCCS Open DTN (Globus 5)" and is a portal to the open NFS and GPFS filesystems.
+If you are on Odo, you are in the OLCF Open enclave and its Collection is called "NCCS Open DTN (Globus 5)" and is a portal to the open NFS and GPFS filesystems.
  
 This assumes that you have logged in using steps like those in the Hands-On Globus-ID exercise.  
  
