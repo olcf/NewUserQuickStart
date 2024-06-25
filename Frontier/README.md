@@ -20,8 +20,8 @@ We will not be covering an overview of Summit today, but you can find one here i
  
 Since it is easiest to do this from pictures, lets go to the Frontier docs:
 https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#system-overview
- 
-TODO: Insert picture of frontier cabinet and node from USRSE container talk
+
+![image](https://github.com/olcf/NewUserQuickStart/assets/17310566/63d472d5-e265-4d8e-bc64-fcf5dd05faa8)
  
 You can also watch [this video giving a more detailed overview of the Frontier hardware](https://vimeo.com/840551316).
  
