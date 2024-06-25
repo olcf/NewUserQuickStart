@@ -1,9 +1,9 @@
 
-# Welcome to Hands-on New User training
+# Welcome to Hands-on New User training (Suzanne)
  
 This training is designed to introduce you to the Oak Ridge Leadership Computing Facility and its resources. Also you should never be more than 20 minutes away from and hands-on exercise. For this training you will want to have a browser window open and an ssh terminal open.
  
-## Hands-on Finding Jupyter terminal.
+## Hands-on Finding Jupyter terminal (Subil)
 If you do not have an ssh terminal:
 1. Open and tab on your browser and direct it to https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html#access.
  
@@ -13,7 +13,7 @@ If you do not have an ssh terminal:
  
 There are many more uses for OLCF Jupyter Hub and you can find them in the Jupyter at OLCF guide. https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html
  
-## Resources Overview
+## Resources Overview (Subil)
  
 We'll begin with an overview of Frontier, our exascale super computer.
 We will not be covering an overview of Summit today, but you can find one here if you are Summit user. https://github.com/olcf/NewUserQuickStart/blob/master/README.md
@@ -25,7 +25,7 @@ TODO: Insert picture of frontier cabinet and node from USRSE container talk
  
 You can also watch [this video giving a more detailed overview of the Frontier hardware](https://vimeo.com/840551316).
  
-## How to login to Frontier:
+## How to login to Frontier (Subil)
  
 Once you have a terminal open (either through Jupyter or by opening a terminal program on your computer), You can login to frontier by executing the following command
  
@@ -59,9 +59,37 @@ If your SSH operation succeeds, you should be placed in your home directory on F
 /ccs/home/subil
 ```
  
+ ## Authentication with RSA tokens (Subil)
+ 
+In an earlier section, we covered logging into Frontier or Odo using SSH and with your RSA token. Let's talk a bit more about what we're doing here.
+ 
+We are using 2-factor authentication via user-selected PINs and RSA securID token. The numbers on the RSA securID token change every 30 seconds. Entering your PIN+tokencode is the only login method available. Using other methods (password, public key, etc) are not allowed.
+ 
+### RSA terminology
+* tokencode - the 6 digit number on your RSA token
+* PIN - an alphanumeric string of 4-8 characters known only to you
+* PASSCODE - your PIN followed by the current tokencode without any spaces
+ 
+### Common Login Issues
+ 
+SSH will not prompt you for your username, so make sure that when you SSH you are using the full `ssh <your username>@frontier.olcf.ornl.gov`.
+ 
+Your RSA token might get out of sync with the server. So sometimes you might be prompted for 'next tokencode'
+```
+Enter PASSCODE:
+Wait for the tokencode to change, then enter the new tokencode :
+```
+When this happens, enter only the tokencode your RSA token generates. Don't enter the PIN. In general, when it asks for PASSCODE, enter the PIN+tokencode. For any other case, the terminal will explicitly tell you what it wants you to do.
+ 
+Sometimes you might encounter a message that looks like "Connection closed by <ip address>" after you correctly enter your PASSCODE. This usually indicates that your account no longer has access to the particular system you are trying to SSH to. Your account's access to systems is tied to your project. So when your project's access to a system expires, you lose access to that system.
  
  
-## User Guides Overview
+If your PASSCODE has failed twice i.e. you are being prompted to enter your PASSCODE for the third time in a row, let the tokencode change before you try entering your PASSCODE again (to avoid getting locked out).
+ 
+If you find that you keep entering the PASSCODE correctly but it fails to log you in, its possible you may have been locked out. Send an email to help@olcf.ornl.gov with the information on what you are seeing. If your account is locked, the OLCF Help Desk can unlock it for you.
+
+ 
+## User Guides Overview (Suzanne)
 OLCF has users guides for its compute systems, data management tools and polices. They have examples that cover the basics that you need to know to run on our system. Let's start with a hands-on to help you find and navigate those guides.
  
  
@@ -101,36 +129,8 @@ Key: https://docs.olcf.ornl.gov, Look to the left menu bar. GO!
  
 When you are done, raise your virtual hand.
  
-## Authentication with RSA tokens
- 
-In an earlier section, we covered logging into Frontier or Odo using SSH and with your RSA token. Let's talk a bit more about what we're doing here.
- 
-We are using 2-factor authentication via user-selected PINs and RSA securID token. The numbers on the RSA securID token change every 30 seconds. Entering your PIN+tokencode is the only login method available. Using other methods (password, public key, etc) are not allowed.
- 
-### RSA terminology
-* tokencode - the 6 digit number on your RSA token
-* PIN - an alphanumeric string of 4-8 characters known only to you
-* PASSCODE - your PIN followed by the current tokencode without any spaces
- 
-### Common Login Issues
- 
-SSH will not prompt you for your username, so make sure that when you SSH you are using the full `ssh <your username>@frontier.olcf.ornl.gov`.
- 
-Your RSA token might get out of sync with the server. So sometimes you might be prompted for 'next tokencode'
-```
-Enter PASSCODE:
-Wait for the tokencode to change, then enter the new tokencode :
-```
-When this happens, enter only the tokencode your RSA token generates. Don't enter the PIN. In general, when it asks for PASSCODE, enter the PIN+tokencode. For any other case, the terminal will explicitly tell you what it wants you to do.
- 
-Sometimes you might encounter a message that looks like "Connection closed by <ip address>" after you correctly enter your PASSCODE. This usually indicates that your account no longer has access to the particular system you are trying to SSH to. Your account's access to systems is tied to your project. So when your project's access to a system expires, you lose access to that system.
- 
- 
-If your PASSCODE has failed twice i.e. you are being prompted to enter your PASSCODE for the third time in a row, let the tokencode change before you try entering your PASSCODE again (to avoid getting locked out).
- 
-If you find that you keep entering the PASSCODE correctly but it fails to log you in, its possible you may have been locked out. Send an email to help@olcf.ornl.gov with the information on what you are seeing. If your account is locked, the OLCF Help Desk can unlock it for you.
 
-## Storage at OLCF 
+## Storage at OLCF (Suzanne)
 
 OLCF has a Network Files system (NFS) that you land on when you login. This is a small secure filesystem that is provisioned to hold your most important data. This is the best place for your executables and small important data. It is backed up. 
 
@@ -206,13 +206,13 @@ cd /gpfs/alpine2/[projid]/scratch/[userid]
 ```
  
  
-## Python on OLCF Systems
+## Python on OLCF Systems (Suzanne)
 In high-performance computing, Python is heavily used to analyze scientific data on the system.
 OLCF has a "Python on OLCF Systems" guide within the software guide. To find it, go to [https://docs.olcf.ornl.gov](https://docs.olcf.ornl.gov)> Software> Python on OLCF Systems. [Link](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems).
  
 It tells you how to load the latest versions of python, manage your environment and run python on Summit, Frontier and Andes.
  
-## Basic Python Hands-on
+## Basic Python Hands-on (Suzanne)
  
 ### Base Environment
  
@@ -288,7 +288,7 @@ There is more good information in the [Python on OLCF Systems]( https://docs.olc
  
 
 
-## Globus
+## Globus (Suzanne)
  
 * Globus is a fast and reliable way to move files between OLCF systems and between OLCF and other institutions.
 * It has a convenient Web-interface at globus.org that you log into with a username and password.
@@ -452,7 +452,7 @@ And the
 [OLCF Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html#data-storage-and-transfers)
 
  
-## Finding and Building Software
+## Finding and Building Software (Subil)
  
 (the following section applies to Odo as well, so you can follow along if you're on Odo)
  
@@ -633,8 +633,10 @@ $ cc -o hello hello.c
 For C code, you will use the `cc` compiler wrapper. For C++, you will use the `CC` compiler wrapper. And for Fortran you will use `ftn`. This applies for any programming environment you may be using.  The compiler wrapper automatically includes the necessary header files and libraries needed for MPI so you don't have to explicitly link the MPI libraries. There are nuances to this that aren't covered here, such as when you're compiling for both MPI and GPU functionality. See more information about compiling in [the Frontier documentation](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#compiling).
  
 You can run `cc -craype-verbose` to get a full picture of what the compiler wrapper is doing when compiling.
- 
-## Training Opportunities
+
+## More New User Trainings (Suzanne)
+
+## Training Opportunities (Suzanne)
  
 - Keep an eye out for upcoming trainings on our [Training Calendar](https://www.olcf.ornl.gov/for-users/training/training-calendar)
 - Missed a training? All our trainings are recorded and are listed in the [Training Archive](https://docs.olcf.ornl.gov/training/training_archive.html)
