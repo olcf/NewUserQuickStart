@@ -6,9 +6,7 @@ This training is designed to introduce you to the Oak Ridge Leadership Computing
 ## Hands-on Finding Jupyter terminal (Subil)
 If you do not have an ssh terminal:
 1. Open and tab on your browser and direct it to https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html#access.
- 
-2. Then follow the directions there to access the moderate Jupyter hub if you are a Frontier of summit user. IF you are using Odo or Ascent follow the directions for the Open Jupyer hub. In either case, choose one of the cpu labs.
- 
+2. Then follow the directions there to access the moderate Jupyter hub if you are a Frontier or Summit user. IF you are using Odo or Ascent follow the directions for the Open Jupyter hub. In either case, choose one of the CPU labs.
 3. Once you are in, find the "terminal icon". Now you will be ready to do the first hands-on.
  
 There are many more uses for OLCF Jupyter Hub and you can find them in the Jupyter at OLCF guide. https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html
