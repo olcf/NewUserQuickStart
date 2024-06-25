@@ -2,14 +2,7 @@
 # Welcome to Hands-on New User training (Suzanne)
  
 This training is designed to introduce you to the Oak Ridge Leadership Computing Facility and its resources. Also you should never be more than 20 minutes away from and hands-on exercise. For this training you will want to have a browser window open and an ssh terminal open.
- 
-## Hands-on Finding Jupyter terminal (Subil)
-If you do not have an ssh terminal:
-1. Open and tab on your browser and direct it to https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html#access.
-2. Then follow the directions there to access the moderate Jupyter hub if you are a Frontier or Summit user. IF you are using Odo or Ascent follow the directions for the Open Jupyter hub. In either case, choose one of the CPU labs.
-3. Once you are in, find the "terminal icon". Now you will be ready to do the first hands-on.
- 
-There are many more uses for OLCF Jupyter Hub and you can find them in the Jupyter at OLCF guide. https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html
+
  
 ## Resources Overview (Subil)
  
@@ -22,6 +15,15 @@ https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#system-overview
 ![image](https://github.com/olcf/NewUserQuickStart/assets/17310566/63d472d5-e265-4d8e-bc64-fcf5dd05faa8)
  
 You can also watch [this video giving a more detailed overview of the Frontier hardware](https://vimeo.com/840551316).
+
+ 
+## Hands-on Finding Jupyter terminal (Subil)
+If you do not have an ssh terminal:
+1. Open and tab on your browser and direct it to https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html#access.
+2. Then follow the directions there to access the moderate Jupyter hub if you are a Frontier or Summit user. IF you are using Odo or Ascent follow the directions for the Open Jupyter hub. In either case, choose one of the CPU labs.
+3. Once you are in, find the "terminal icon". Now you will be ready to do the first hands-on.
+ 
+There are many more uses for OLCF Jupyter Hub and you can find them in the Jupyter at OLCF guide. https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html
  
 ## How to login to Frontier (Subil)
  
