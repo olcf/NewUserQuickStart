@@ -638,6 +638,8 @@ You can run `cc -craype-verbose` to get a full picture of what the compiler wrap
 
 ## More New User Trainings (Suzanne)
 
+[February 2024 New User Training](https://www.olcf.ornl.gov/calendar/frontier-training-workshop-february-2024/)
+
 ## Training Opportunities (Suzanne)
  
 - Keep an eye out for upcoming trainings on our [Training Calendar](https://www.olcf.ornl.gov/for-users/training/training-calendar)
