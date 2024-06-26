@@ -639,6 +639,7 @@ You can run `cc -craype-verbose` to get a full picture of what the compiler wrap
 ## Submitting and Running Jobs with Slurm (Subil)
 
 Documentation: https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#running-jobs
+
 In depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
 
 ## More New User Trainings (Suzanne)
