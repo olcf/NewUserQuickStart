@@ -455,10 +455,12 @@ And the
 
  
 ## Finding and Building Software (Subil)
+
+Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment
  
 (the following section applies to Odo as well, so you can follow along if you're on Odo)
  
-Frontier supports a large number of users from a wide range of scientific disciplines. Different users have needs for different users. Some users might need to use different versions of the same software. In order to accommodate this, Frontier uses Lmod. Lmod manages software installed on Frontier in the form of 'modules'. You can get access to a specific software or package or library you need by 'loading' the specific module (provided it is available on Frontier).
+Frontier supports a large number of users from a wide range of scientific disciplines. Different users have different software needs. Some users might need to use different versions of the same software. In order to accommodate this, Frontier uses Lmod. Lmod manages software installed on Frontier in the form of 'modules'. You can get access to a specific software or package or library you need by 'loading' the specific module (provided it is available on Frontier).
  
  
 For example, if you want to use the `hipcc` compiler which is part of AMD's ROCm software stack, you need to first load the `amd-mixed` or the `rocm` module. The command is the same as what you did earlier to load miniforge
@@ -639,6 +641,21 @@ You can run `cc -craype-verbose` to get a full picture of what the compiler wrap
 ## Submitting and Running Jobs with Slurm (Subil)
 
 Documentation: https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#running-jobs
+
+Here is a simple job script named `submit.sl`
+
+```
+#!/bin/bash
+#SBATCH -A STF007
+#SBATCH -J RunSim123
+#SBATCH -o %x-%j.out
+#SBATCH -t 0:10:00
+#SBATCH -p batch
+#SBATCH -N 1
+
+srun -N1 --tasks-per-node=8 --gpus-per-task=1 --gpu-bind=closest ./hello
+
+```
 
 In depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
 
