@@ -636,6 +636,11 @@ For C code, you will use the `cc` compiler wrapper. For C++, you will use the `C
  
 You can run `cc -craype-verbose` to get a full picture of what the compiler wrapper is doing when compiling.
 
+## Submitting and Running Jobs with Slurm (Subil)
+
+Documentation: https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#running-jobs
+In depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
+
 ## More New User Trainings (Suzanne)
 
 [February 2024 New User Training](https://www.olcf.ornl.gov/calendar/frontier-training-workshop-february-2024/)
