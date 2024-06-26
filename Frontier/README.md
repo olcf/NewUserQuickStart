@@ -12,7 +12,8 @@ We will not be covering an overview of Summit today, but you can find one here i
 Since it is easiest to do this from pictures, lets go to the Frontier docs:
 https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#system-overview
 
-![image](https://github.com/olcf/NewUserQuickStart/assets/17310566/09d8f5a1-5358-4539-8b32-ba2151be44b0)
+![image](https://github.com/olcf/NewUserQuickStart/assets/17310566/d02cca71-f95f-44d7-9843-8004cccade7f)
+
 
  
 You can also watch [this video giving a more detailed overview of the Frontier hardware](https://vimeo.com/840551316).
