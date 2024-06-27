@@ -157,7 +157,7 @@ cd /lustre/orion/[projid]/scratch/[userid]
 ls
 ```
 
-You can also do
+You can also do:
 
 ```
 cd $MEMBERWORK/[projid]
@@ -172,7 +172,7 @@ ls
 
 ```
 
-You can also do
+You can also do:
 ```
 cd $PROJWORK/[projid]/
 ls
@@ -184,7 +184,7 @@ cd /lustre/orion/[projid]/world-shared/
 ls
 ```
 
-You can also do
+You can also do:
 ```
 cd $WORLDWORK/[projid]
 ls
@@ -199,7 +199,7 @@ However, the paths will be of the same form except the beginning will of each pa
 /gpfs/alpine2/[projid]/
 ```
 
-And Alipne2 does not have the environment varaibles like $MEMEBERWORK” 
+Alipne2 does not have the environment varaibles like $MEMEBERWORK” 
 
 
 Summit (Alpine2) example for indivual storage:
@@ -209,6 +209,7 @@ cd /gpfs/alpine2/[projid]/scratch/[userid]
  
  
 ## Python on OLCF Systems (Suzanne)
+
 In high-performance computing, Python is heavily used to analyze scientific data on the system.
 OLCF has a "Python on OLCF Systems" guide within the software guide. To find it, go to [https://docs.olcf.ornl.gov](https://docs.olcf.ornl.gov)> Software> Python on OLCF Systems. [Link](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems).
  
@@ -218,9 +219,10 @@ It tells you how to load the latest versions of python, manage your environment 
  
 ### Base Environment
  
-Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise. Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems Base Environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). 
+Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise. 
 
-#### Hands-on
+Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems Base Environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). 
+
 Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
  
 For example, for Frontier/Odo you would do.
@@ -233,7 +235,9 @@ $ conda list
  
 ### Setting up a Custom Environment
  
-Suppose you wanted to install the `numpy` package. If you do that in your base environment, it could get messy as you install more packages. It is a best practice to setup a custom environment that contains consistent versions of all the packages that you want to use for each particular project. This next hands-on walks you through setting up a custom environment that we will use later in the training. 
+Suppose you want to install the `numpy` package. If you do that in your base environment, it could get messy as you install more packages. It is a best practice to setup a custom environment that contains consistent versions of all the packages you use for each particular project. 
+
+This next hands-on walks you through setting up a custom environment that we will use later in the training. 
  
 Open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). In the tabs under "To create and activate an environment:" follow the instructions for the resource you are working on. If you are on Odo, follow the Frontier instructions.
  
@@ -278,7 +282,7 @@ You must use the path to the custom environment to activate it. For example:
 ```
 $ source activate /ccs/proj/<your_proeject_ID>/globus_env
 ```
-We will use this environment in the next hands-on, but let's close it out cleanly to form good habits.
+We will use this environment in the one of the next exercise, but let's close it out cleanly to form good habits.
  
 ```
 $ source deactivate
