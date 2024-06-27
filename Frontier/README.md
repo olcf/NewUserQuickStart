@@ -134,7 +134,7 @@ When you are done, raise your virtual hand.
 
 ## Storage at OLCF (Suzanne)
 
-![image](https://www.olcf.ornl.gov/screenshot-2024-06-22-at-11-59-34-am/)
+![image](https://www.olcf.ornl.gov/wp-content/uploads/OLCF-Storage.pdf)
 
 OLCF has a Network Files system (NFS) that you land on when you login. This is a small secure filesystem that is provisioned to hold your most important data. This is the best place for your executables and small important data. It is backed up. 
 
