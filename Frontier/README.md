@@ -153,7 +153,7 @@ Longer term storge will be available in OLCF’s nearline storge system called K
 
 See our [2024 Notable System Changes](https://docs.olcf.ornl.gov/systems/2024_olcf_system_changes.html)
 
-## Hands on: Find your Storage Areas (Suzanne) 
+## Hand-on Find Your Storage Areas (Suzanne) 
 
 Login to Frontier or Summit and go to your induvial user storage called “scratch”: 
 
