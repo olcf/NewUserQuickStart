@@ -146,7 +146,7 @@ Longer term storge will be available in OLCF’s nearline storge system called K
 
 See our [2024 Notable System Changes](https://docs.olcf.ornl.gov/systems/2024_olcf_system_changes.html)
 
-## Hands on: Find your Storage Areas
+## Hands on: Find your Storage Areas (Suzanne) 
 
 Login to Frontier or Summit and go to your induvial user storage called “scratch”: 
 
@@ -178,7 +178,7 @@ cd $PROJWORK/[projid]/
 ls
 ```
 
-And for sharing between projects
+And for sharing between projects:
 ```
 cd /lustre/orion/[projid]/world-shared/
 ls
