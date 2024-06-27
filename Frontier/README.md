@@ -316,23 +316,23 @@ Now try to log in:
  
 ### Activating a Globus Collection
  
-Activating the OLCF Globus Collection is done using your OLCF username and Token Passcode. Think of it ask logging in to an OLCF filesystem.
+Activating the OLCF Globus Collection is done using your OLCF username and Token Passcode. Think of it as logging in to an OLCF filesystem.
 
-Collections stay activated for three days so you don’t need to enter your credentials for each transfer and you can run a transfer workflow during a simulation.
+Collections stay activated for three days, so you don’t need to enter your credentials for each transfer, and you can run a transfer workflow during a simulation.
   
 The OLCF Moderate Collection is called “OLCF DTN (Globus 5)”. 
 
-If you are on Odo, you are in the OLCF Open enclave and its Collection is called "NCCS Open DTN (Globus 5)" and is a portal to the open NFS and GPFS filesystems.
+If you are on Odo, you are in the OLCF Open enclave, and its Collection is called "NCCS Open DTN (Globus 5)". It is a portal to the open NFS and GPFS filesystems.
  
-This assumes that you have logged in using steps like those in the Hands-On Globus-ID exercise.  
+The following exercise assumes that you have logged in using steps like those in the Hands-On Globus-ID exercise above. 
  
 1.	Type "OLCF" in the Collections bar. A list of options for OLCF will form below, select the “OLCF DTN (Globus 5)” Collection. (If you are doing this training on Odo, look for NCCS Open DTN (globus5) instead.)
 
-2.	If Globus pings you to associate your Globus ID with OCLF credentials, follow the instructions that it gives.
+2.	If Globus pings you to associate your Globus ID with OLCF credentials, follow the instructions that it gives.
 
-3.	 When prompted, sign in with your OLCF UserName and PIN+ PASSCODE. (If you are doing this from Odo, use the Username and XCAMS password to login)
+3.	 When prompted, sign in with your OLCF username and PIN+ PASSCODE. (If you are doing this from Odo, use you XCAMS/UCAMS username and password to login.)
  
-You should see the files that you have in /ccs/home/<<your_user_ID>>>
+Once you have activated the OLCF collection, you should see the files that you have in /ccs/home/<<user_ID>>>
  
 You can reach both Orion Luster and Alpine2 GPFS from the “OLCF DTN (Globus 5)” Collection. You do so by entering the path to them in the Path bar.
  
@@ -342,69 +342,62 @@ You can reach both Orion Luster and Alpine2 GPFS from the “OLCF DTN (Globus 5)
  
 * Odo users: Path to wolf2 `/gpfs/wolf2/olcf/<<your_project_ID>>`
  
-4.	Enter the path for the resource you are on.
+4.	Find the Path bar in the file manager and Enter the path listed above that is appropriate for the resource that you are working on. 
  
-Either way you will see three directors list in the file manager:
+You should see three directories listed in the file manager:
 
-* scratch - personal workspace on the parallel file system purged every 90 days.
-* proj-shared - Workspace on the parallel file system for your project 
-* world-shared- Workspace on the parallel file system where files can be shared between projects.
+* scratch - personal workspace on the parallel file system; purged every 90 days.
+* proj-shared – project level workspace on the parallel file system; purged every 90 days.
+* world-shared - workspace on the parallel file system where files can be shared between projects; purged every 90 days.
  
-5.	You can click on those spaces to see what's in them from the file manager.
+5.	From the File Manager, you can click on those work spaces to see the files within each. 
 
-If you want to setup a personal Globus Collection on your laptop, follow these instructions: https://www.globus.org/globus-connect-personal.
 
+If you want to setup a personal Globus Collection on your laptop, follow these instructions: [https://www.globus.org/globus-connect-personal](https://www.globus.org/globus-connect-personal).
 
  
-## Globus Transfer
+## Globus Data Transfer
 
-The Department of Energy Energy Sciences Network ( ESnet) has deployed anonymous read-only GridFTP servers for data transfer testing purposes. We are going to use one of those, called "ESnet Denver DTN (Anonymous read only testing)" and its testfiles to do the next two exercises because everyone can get to them from globus.
+The Department of Energy, [Energy Sciences Network]( https://www.es.net/about/),  ESnet has deployed read-only GridFTP servers and Globus Collections for data transfer testing purposes. We are going to use one of those, called "ESnet Denver DTN (Anonymous read only testing)" and its test files to do the next two exercises.
 
 Let's move a test file from an ESnet test collection into our scratch workspace.
 
-1. Go to the browser tab that has the Globus file manager in it and find the panels options in the upper right.
+1. Go to the browser tab that has the Globus File Manager in it and find the panels options in the upper right. 
 
-2. Click on the picture of the double panel. After that you should have a panels on the left and right that each have collections and path bars.
+2. Click on the picture of the double panel. After that, you should have panels on the left and right that each have a Collection and a Path bar.
 
-3. Enter "ESnet Denver DTN (Anonymous read only testing)" in the left collection bar.
+3. Enter "ESnet Denver DTN (Anonymous read only testing)" in the left Collection bar.
 
-4. You will see a folders with different sized files and folders listed. We are going to transfer the 10MB file called `10M.dat`.  
+4. You will see a set of folders with different sized files and folders listed in the File Manager. We are going to transfer the 10MB file called `10M.dat`.  
 
-5. In the right collections bar enter the  “OLCF DTN (Globus 5)”, then either enter the path to your scratch directory `/gpfs/orion/<<your_project_ID>>/scratch/<<your_user_ID>>’ in the path bar or navigate to it by clicking on the folders in the File manager.    
+5. In the right Collection bar enter the  “OLCF DTN (Globus 5)”, then enter the path to your scratch directory `/gpfs/orion/<<your_project_ID>>/scratch/<<user_ID>>’ in the Path bar. 
 
 6. To move the file "10M.dat" from the "ESnet Denver DTN (Anonymous read only testing)" to your OLCF parallel file system scratch area, simply drag and drop "10M.dat" from panel to panel. You can also select "10M.dat" and click on the arrows to move it.
  
 Globus will notify you when the transfer is complete. 
 
-If you are a NERSC user, you can use their collections too, you just need to activate the collection with your NERSC credentials. 
+You can access Globus collections, that you have credentials for, at institution that has them. For example, if you are a NERSC user, you can access their file systems via their globus Collection too, you just need to activate the collection with your NERSC credentials. 
 
-###A few tips for using Globus
+###A Few Tips for Using Globus
 
-1. If you are moving files from one parallel filesystem to another, it is better to move many files, at once, for example, by moving a folder.  Globus will use the parallel systems to move the files faster. 
+1. If you are moving files from one parallel filesystem to another, it is better to move many files, at once, for example, by moving a folder.  Globus will transfer the files in parallel streams. 
 
-2. If you are moving files to or from a single disk it will not help the speed to move them in folders. 
-
-3. OLCF's HPSS is retiring in August, but if you are moving files to an HPSS at another center, please tar the files first. HPSS is designed to handle large files better than many small files, and many small files can fill up the cache and block performance for all users.
+2. OLCF's HPSS is retiring in August, but if you are moving files to an HPSS at another User Facility, please tar the files first. HPSS is designed to handle large files better than many small files. A transfer of many small files can fill up the HPSS’s cache and block performance for all users.
  
-### GlobusCLI
+### Globus-CLI
  
-We realize that not everyone will want to use a GUI interface for moving data. Globus offers a few APIs. We will leave it to the use to find examples in Globus's helpful users guides:
+Not everyone will want to use the Globus GUI interface for moving data. Globus offers a few APIs for scripted transfers. For this exercise we will explore installing and using an API called Globus-CLI that is supported by Globus. 
  
-https://docs.globus.org/cli/
-https://docs.globus.org/cli/quickstart/
+OLCF users must install Globus-CLI themselves as it is not provided on Frontier or the DTNS.  
  
-However, users must install Globus CLI themselves to use it, and that is best done within a custom python environment. So, our next hands-on is an example of how to do that.
- 
-In a previous example we setup a custom environment,`/ccs/proj/<your_proeject_ID>/globus_env` in  the non-purged project-centric storage area on the NFS filesystem. Let's start by reactivating that.
+In a previous example we setup a custom python environment, `/ccs/proj/<your_proeject_ID>/globus_env` in the non-purged project-centric storage area on the NFS filesystem. Let's start by reactivating that environment:
  
 ```
-$ Module load miniforge3
+$ module load miniforge3
 $ source activate /ccs/proj/<your_proeject_ID>/globus_env 
 ```
  
-Globus recommends using pip to install GlobusCLI
- 
-So next let's do that:
+Globus recommends using pip to install GlobusCLI, so let's do that:
  
 ```
 (/ccs/proj/<<your_proj_ID/globus_env) [<<your_User_ID>>@login1.odo ~]$ pip install globus-cli
@@ -429,11 +422,9 @@ Installing collected packages: urllib3, typing-extensions, pyjwt, pycparser, pac
 Successfully installed certifi-2024.2.2 cffi-1.16.0 charset-normalizer-3.3.2 click-8.1.7 cryptography-42.0.5 globus-cli-3.28.2 globus-sdk-3.41.0 idna-3.7 jmespath-1.0.1 packaging-24.0 pycparser-2.22 pyjwt-2.8.0 requests-2.31.0 typing-extensions-4.11.0 urllib3-2.2.1
  
 ```
-You should now have globus cli in an area where all the members of your project can use it. 
+You should now have Globus-CLI in an area where all the members of your project can use it. 
  
-If you want test do the globus login and follow the instructions given:
- 
-For example, here is the command from my globus_env on Odo:
+Let’s test your installation by forcing the globus login:
  
  
 ```
@@ -441,14 +432,18 @@ For example, here is the command from my globus_env on Odo:
  
 ```
  
-It will give you a link and tell you to paste it in your browser. That will lead you to the same login we did for your globus ID from the globus web GUI.
+This command will give you a link and tell you to paste it in your browser. That will lead you to the same login we did for your Globus ID from the Globus web GUI.
   
-You will also have to activate collections from the GUI. But the collections stay active for three days before you need to re-authenticate, so you can still  
-run a workflow with globus using the scripts.
+You will also have to activate Collections from the GUI. But most Collections stay active for three days before you need to re-authenticate, so you can still  
+run a workflow with Globus using the scripts.
  
+We will leave it to the user to find transfer examples in Globus's users guides:
+ 
+https://docs.globus.org/cli/
+https://docs.globus.org/cli/quickstart/
 
 
-For more data transfer tips see: [OCLF Data transfer Tutorial]( https://www.olcf.ornl.gov/wp-content/uploads/Data-Transfer.pdf)
+For more data transfer tips see: [OLCF Data Transfer Tutorial]( https://www.olcf.ornl.gov/wp-content/uploads/Data-Transfer.pdf)
 
 And the 
 [OLCF Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html#data-storage-and-transfers)
