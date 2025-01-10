@@ -673,10 +673,10 @@ OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 ./hello_job
 
 We'll run a jon with the following options 
 -N 1  1 node 
--n8 eight MPI tasks 
--c1, one taks per core
--m block:block 
---ntasks-per-gpu=1
+-n8 launch eight MPI tasks 
+-c1, indicates we are assigning 1 logical core per MPI task.
+-m block:block distribute the tasks in a block layout across nodes (default), and in a block layout across L3 sockets
+--ntasks-per-gpu=1 Request that there is task invoked for every GPU.
 
 Submit the job and pay attention to which GPUs are used with which hardware thead. 
 
@@ -690,7 +690,7 @@ MPI 004 - OMP 000 - HWT 005 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 3 - Bus_
 MPI 005 - OMP 000 - HWT 006 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 5 - Bus_ID d6
 MPI 006 - OMP 000 - HWT 007 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 6 - Bus_ID d9
 MPI 007 - OMP 000 - HWT 009 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 7 - Bus_ID de
-
+```
 Notice that the hardward theads (HWT) are bound to GPUs systematically, but this leaves the hardware thread in certain L3 regions bound to GPUs that are farer from that region than ideally possible.
 
 The `--gpu-bind=closest` falg will ensure that the job binds the hardware theads to the GPU that is most closely connected to their L3 cache. 
