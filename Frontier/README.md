@@ -7,7 +7,6 @@ This training is designed to introduce you to the Oak Ridge Leadership Computing
 ## Resources Overview (Subil)
  
 We'll begin with an overview of Frontier, our exascale super computer.
-We will not be covering an overview of Summit today, but you can find one here if you are Summit user. https://github.com/olcf/NewUserQuickStart/blob/master/README.md
  
 Since it is easiest to do this from pictures, lets go to the Frontier docs:
 https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#system-overview
@@ -22,7 +21,7 @@ You can also watch [this video giving a more detailed overview of the Frontier h
 ## Hands-on Finding Jupyter terminal (Subil)
 If you do not have an ssh terminal:
 1. Open and tab on your browser and direct it to https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html#access.
-2. Then follow the directions there to access the moderate Jupyter hub if you are a Frontier or Summit user. IF you are using Odo or Ascent follow the directions for the Open Jupyter hub. In either case, choose one of the CPU labs.
+2. Then follow the directions there to access the moderate Jupyter hub if you are a Frontier user. IF you are using Odo or Ascent follow the directions for the Open Jupyter hub. In either case, choose one of the CPU labs.
 3. Once you are in, find the "terminal icon". Now you will be ready to do the first hands-on.
  
 There are many more uses for OLCF Jupyter Hub and you can find them in the Jupyter at OLCF guide. https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html
@@ -281,8 +280,6 @@ Ignore any warning that popup to use "conda activate".
  
 There is more good information in the [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment) guide.
  
-
-
 ## Globus (Suzanne)
  
 * Globus is a fast and reliable way to move files between OLCF systems and between OLCF and other institutions.
@@ -644,8 +641,71 @@ Here is a simple job script named `submit.sl`
 srun -N1 --tasks-per-node=8 --gpus-per-task=1 --gpu-bind=closest ./hello
 
 ```
+## Srun and hello_jobstep
 
-In depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
+The proper job layout is important for getting the best perforamce on Frotnier. In this next section we will illustrate how to check your job layout with a thead mapping program called hello_jobsteo. 
+
+Direct your browser to the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
+
+```
+git clone https://code.ornl.gov/olcf/hello_jobstep.git
+
+
+cd hello_jobstep
+```
+Follow the instuctions to compile the code given in the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
+
+You can use this program to check your job's layot on a single node before you try to run at scale. 
+The Frontier documentation has a detailed section covering the options that you can use with srun to control your job.
+For this hands-on exercise we will focus on the GPU affinity because it is a feature specific to frontier. 
+
+First, let's look at a Frotnier node diagram [here in the documentation](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes). It shows how the L3 cache regions and cpus cores are conneded with Frontier's GPUs. You can see that each L3 region is most closely linked with a specific GPU. 
+
+For example Hardware Theads 0-9 are in the L# reigon most closely bound to GPU 4. 
+Get an interative job for 30 minutes on Frontier. 
+```
+salloc -A <project_id> -t 30 -p <parition> -N 2
+
+cd cd hello_jobstep
+```
+We are going to explore how to make sure we are using the gpu that is closest to the L3 region that contains our specified harward thread. 
+OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 ./hello_jobstep | sort
+
+We'll run a jon with the following options 
+-N 1  1 node 
+-n8 eight MPI tasks 
+-c1, one taks per core
+-m block:block 
+--ntasks-per-gpu=1
+
+Submit the job and pay attention to which GPUs are used with which hardware thead. 
+
+```
+OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 ./hello_jobstep | sort
+MPI 000 - OMP 000 - HWT 001 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 4 - Bus_ID d1
+MPI 001 - OMP 000 - HWT 002 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 0 - Bus_ID c1
+MPI 002 - OMP 000 - HWT 003 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 1 - Bus_ID c6
+MPI 003 - OMP 000 - HWT 004 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 2 - Bus_ID c9
+MPI 004 - OMP 000 - HWT 005 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 3 - Bus_ID ce
+MPI 005 - OMP 000 - HWT 006 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 5 - Bus_ID d6
+MPI 006 - OMP 000 - HWT 007 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 6 - Bus_ID d9
+MPI 007 - OMP 000 - HWT 009 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 7 - Bus_ID de
+
+Notice that the hardward theads (HWT) are bound to GPUs systematically, but this leaves the hardware thread in certain L3 regions bound to GPUs that are farer from that region than ideally possible.
+
+The `--gpu-bind=closest` falg will ensure that the job binds the hardware theads to the GPU that is most closely connected to their L3 cache. 
+
+Run the job again with `--gpu-bind=closest`.
+
+```
+OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 --gpu-bind=closest ./hello_jobstep | sort
+
+```
+Look at the output and the [Frontier Node Diagram](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes)
+to convince yourself that the hardware threads are now bound to the GPU closest to thier L3 chache reigion. 
+
+
+For more information about how to control the job layout, see out in depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
 
 ## More New User Trainings (Suzanne)
 
