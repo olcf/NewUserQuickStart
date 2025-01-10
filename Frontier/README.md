@@ -153,7 +153,7 @@ Longer term storge will be available in OLCF’s nearline storge system called K
 
 See our [2024 Notable System Changes](https://docs.olcf.ornl.gov/systems/2024_olcf_system_changes.html)
 
-## Hand-on Find Your Storage Areas (Suzanne) 
+## Hands-on Find Your Storage Areas (Suzanne) 
 
 Login to Frontier or Summit and go to your induvial user storage called “scratch”: 
 
@@ -196,24 +196,6 @@ You can also do:
 cd $WORLDWORK/[projid]
 ls
 ```
-
-For Summit (Alpine2) you can look up the paths here:
-[Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html).
-
-However, the paths will be of the same form except the beginning will of each path will start with:
-
-```
-/gpfs/alpine2/[projid]/
-```
-
-Alipne2 does not have the environment varaibles like $MEMEBERWORK” 
-
-
-Summit (Alpine2) example for indivual storage:
-```
-cd /gpfs/alpine2/[projid]/scratch/[userid]
-```
- 
  
 ## Python on OLCF Systems (Suzanne)
 
