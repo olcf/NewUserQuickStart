@@ -135,26 +135,26 @@ When you are done, raise your virtual hand.
 
 <br>
 <center>
-<img src="images/storage.png" style="width:100%">
+<img src="images/storage_25.png" style="width:100%">
 </center>
 <br>
 
 
 OLCF has a Network Files system (NFS) that you land on when you login. This is a small secure filesystem that is provisioned to hold your most important data. This is the best place for your executables and small important data. It is backed up. 
 
-OLCF also has large parallel filesystems, Orion Luster for Frontier and Alpine2 GPFS for Summit. These are the filesystems that you should use to hold your large production data for simulation campaigns while you are running. They are not backed up and data older than 90 days are purged. 
+OLCF also has a large parallel filesystem, Orion Luster, for Frontier that you should use to hold your large production data for simulation campaigns while you are running. Orion is not backed up and data older than 90 days are purged. 
 
 OLCF storage systems have different areas designated for induvial user storage and project level storage that is controlled by the file permissions. Please make sure that data that is to be shared with multiple project members in in the project storage. This especially important as people leave your project. 
 
 For details see our [Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html).
 
-Longer term storge will be available in OLCF’s nearline storge system called Kronos.  The target date for that late July. OLCF is currently in transitioning to Kronos from an archival storage system called HPSS. HPSS will become read-only in August. New projects should refrain from using it. 
+Longer term storge is available in OLCF’s nearline storge system called Kronos. Kronos is mounted on the moderate security enclave Data Transfer Nodes (dtn.ccs.ornl.gov) and is accessible via Globus at the “OLCF Kronos” collection. Standard UNIX commands and tools can also be used to interact with Kronos (scp, rsync, etc.). 
 
-See our [2024 Notable System Changes](https://docs.olcf.ornl.gov/systems/2024_olcf_system_changes.html)
+See our [Data Storage and Transfers guide](https://docs.olcf.ornl.gov/data/index.html#kronos-nearline-archival-storage-system)
 
 ## Hands-on Find Your Storage Areas (Suzanne) 
 
-Login to Frontier or Summit and go to your induvial user storage called “scratch”: 
+Login to Frontier and go to your induvial user storage called “scratch”: 
 
 Frontier (Orion) : 
 
