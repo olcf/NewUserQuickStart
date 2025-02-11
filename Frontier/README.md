@@ -150,11 +150,11 @@ For details see our [Data Storage and Transfers Guide]( https://docs.olcf.ornl.g
 
 Longer term storge is available in OLCF’s nearline storge system called Kronos. Kronos is mounted on the moderate security enclave Data Transfer Nodes (dtn.ccs.ornl.gov) and is accessible via Globus at the “OLCF Kronos” collection. Standard UNIX commands and tools can also be used to interact with Kronos (scp, rsync, etc.). 
 
-See our [Data Storage and Transfers guide](https://docs.olcf.ornl.gov/data/index.html#kronos-nearline-archival-storage-system)
+See the Kronos section of our [Data Storage and Transfers guide](https://docs.olcf.ornl.gov/data/index.html#kronos-nearline-archival-storage-system)
 
 ## Hands-on Find Your Storage Areas (Suzanne) 
 
-Login to Frontier and go to your induvial user storage called “scratch”: 
+Login to Frontier and go to your individual  user storage called “scratch”: 
 
 Frontier (Orion) : 
 
@@ -324,15 +324,19 @@ The following exercise assumes that you have logged in using steps like those in
  
 Once you have activated the OLCF collection, you should see the files that you have in /ccs/home/<<user_ID>>>
  
-You can reach both Orion Luster and Alpine2 GPFS from the “OLCF DTN (Globus 5)” Collection. You do so by entering the path to them in the Path bar.
+* Frontier users: 
+
+You can reach Orion Luster from the “OLCF DTN (Globus 5)” Collection. You do so by entering the path to them in the Path bar.
  
-* Summit users: Path to Alpine2 `/gpfs/alpine2/<your_project_ID>>`
+Path to Orion `/gpfs/orion/<<your_project_ID>>`
+
+* Odo users:
+
+You can reach Wolf2 from the “NCCS Open DTN (globus5)” Collection 
+
+ Path to wolf2 `/gpfs/wolf2/olcf/<<your_project_ID>>`
  
-* Frontier users: Path to Orion `/gpfs/orion/<<your_project_ID>>`
- 
-* Odo users: Path to wolf2 `/gpfs/wolf2/olcf/<<your_project_ID>>`
- 
-4.	Find the Path bar in the file manager and Enter the path listed above that is appropriate for the resource that you are working on. 
+4.	Find the Path bar in the file manager and enter the path listed above that is appropriate for the resource that you are working on. 
  
 You should see three directories listed in the file manager:
 
@@ -372,7 +376,7 @@ You can access Globus collections, that you have credentials for, at institution
 
 1. If you are moving files from one parallel filesystem to another, it is better to move many files, at once, for example, by moving a folder.  Globus will transfer the files in parallel streams. 
 
-2. OLCF's HPSS is retiring in August, but if you are moving files to an HPSS at another User Facility, please tar the files first. HPSS is designed to handle large files better than many small files. A transfer of many small files can fill up the HPSS’s cache and block performance for all users.
+2. If you are moving files to an HPSS at another User Facility, please tar the files first. HPSS is designed to handle large files better than many small files. A transfer of many small files can fill up the HPSS’s cache and block performance for all users.
  
 ### Globus-CLI
  
@@ -643,7 +647,7 @@ srun -N1 --tasks-per-node=8 --gpus-per-task=1 --gpu-bind=closest ./hello
 ```
 ## Srun and hello_jobstep
 
-The proper job layout is important for getting the best perforamce on Frotnier. In this next section we will illustrate how to check your job layout with a thead mapping program called hello_jobsteo. 
+The proper job layout is important for getting the best perforamce on Frotnier. In this next section we will illustrate how to check your job layout with a thead mapping program called hello_jobstep. 
 
 Direct your browser to the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
 
@@ -653,22 +657,25 @@ git clone https://code.ornl.gov/olcf/hello_jobstep.git
 
 cd hello_jobstep
 ```
-Follow the instuctions to compile the code given in the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
+Follow the instructions to compile the code given in the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
 
-You can use this program to check your job's layot on a single node before you try to run at scale. 
-The Frontier documentation has a detailed section covering the options that you can use with srun to control your job.
+You can use this program to check your job's layout on a single node before run at scale. 
+
+The Frontier documentation has a detailed section covering the options you can use with srun to control your job.
+
 For this hands-on exercise we will focus on the GPU affinity because it is a feature specific to frontier. 
 
-First, let's look at a Frotnier node diagram [here in the documentation](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes). It shows how the L3 cache regions and cpus cores are conneded with Frontier's GPUs. You can see that each L3 region is most closely linked with a specific GPU. 
+First, let's look at a Frontier node diagram [here in the documentation](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes). It shows how the L3 cache regions and CPU cores are connected with Frontier's GPUs. You can see that each L3 region is most closely linked with a specific GPU.
 
-For example Hardware Theads 0-9 are in the L# reigon most closely bound to GPU 4. 
-Get an interative job for 30 minutes on Frontier. 
+For example, hardware threads 0-9 are in the L3 region most closely bound to GPU 4. 
+Get an interactive job for 30 minutes on Frontier.
+
 ```
 salloc -A <project_id> -t 30 -p <parition> -N 2
 
-cd cd hello_jobstep
+cd hello_jobstep
 ```
-We are going to explore how to make sure we are using the gpu that is closest to the L3 region that contains our specified harward thread. 
+We are going to explore how to ensure that we use the GPU closest to the L3 region containing our specified hardware thread.
 OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 ./hello_jobstep | sort
 
 We'll run a jon with the following options 
@@ -678,7 +685,7 @@ We'll run a jon with the following options
 -m block:block distribute the tasks in a block layout across nodes (default), and in a block layout across L3 sockets
 --ntasks-per-gpu=1 Request that there is task invoked for every GPU.
 
-Submit the job and pay attention to which GPUs are used with which hardware thead. 
+Submit the job and pay attention to which GPUs are used with which hardware thread. 
 
 ```
 OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 ./hello_jobstep | sort
@@ -691,9 +698,9 @@ MPI 005 - OMP 000 - HWT 006 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 5 - Bus_
 MPI 006 - OMP 000 - HWT 007 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 6 - Bus_ID d9
 MPI 007 - OMP 000 - HWT 009 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 7 - Bus_ID de
 ```
-Notice that the hardward theads (HWT) are bound to GPUs systematically, but this leaves the hardware thread in certain L3 regions bound to GPUs that are farer from that region than ideally possible.
+Notice that the hardware threads (HWT) are systematically bound to GPUs, but in some L3 regions, certain hardware threads are linked to GPUs that are farther from their region than would be ideal.
 
-The `--gpu-bind=closest` falg will ensure that the job binds the hardware theads to the GPU that is most closely connected to their L3 cache. 
+The `--gpu-bind=closest` flag will ensure that the job binds the hardware threads to the GPU that is most closely connected to their L3 cache.
 
 Run the job again with `--gpu-bind=closest`.
 
@@ -702,10 +709,11 @@ OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 --gpu-bind=
 
 ```
 Look at the output and the [Frontier Node Diagram](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes)
-to convince yourself that the hardware threads are now bound to the GPU closest to thier L3 chache reigion. 
+to convince yourself that the hardware threads are now bound to the GPU closest to their L3 cheche religion.
 
 
 For more information about how to control the job layout, see out in depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
+
 
 ## More New User Trainings (Suzanne)
 
