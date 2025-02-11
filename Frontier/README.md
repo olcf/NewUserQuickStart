@@ -322,7 +322,11 @@ The following exercise assumes that you have logged in using steps like those in
 
 3.	 When prompted, sign in with your OLCF username and PIN+ PASSCODE. (If you are doing this from Odo, use you XCAMS/UCAMS username and password to login.)
  
-Once you have activated the OLCF collection, you should see the files that you have in /ccs/home/<<user_ID>>>
+You will need to enter a path in the PATH bar to access files. To see you home area on Frontier enter:
+
+/ccs/home/<your_user_id>
+
+In this exercise we will access the parallel filesystem using Globus: 
  
 * Frontier users: 
 
@@ -372,7 +376,7 @@ Globus will notify you when the transfer is complete.
 
 You can access Globus collections, that you have credentials for, at institution that has them. For example, if you are a NERSC user, you can access their file systems via their globus Collection too, you just need to activate the collection with your NERSC credentials. 
 
-###A Few Tips for Using Globus
+### A Few Tips for Using Globus
 
 1. If you are moving files from one parallel filesystem to another, it is better to move many files, at once, for example, by moving a folder.  Globus will transfer the files in parallel streams. 
 
