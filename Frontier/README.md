@@ -1,4 +1,3 @@
-
 # Welcome to Hands-on New User training (Suzanne)
  
 This training is designed to introduce you to the Oak Ridge Leadership Computing Facility and its resources. Also you should never be more than 20 minutes away from and hands-on exercise. For this training you will want to have a browser window open and an ssh terminal open.
@@ -378,9 +377,9 @@ You can access Globus collections, that you have credentials for, at institution
 
 ### A Few Tips for Using Globus
 
-1. If you are moving files from one parallel filesystem to another, it is better to move many files, at once, for example, by moving a folder.  Globus will transfer the files in parallel streams. 
+1. When transferring files between parallel filesystems, it is best to move multiple files at once, such as by transferring an entire folder. Globus will optimize the transfer by using parallel streams.
 
-2. If you are moving files to an HPSS at another User Facility, please tar the files first. HPSS is designed to handle large files better than many small files. A transfer of many small files can fill up the HPSS’s cache and block performance for all users.
+2. When transferring files to an HPSS at another User Facility, first create a tar archive. HPSS is optimized for handling large files and may experience performance issues if many small files are transferred individually. A large number of small files can overwhelm the HPSS cache, impacting performance for all users.
  
 ### Globus-CLI
  
