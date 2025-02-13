@@ -195,255 +195,6 @@ cd $WORLDWORK/[projid]
 ls
 ```
  
-## Python on OLCF Systems (Suzanne)
-
-In high-performance computing, Python is heavily used to analyze scientific data on the system.
-OLCF has a "Python on OLCF Systems" guide within the software guide. To find it, go to [https://docs.olcf.ornl.gov](https://docs.olcf.ornl.gov)> Software> Python on OLCF Systems. [Link](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems).
- 
-It tells you how to load the latest versions of python, manage your environment and run python on Summit, Frontier and Andes.
- 
-## Basic Python Hands-on (Suzanne)
- 
-### Base Environment
- 
-Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise. 
-
-Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems Base Environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). 
-
-Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
- 
-For example, for Frontier/Odo you would do.
- 
- 
-```
-$ module load miniforge3/23.11.0
-$ conda list
-```
- 
-### Setting up a Custom Environment
- 
-Suppose you want to install the `numpy` package. If you do that in your base environment, it could get messy as you install more packages. It is a best practice to setup a custom environment that contains consistent versions of all the packages you use for each particular project. 
-
-This next hands-on walks you through setting up a custom environment that we will use later in the training. 
- 
-Open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). In the tabs under "To create and activate an environment:" follow the instructions for the resource you are working on. If you are on Odo, follow the Frontier instructions.
- 
-For this exercise we will create a custom environment called *globus_env* in your /ccs/proj/<<your_project_id>>. If you are on Odo, you will use /ccsopen/proj/<<your_project_id>>.
- 
-For example on Frontier:
-  
-1. Load the module, if you have not done so already,
-```
-$ module load miniforge3/23.11.0
-```
-2 Create "globus_env" with Python version X.Y at the desired path
-```
-$ conda create -p /ccs/proj/<<your_project_id>>/globus_env python=3.10.13
-```
-3. Activate "globus_env"
-```
-$ source activate /ccs/proj/<<your_project_id>>/globus_env
-```
- 
-Try it yourself. . . .
- 
-If you are on Frontier or Odo. It may print a message like this:
-
-```
-# To activate this environment, use
-#
-#     $ conda activate /ccsopen/proj/stf007/globus_env
-#
-# To deactivate an active environment, use
-#
-#     $ conda deactivate
-```
- 
-Avoid using "conda activate" and "conda deactivate" as they add code blocks to your .bashrc file, causing compatibility issues when moving between different machines within OLCF with different versions of python. 
- 
-Use `source active` to activate your custom environments and `source deactivate` to deactivate them when you are done using them.
- 
-You must use the path to the custom environment to activate it. For example:
- 
- 
-```
-$ source activate /ccs/proj/<your_proeject_ID>/globus_env
-```
-We will use this environment in the one of the next exercise, but let's close it out cleanly to form good habits.
- 
-```
-$ source deactivate
-```
-Ignore any warning that popup to use "conda activate".
- 
- 
-There is more good information in the [Python on OLCF Systems]( https://docs.olcf.ornl.gov/software/python/index.html#base-environment) guide.
- 
-## Globus (Suzanne)
- 
-* Globus is a fast and reliable way to move files between OLCF systems and between OLCF and other institutions.
-* It has a convenient Web-interface at globus.org that you log into with a username and password.
-* Transfers are done by activating “Collections” which are portals in to the OLCF's file systems and to those of participating institutions.
-* Globus is the recommended way to move files between OLCF systems and between OLCF and exterior systems.
- 
-For this exercise we will setup your globus.org username and password. You can skip this if you have a globus ID.
-
-Note: Globus is not controlled by OLCF and its help and login pages and option change without warning. This hands-on is based on Globus pages from 05-02-24. Even if the specific Globus pages chanage, this tutorial should be close to what is needed to get a globus username and password.
- 
-### Hands-on GlobusID
- 
-1. Open a browser and direct it to globusid.org.
-2. Select "create GlobusID" and follow the instructions
-3. Remember your globusID and password someplace safe.
- 
-Now try to log in: 
-
-1. Go to globus.org and click "Login"
-  
-2.  Find the "use Globus ID" link and use your GlobusID to login.  The Oak Ridge National Laboratory login is only for ORNL staff.
-3. You should see the Globus "File Manager" when you are logged in.
- 
-### Activating a Globus Collection
- 
-Activating the OLCF Globus Collection is done using your OLCF username and Token Passcode. Think of it as logging in to an OLCF filesystem.
-
-Collections stay activated for three days, so you don’t need to enter your credentials for each transfer, and you can run a transfer workflow during a simulation.
-  
-The OLCF Moderate Collection is called “OLCF DTN (Globus 5)”. 
-
-If you are on Odo, you are in the OLCF Open enclave, and its Collection is called "NCCS Open DTN (Globus 5)". It is a portal to the open NFS and GPFS filesystems.
- 
-The following exercise assumes that you have logged in using steps like those in the Hands-On Globus-ID exercise above. 
- 
-1.	Type "OLCF" in the Collections bar. A list of options for OLCF will form below, select the “OLCF DTN (Globus 5)” Collection. (If you are doing this training on Odo, look for NCCS Open DTN (globus5) instead.)
-
-2.	If Globus pings you to associate your Globus ID with OLCF credentials, follow the instructions that it gives.
-
-3.	 When prompted, sign in with your OLCF username and PIN+ PASSCODE. (If you are doing this from Odo, use you XCAMS/UCAMS username and password to login.)
- 
-You will need to enter a path in the PATH bar to access files. To see you home area on Frontier enter:
-
-/ccs/home/<your_user_id>
-
-In this exercise we will access the parallel filesystem using Globus: 
- 
-* Frontier users: 
-
-You can reach Orion Luster from the “OLCF DTN (Globus 5)” Collection. You do so by entering the path to them in the Path bar.
- 
-Path to Orion `/gpfs/orion/<<your_project_ID>>`
-
-* Odo users:
-
-You can reach Wolf2 from the “NCCS Open DTN (globus5)” Collection 
-
- Path to wolf2 `/gpfs/wolf2/olcf/<<your_project_ID>>`
- 
-4.	Find the Path bar in the file manager and enter the path listed above that is appropriate for the resource that you are working on. 
- 
-You should see three directories listed in the file manager:
-
-* scratch - personal workspace on the parallel file system; purged every 90 days.
-* proj-shared – project level workspace on the parallel file system; purged every 90 days.
-* world-shared - workspace on the parallel file system where files can be shared between projects; purged every 90 days.
- 
-5.	From the File Manager, you can click on those work spaces to see the files within each. 
-
-
-If you want to setup a personal Globus Collection on your laptop, follow these instructions: [https://www.globus.org/globus-connect-personal](https://www.globus.org/globus-connect-personal).
-
- 
-## Globus Data Transfer
-
-The Department of Energy, [Energy Sciences Network]( https://www.es.net/about/),  ESnet has deployed read-only GridFTP servers and Globus Collections for data transfer testing purposes. We are going to use one of those, called "ESnet Denver DTN (Anonymous read only testing)" and its test files to do the next two exercises.
-
-Let's move a test file from an ESnet test collection into our scratch workspace.
-
-1. Go to the browser tab that has the Globus File Manager in it and find the panels options in the upper right. 
-
-2. Click on the picture of the double panel. After that, you should have panels on the left and right that each have a Collection and a Path bar.
-
-3. Enter "ESnet Denver DTN (Anonymous read only testing)" in the left Collection bar.
-
-4. You will see a set of folders with different sized files and folders listed in the File Manager. We are going to transfer the 10MB file called `10M.dat`.  
-
-5. In the right Collection bar enter the  “OLCF DTN (Globus 5)”, then enter the path to your scratch directory `/gpfs/orion/<<your_project_ID>>/scratch/<<user_ID>>’ in the Path bar. 
-
-6. To move the file "10M.dat" from the "ESnet Denver DTN (Anonymous read only testing)" to your OLCF parallel file system scratch area, simply drag and drop "10M.dat" from panel to panel. You can also select "10M.dat" and click on the arrows to move it.
- 
-Globus will notify you when the transfer is complete. 
-
-You can access Globus collections, that you have credentials for, at institution that has them. For example, if you are a NERSC user, you can access their file systems via their globus Collection too, you just need to activate the collection with your NERSC credentials. 
-
-### A Few Tips for Using Globus
-
-1. When transferring files between parallel filesystems, it is best to move multiple files at once, such as by transferring an entire folder. Globus will optimize the transfer by using parallel streams.
-
-2. When transferring files to an HPSS at another User Facility, first create a tar archive. HPSS is optimized for handling large files and may experience performance issues if many small files are transferred individually. A large number of small files can overwhelm the HPSS cache, impacting performance for all users.
- 
-### Globus-CLI
- 
-Not everyone will want to use the Globus GUI interface for moving data. Globus offers a few APIs for scripted transfers. For this exercise we will explore installing and using an API called Globus-CLI that is supported by Globus. 
- 
-OLCF users must install Globus-CLI themselves as it is not provided on Frontier or the DTNS.  
- 
-In a previous example we setup a custom python environment, `/ccs/proj/<your_proeject_ID>/globus_env` in the non-purged project-centric storage area on the NFS filesystem. Let's start by reactivating that environment:
- 
-```
-$ module load miniforge3
-$ source activate /ccs/proj/<your_proeject_ID>/globus_env 
-```
- 
-Globus recommends using pip to install GlobusCLI, so let's do that:
- 
-```
-(/ccs/proj/<<your_proj_ID/globus_env) [<<your_User_ID>>@login1.odo ~]$ pip install globus-cli
- 
-Collecting globus-cli
-  Downloading globus_cli-3.28.2-py3-none-any.whl.metadata (2.4 kB)
-Collecting globus-sdk==3.41.0 (from globus-cli)
-  Downloading globus_sdk-3.41.0-py3-none-any.whl.metadata (3.3 kB)
-Collecting click<9,>=8.1.4 (from globus-cli)
-  Downloading click-8.1.7-py3-none-any.whl.metadata (3.0 kB)
-Collecting jmespath==1.0.1 (from globus-cli)
-  Downloading jmespath-1.0.1-py3-none-any.whl.metadata (7.6 kB)
-Collecting packaging>=17.0 (from globus-cli)
-  Downloading packaging-24.0-py3-none-any.whl.metadata (3.2 kB)
-Collecting requests<3.0.0,>=2.19.1 (from globus-cli)
-.  .  .
- 
-.  .  .
-Downloading pycparser-2.22-py3-none-any.whl (117 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 kB 11.2 MB/s eta 0:00:00
-Installing collected packages: urllib3, typing-extensions, pyjwt, pycparser, packaging, jmespath, idna, click, charset-normalizer, certifi, requests, cffi, cryptography, globus-sdk, globus-cli
-Successfully installed certifi-2024.2.2 cffi-1.16.0 charset-normalizer-3.3.2 click-8.1.7 cryptography-42.0.5 globus-cli-3.28.2 globus-sdk-3.41.0 idna-3.7 jmespath-1.0.1 packaging-24.0 pycparser-2.22 pyjwt-2.8.0 requests-2.31.0 typing-extensions-4.11.0 urllib3-2.2.1
- 
-```
-You should now have Globus-CLI in an area where all the members of your project can use it. 
- 
-Let’s test your installation by forcing the globus login:
- 
- 
-```
-(/ccs/proj/stf007/globus_env) [nk8@login1.odo ~]$ globus login
- 
-```
- 
-This command will give you a link and tell you to paste it in your browser. That will lead you to the same login we did for your Globus ID from the Globus web GUI.
-  
-You will also have to activate Collections from the GUI. But most Collections stay active for three days before you need to re-authenticate, so you can still  
-run a workflow with Globus using the scripts.
- 
-We will leave it to the user to find transfer examples in Globus's users guides:
- 
-https://docs.globus.org/cli/
-https://docs.globus.org/cli/quickstart/
-
-
-For more data transfer tips see: [OLCF Data Transfer Tutorial]( https://www.olcf.ornl.gov/wp-content/uploads/Data-Transfer.pdf)
-
-And the 
-[OLCF Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html#data-storage-and-transfers)
 
  
 ## Finding and Building Software (Subil)
@@ -717,6 +468,310 @@ to convince yourself that the hardware threads are now bound to the GPU closest 
 
 For more information about how to control the job layout, see out in depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
 
+# Python on Frotnier (Suzanne)  
+
+In high-performance computing, Python is heavily used to analyze scientific data on the system.
+OLCF has a "Python on OLCF Systems" guide within the software guide. To find it, go to [https://docs.olcf.ornl.gov](https://docs.olcf.ornl.gov)> Software> Python on OLCF Systems. [Link](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems).
+
+It tells you how to load the latest versions of python, manage your environment and run python on Frontier and Andes.
+
+Goals:
+
+## Basic Python Hands-on (Suzanne)
+
+* Create a new virtual environment using conda
+* Install mpi4py from source
+* Test our build with a Python script
+
+## Setting up the environment
+
+### Base Environment
+
+Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise.
+
+Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems Base Environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment).
+
+Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
+
+For example, for Frontier/Odo you would do.
+
+```
+$ module load miniforge3/23.11.0
+$ conda list
+```
+### Setting up a Custom Environment
+
+Suppose you want to install the `numpy` package. If you do that in your base environment, it could get messy as you install more packages. It is a best practice to setup a custom environment that contains consistent versions of all the packages you use for each particular project.
+
+This next hands-on walks you through setting up a custom environment that we will use later in the training.
+
+For your future refrence, open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). You will see tabs under "To create and activate an environment:" that have instructions for creating custom enviroments on each of our resouces.
+
+For this exercise we will create a custom environment called *mpi4py_env* in your /ccs/proj/<<your_project_id>>. If you are on Odo, you will use /ccsopen/proj/<<your_project_id>>.
+
+
+For example on Frontier:
+
+
+Next, we will load the gnu compiler module (most Python packages assume GCC):
+
+```bash
+$ module load PrgEnv-gnu
+$ module load miniforge3
+```
+
+We are in a "base" conda environment, but we need to create a new environment using the `conda create` command.
+It is highly recommended to create new environments in the "Project Home" directory (on Frontier, this is /ccs/proj/<YOUR_PROJECT_ID>/<YOUR_USER_ID>). This space avoids purges and allows for potential collaboration within your project.
+```
+$ conda create -p /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env python=3.10.13
+```
+
+The "-p" flag specifies the desired path and name of your new virtual environment. The directory structure is case sensitive, so be sure to insert "<your_project_id>" ad as lowercase. Directories will be created if they do not exist already (provided you have write-access in that location).
+
+
+A Note on Organization:
+
+I chose to create a `.conda` directory to keep my Python environments organized and separate from a plain directory listing. Within `.conda`, I created a `frontier` subdirectory to store all my environments specifically for Frontier. While both Frontier and Andes mount the home and project areas, an environment built for one machine cannot be assumed to work seamlessly on the other, so it is important to have an orgaization strucutre for your python envoriments from the start.
+
+
+After following the prompts for creating your new environment, the installation should be successful, and you will see something similar to:
+
+```
+
+Preparing transaction: done
+Verifying transaction: done
+Executing transaction: done
+#
+# To activate this environment, use
+#
+#     $ conda activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+```
+
+Due to the specific nature of conda on Frontier, we will be using `source activate` instead of `conda activate` to activate our new environment:
+
+```bash
+$ source activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
+```
+
+The path to the environment should now be displayed in "( )" at the beginning of your terminal lines, which indicate that you are currently using that specific conda environment.
+If you check with `conda env list`, you should see that the `*` marker is next to your new environment, which means that it is currently active:
+
+```bash
+$ conda env list
+
+# conda environments:
+#
+base                     /autofs/nccs-svm1_sw/frontier/miniforge3/23.11.0
+                      *  /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
+```
+
+
+## Installing mpi4py
+
+Now that we have a fresh conda environment, we will next install mpi4py from source into our new environment.
+To make sure that we are building from source, and not a pre-compiled binary, we will be using pip:
+
+```bash
+$ MPICC="cc -shared" pip install --no-cache-dir --no-binary=mpi4py mpi4py
+```
+
+* The `MPICC` flag ensures that you are using the correct C wrapper for MPI on the system.
+* -shared tells the compiler to produce a shared object (dynamic library) instead of an executable.
+* --no-cache-dir: Prevents pip from using or storing cached packages, forcing a fresh download and build.
+* --no-binary=mpi4py: Ensures that mpi4py is built from source instead of using a pre-compiled binary. This is important for compatibility with the specific MPI implementation on the system.
+
+Building from source typically takes longer than a simple `conda install`, so the download and installation may take a couple minutes.
+If everything goes well, you should see a "Successfully installed mpi4py" message.
+
+## Running with Python 
+
+To test the mpi4py we just installed in the exercise above, we will use an example Python script called "hello_mpi.py".
+
+To do so, we will be submitting a job to the batch queue with "submit_hello.sbatch":
+
+This part of the hands-on covers the [How to Run](https://docs.olcf.ornl.gov/software/python/index.html#how-to-run) section of the Python on OLCF system Guide. 
+
+The example below is for Frontier, but if you are using Andes or Odo you can use the guide linked above to understand how to ajust the commands accordingly. 
+
+
+To get to this script 
+
+```
+cd python_hands-on
+
+```
+
+On Frontier Odo, and Andes, you're already on a compute node once inside a batch job.
+* Use srun only for parallel-enabled Python; don't use it for serial applications.
+* $PATH issues can occur if submitting from a non-fresh login shell, leading to the wrong environment being detected.
+* To prevent this:
+          * Use --export=NONE when submitting a job.
+          * Unset SLURM_EXPORT_ENV in your job script before calling srun.
+          * Load modules and activate your environment inside the batch script.
+
+An example batch script for this is provided below:
+
+```
+#!/bin/bash
+#SBATCH -A <your_project_id_here>
+#SBATCH -J mpi4py
+#SBATCH -o %x-%j.out
+#SBATCH -t 0:10:00
+#SBATCH -p batch
+#SBATCH -N 1
+
+unset SLURM_EXPORT_ENV
+
+date
+
+module load PrgEnv-gnu
+module load miniforge3
+
+source activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
+
+srun -n42 python3 -u hello_mpi.py
+```
+
+Now lets uset the example script to edit the one for our exercies. 
+
+Open the submit_hello.sbatch 
+```
+vi submit_hello.sbatch 
+
+```
+* Edit the second like after -A to your project ID
+* Note the `unset SLURM_EXPORT_ENV` line 
+* Note the lines that relaod modules
+* Edit the source activate line to activate the mpi4p_env we created together. 
+* close and save the file. 
+
+To submit the batch script from a fresh shell: 
+```
+sbatch --export=NONE submit_hello.sbatch
+``
+
+Once the batch job makes its way through the queue, it will run the "hello_mpi.py" script with 42 MPI tasks.
+If mpi4py is working properly, in `mpi4py-<JOB_ID>.out` you should see output similar to:
+
+```
+Hello from MPI rank 21 !
+Hello from MPI rank 23 !
+Hello from MPI rank 28 !
+Hello from MPI rank 40 !
+Hello from MPI rank 0 !
+Hello from MPI rank 1 !
+Hello from MPI rank 32 !
+
+Congratulations! You have the tools and knowledge you need to start using python on Frontier! 
+
+
+## Globus (Suzanne)
+ 
+* Globus is a fast and reliable way to move files between OLCF systems and between OLCF and other institutions.
+* It has a convenient Web-interface at globus.org that you log into with a username and password.
+* Transfers are done by activating “Collections” which are portals in to the OLCF's file systems and to those of participating institutions.
+* Globus is the recommended way to move files between OLCF systems and between OLCF and exterior systems.
+ 
+For this exercise we will setup your globus.org username and password. You can skip this if you have a globus ID.
+
+Note: Globus is not controlled by OLCF and its help and login pages and option change without warning. This hands-on is based on Globus pages from 05-02-24. Even if the specific Globus pages chanage, this tutorial should be close to what is needed to get a globus username and password.
+ 
+### Hands-on GlobusID
+ 
+1. Open a browser and direct it to globusid.org.
+2. Select "create GlobusID" and follow the instructions
+3. Remember your globusID and password someplace safe.
+ 
+Now try to log in: 
+
+1. Go to globus.org and click "Login"
+  
+2.  Find the "use Globus ID" link and use your GlobusID to login.  The Oak Ridge National Laboratory login is only for ORNL staff.
+3. You should see the Globus "File Manager" when you are logged in.
+ 
+### Activating a Globus Collection
+ 
+Activating the OLCF Globus Collection is done using your OLCF username and Token Passcode. Think of it as logging in to an OLCF filesystem.
+
+Collections stay activated for three days, so you don’t need to enter your credentials for each transfer, and you can run a transfer workflow during a simulation.
+  
+The OLCF Moderate Collection is called “OLCF DTN (Globus 5)”. 
+
+If you are on Odo, you are in the OLCF Open enclave, and its Collection is called "NCCS Open DTN (Globus 5)". It is a portal to the open NFS and GPFS filesystems.
+ 
+The following exercise assumes that you have logged in using steps like those in the Hands-On Globus-ID exercise above. 
+ 
+1.	Type "OLCF" in the Collections bar. A list of options for OLCF will form below, select the “OLCF DTN (Globus 5)” Collection. (If you are doing this training on Odo, look for NCCS Open DTN (globus5) instead.)
+
+2.	If Globus pings you to associate your Globus ID with OLCF credentials, follow the instructions that it gives.
+
+3.	 When prompted, sign in with your OLCF username and PIN+ PASSCODE. (If you are doing this from Odo, use you XCAMS/UCAMS username and password to login.)
+ 
+You will need to enter a path in the PATH bar to access files. To see you home area on Frontier enter:
+
+/ccs/home/<your_user_id>
+
+In this exercise we will access the parallel filesystem using Globus: 
+ 
+* Frontier users: 
+
+You can reach Orion Luster from the “OLCF DTN (Globus 5)” Collection. You do so by entering the path to them in the Path bar.
+ 
+Path to Orion `/gpfs/orion/<<your_project_ID>>`
+
+* Odo users:
+
+You can reach Wolf2 from the “NCCS Open DTN (globus5)” Collection 
+
+ Path to wolf2 `/gpfs/wolf2/olcf/<<your_project_ID>>`
+ 
+4.	Find the Path bar in the file manager and enter the path listed above that is appropriate for the resource that you are working on. 
+ 
+You should see three directories listed in the file manager:
+
+* scratch - personal workspace on the parallel file system; purged every 90 days.
+* proj-shared – project level workspace on the parallel file system; purged every 90 days.
+* world-shared - workspace on the parallel file system where files can be shared between projects; purged every 90 days.
+ 
+5.	From the File Manager, you can click on those work spaces to see the files within each. 
+
+
+If you want to setup a personal Globus Collection on your laptop, follow these instructions: [https://www.globus.org/globus-connect-personal](https://www.globus.org/globus-connect-personal).
+
+ 
+## Globus Data Transfer
+
+The Department of Energy, [Energy Sciences Network]( https://www.es.net/about/),  ESnet has deployed read-only GridFTP servers and Globus Collections for data transfer testing purposes. We are going to use one of those, called "ESnet Denver DTN (Anonymous read only testing)" and its test files to do the next two exercises.
+
+Let's move a test file from an ESnet test collection into our scratch workspace.
+
+1. Go to the browser tab that has the Globus File Manager in it and find the panels options in the upper right. 
+
+2. Click on the picture of the double panel. After that, you should have panels on the left and right that each have a Collection and a Path bar.
+
+3. Enter "ESnet Denver DTN (Anonymous read only testing)" in the left Collection bar.
+
+4. You will see a set of folders with different sized files and folders listed in the File Manager. We are going to transfer the 10MB file called `10M.dat`.  
+
+5. In the right Collection bar enter the  “OLCF DTN (Globus 5)”, then enter the path to your scratch directory `/gpfs/orion/<<your_project_ID>>/scratch/<<user_ID>>’ in the Path bar. 
+
+6. To move the file "10M.dat" from the "ESnet Denver DTN (Anonymous read only testing)" to your OLCF parallel file system scratch area, simply drag and drop "10M.dat" from panel to panel. You can also select "10M.dat" and click on the arrows to move it.
+ 
+Globus will notify you when the transfer is complete. 
+
+You can access Globus collections, that you have credentials for, at institution that has them. For example, if you are a NERSC user, you can access their file systems via their globus Collection too, you just need to activate the collection with your NERSC credentials. 
+
+### A Few Tips for Using Globus
+
+1. When transferring files between parallel filesystems, it is best to move multiple files at once, such as by transferring an entire folder. Globus will optimize the transfer by using parallel streams.
+
+2. When transferring files to an HPSS at another User Facility, first create a tar archive. HPSS is optimized for handling large files and may experience performance issues if many small files are transferred individually. A large number of small files can overwhelm the HPSS cache, impacting performance for all users.
+ 
+[OLCF Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html#data-storage-and-transfers)
 
 ## More New User Trainings (Suzanne)
 
