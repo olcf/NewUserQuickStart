@@ -602,16 +602,17 @@ To get to this script
 
 ```
 cd python_hands-on
-
 ```
 
 On Frontier Odo, and Andes, you're already on a compute node once inside a batch job.
-* Use srun only for parallel-enabled Python; don't use it for serial applications.
-* $PATH issues can occur if submitting from a non-fresh login shell, leading to the wrong environment being detected.
-* To prevent this:
-          * Use --export=NONE when submitting a job.
-          * Unset SLURM_EXPORT_ENV in your job script before calling srun.
-          * Load modules and activate your environment inside the batch script.
+
+Use srun only for parallel-enabled Python; don't use it for serial applications.
+ 
+$PATH issues can occur if submitting from a non-fresh login shell, leading to the wrong environment being detected.
+ To prevent this:
+ * Use --export=NONE when submitting a job.
+ * Unset SLURM_EXPORT_ENV in your job script before calling srun.
+ * Load modules and activate your environment inside the batch script.
 
 An example batch script for this is provided below:
 
