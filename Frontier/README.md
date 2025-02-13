@@ -401,7 +401,7 @@ srun -N1 --tasks-per-node=8 --gpus-per-task=1 --gpu-bind=closest ./hello
 ```
 ## Srun and hello_jobstep
 
-The proper job layout is important for getting the best perforamce on Frotnier. In this next section we will illustrate how to check your job layout with a thead mapping program called hello_jobstep. 
+The proper job layout is important for getting the best perforamce on Frontier. In this next section we will illustrate how to check your job layout with a thead mapping program called hello_jobstep. 
 
 Direct your browser to the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
 
@@ -468,7 +468,7 @@ to convince yourself that the hardware threads are now bound to the GPU closest 
 
 For more information about how to control the job layout, see out in depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
 
-# Python on Frotnier (Suzanne)  
+# Python on Frontier (Suzanne)  
 
 In high-performance computing, Python is heavily used to analyze scientific data on the system.
 OLCF has a "Python on OLCF Systems" guide within the software guide. To find it, go to [https://docs.olcf.ornl.gov](https://docs.olcf.ornl.gov)> Software> Python on OLCF Systems. [Link](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems).
@@ -643,9 +643,9 @@ Open the submit_hello.sbatch
 vi submit_hello.sbatch 
 
 ```
-* Edit the second like after -A to your project ID
+* Edit the second line after `-A` to your project ID
 * Note the `unset SLURM_EXPORT_ENV` line 
-* Note the lines that relaod modules
+* Note the lines that reload modules
 * Edit the source activate line to activate the mpi4p_env we created together. 
 * close and save the file. 
 
