@@ -206,128 +206,146 @@ Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/front
 Frontier supports a large number of users from a wide range of scientific disciplines. Different users have different software needs. Some users might need to use different versions of the same software. In order to accommodate this, Frontier uses Lmod. Lmod manages software installed on Frontier in the form of 'modules'. You can get access to a specific software or package or library you need by 'loading' the specific module (provided it is available on Frontier).
  
  
-For example, if you want to use the `hipcc` compiler which is part of AMD's ROCm software stack, you need to first load the `amd-mixed` or the `rocm` module. The command is the same as what you did earlier to load miniforge
+For example, if you want to use the `hipcc` compiler which is part of AMD's ROCm software stack, you need to first load the `rocm` module. The command is the same as what you did earlier to load miniforge
  
 ```
 $ hipcc --version
 If 'hipcc' is not a typo you can use command-not-found to lookup the package that contains it, like this:
     cnf hipcc
-$ module load amd-mixed
+$ module load rocm
 $ hipcc --version
-HIP version: 5.3.22061-e8e78f1a
-AMD clang version 15.0.0 (https://github.com/RadeonOpenCompute/llvm-project roc-5.3.0 22362 3cf23f77f8208174a2ee7c616f4be23674d7b081)
+HIP version: 5.7.31921-1949b1621
+AMD clang version 17.0.0 (https://github.com/RadeonOpenCompute/llvm-project roc-5.7.1 23382 f3e174a1d286158c06e4cc8276366b1d4bc0c914)
 Target: x86_64-unknown-linux-gnu
 Thread model: posix
-InstalledDir: /opt/rocm-5.3.0/llvm/bin
+InstalledDir: /opt/rocm-5.7.1/llvm/bin
+Configuration file: /opt/rocm-5.7.1/llvm/bin/clang++.cfg
 ```
  
-If you want to use a specific version of the ROCm software stack, you can check which versions are available by running `module spider amd-mixed`.
+If you want to use a specific version of the ROCm software stack, you can check which versions are available by running `module spider rocm`. (Note: module spider output will show 
+colors when you actually use it on the terminal).
  
 ```
-$ module spider amd-mixed
+$ module spider rocm
  
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  amd-mixed:
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     Versions:
-        amd-mixed/4.5.2
-        amd-mixed/5.1.0
-        amd-mixed/5.2.0
-        amd-mixed/5.3.0
-        amd-mixed/5.4.0
-        amd-mixed/5.4.3
-        amd-mixed/5.5.1
-        amd-mixed/5.6.0
-        amd-mixed/5.7.0
-        amd-mixed/5.7.1
- 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  For detailed information about a specific "amd-mixed" package (including how to load the modules) use the module's full name.
-  Note that names that have a trailing (E) are extensions provided by other modules.
-  For example:
- 
-     $ module spider amd-mixed/5.7.1
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+(OLCF SPIDER): Modules in RED are not supported by ORNL!    (for non-colorized output, set LMOD_COLORIZE=0)
+  To learn more about unsupported modules see: https://docs.olcf.ornl.gov/software/UMS/index.html
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  rocm:
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    Versions:
+      rocm/5.3.0
+      rocm/5.4.0
+      rocm/5.4.3
+      rocm/5.5.1
+      rocm/5.6.0
+      rocm/5.7.0
+      rocm/5.7.1
+      rocm/6.0.0
+      rocm/6.1.3
+      rocm/6.2.0
+      rocm/6.2.4
+      rocm/6.3.1
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+For detailed information about a specific module use the module's full name.
+For example:
+
+    $ module spider Foo/1.2.3
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  
 ```
 You can see the full list of modules available to load by simply executing `module spider` without a module name given.
  
 ```
 $ module spider
- 
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-The following is a list of the modules and extensions currently available:
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  DefApps: DefApps/default
- 
-  PrgEnv-amd: PrgEnv-amd/8.3.3, PrgEnv-amd/8.4.0
- 
-  PrgEnv-cray: PrgEnv-cray/8.3.3, PrgEnv-cray/8.4.0
- 
-  PrgEnv-cray-amd: PrgEnv-cray-amd/8.3.3, PrgEnv-cray-amd/8.4.0
- 
-  PrgEnv-gnu: PrgEnv-gnu/8.3.3, PrgEnv-gnu/8.4.0
- 
-  PrgEnv-gnu-amd: PrgEnv-gnu-amd/8.3.3, PrgEnv-gnu-amd/8.4.0
- 
-  amd: amd/4.5.2, amd/5.1.0, amd/5.2.0, amd/5.3.0, amd/5.4.0, amd/5.4.3, amd/5.5.1, amd/5.6.0, amd/5.7.0, amd/5.7.1
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+(OLCF SPIDER): Modules in RED are not supported by ORNL!    (for non-colorized output, set LMOD_COLORIZE=0)
+  To learn more about unsupported modules see: https://docs.olcf.ornl.gov/software/UMS/index.html
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  .qt: .qt/5.15
+
+  Core: Core/24.00 Core/24.07
+
+  DefApps: DefApps
+
+  DefApps-spi: DefApps-spi
+
+  PrgEnv-amd: PrgEnv-amd/8.3.3 PrgEnv-amd/8.4.0 PrgEnv-amd/8.5.0 PrgEnv-amd/8.5.0 PrgEnv-amd/8.6.0
+
+  PrgEnv-cray: PrgEnv-cray/8.3.3 PrgEnv-cray/8.4.0 PrgEnv-cray/8.5.0 PrgEnv-cray/8.6.0
+
+  PrgEnv-cray-amd: PrgEnv-cray-amd/8.3.3 PrgEnv-cray-amd/8.4.0 PrgEnv-cray-amd/8.5.0 PrgEnv-cray-amd/8.6.0
+
+  PrgEnv-gnu: PrgEnv-gnu/8.3.3 PrgEnv-gnu/8.4.0 PrgEnv-gnu/8.5.0 PrgEnv-gnu/8.5.0 PrgEnv-gnu/8.6.0
  
 <truncated for space>
 ```
  
-And you can load a specific version of a module like amd-mixed 5.4.0 by specifying the version number in the `module load` command like so:
+And you can load a specific version of a module like rocm 6.0.0 specifying the version number in the `module load` command like so:
  
 ```
-$ module load amd-mixed/5.4.0
+$ module load rocm/6.0.0
 ```
  
-If a specific version number is not specified, it will load a system defined default version (in the case of amd-mixed, the default version loaded is 5.3.0).
+If a specific version number is not specified, it will load a system defined default version (in the case of rocm, the default version loaded is 5.7.1).
  
  
 `module load` does a few things, chief among which is it updates some environment variables that the OS uses to look for software or libraries. You can see information about a module and a summary of what changes are made when you execute a `module show` operation.
  
 ```
-$ module show amd-mixed
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   /opt/cray/pe/lmod/modulefiles/mix_compilers/amd-mixed/5.3.0.lua:
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-family("amd_compiler")
-conflict("amd")
-help([[5.3.0
-/opt/rocm-5.3.0
+$ module show rocm
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+   /opt/cray/pe/lmod/modulefiles/core/rocm/5.7.1.lua:
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+unsetenv("CRAY_LMOD_AMD_CONTROL_TK_LOAD")
+help([[5.7.1
+/opt/rocm-5.7.1
 This modulefile defines the system paths and environment
-variables needed to use the AMD Optimizing C/C++ Compiler.
- 
+variables needed to use the ROCm Toolkit. The ROCm modulefile
+enables ROC Profiler, ROC Tracer, HIP, and ROCr.
+
+This module is required to interface with AMD accelerators for
+all programming environments.
+
+To use CPE's AMD environment with amd libraries, load the amd
+modulefile. The core "amd" compiler modulefile is required if access
+to AMD compatible libraries is necessary.
+
+Mixed compiler modules (such as amd-mixed) do not extend the CPE Lmod
+hierarchy and can be loaded with core compilers (such as cce).
+
 ===================================================================
-To see AMD/5.3.0 release information,
+To see AMD/5.7.1 release information,
   visit https://rocmdocs.amd.com/en/latest
 ===================================================================
- 
+
 To make this the default version, execute:
-  /opt/admin-pe/set_default_craypkg/set_default_amd_5.3.0
- 
+/opt/admin-pe/set_default_craypkg/set_default_rocm_5.7.1
+
+Certain components, files or programs contained within this package or
+product are Copyright 2021-2023 Hewlett Packard Enterprise Development LP.
+
 ]])
-whatis("Defines the system paths and environment variables needed for the AMD LLVM Compiling Environment.")
-prepend_path("PATH","/opt/rocm-5.3.0/bin")
-prepend_path("LIBRARY_PATH","/opt/rocm-5.3.0/llvm/lib")
-prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.3.0/llvm/lib")
-prepend_path("C_INCLUDE_PATH","/opt/rocm-5.3.0/llvm/include")
-prepend_path("CPLUS_INCLUDE_PATH","/opt/rocm-5.3.0/llvm/include")
-prepend_path("CMAKE_PREFIX_PATH","/opt/rocm-5.3.0")
-prepend_path("CMAKE_PREFIX_PATH","/opt/rocm-5.3.0/hip")
-setenv("ROCM_COMPILER_PATH","/opt/rocm-5.3.0/llvm")
-setenv("ROCM_COMPILER_VERSION","5.3.0")
-setenv("CRAY_AMD_COMPILER_PREFIX","/opt/rocm-5.3.0")
-setenv("CRAY_AMD_COMPILER_VERSION","5.3.0")
-setenv("ROCM_PATH","/opt/rocm-5.3.0")
-setenv("HIP_PATH","/opt/rocm-5.3.0/hip")
-setenv("HIP_LIB_PATH","/opt/rocm-5.3.0/lib")
-setenv("HSA_PATH","/opt/rocm-5.3.0/hsa")
-prepend_path("CMAKE_PREFIX_PATH","/opt/rocm-5.3.0")
-prepend_path("CMAKE_PREFIX_PATH","/opt/rocm-5.3.0/hip")
-prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.3.0/lib")
-prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.3.0/lib64")
-prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.3.0/hsa/lib")
+whatis("Defines the system paths and environment variables required for the ROCm Toolkit.")
+setenv("CRAY_ROCM_DIR","/opt/rocm-5.7.1")
+setenv("CRAY_ROCM_PREFIX","/opt/rocm-5.7.1")
+setenv("CRAY_ROCM_VERSION","5.7.1")
+setenv("ROCM_PATH","/opt/rocm-5.7.1")
+setenv("HIP_LIB_PATH","/opt/rocm-5.7.1/lib")
+prepend_path("PATH","/opt/rocm-5.7.1/bin")
+prepend_path("MANPATH","/opt/rocm-5.7.1/share/man")
+prepend_path("CMAKE_PREFIX_PATH","/opt/rocm-5.7.1/lib/cmake/hip")
+setenv("CRAY_ROCM_INCLUDE_OPTS","-I/opt/rocm-5.7.1/include -I/opt/rocm-5.7.1/include/rocprofiler -I/opt/rocm-5.7.1/include/roctracer -I/opt/rocm-5.7.1/include/hip -D__HIP_PLATFORM_AMD__")
+setenv("CRAY_ROCM_POST_LINK_OPTS"," -L/opt/rocm-5.7.1/lib -L/opt/rocm-5.7.1/lib/rocprofiler -L/opt/rocm-5.7.1/lib/roctracer -lamdhip64")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.7.1/lib")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.7.1/lib/rocprofiler")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.7.1/lib/roctracer")
+append_path("PE_PRODUCT_LIST","CRAY_ROCM")
+prepend_path("PKG_CONFIG_PATH","/usr/lib64/pkgconfig")
+prepend_path("PE_PKGCONFIG_LIBS","rocm-5.7.1")
 ```
  
  
@@ -337,12 +355,13 @@ At anytime you can check the modules that are currently loaded by running `modul
 $ module list
  
 Currently Loaded Modules:
-  1) craype-x86-trento    3) craype-network-ofi       5) xpmem/2.6.2-2.5_2.22__gd067c3f.shasta   7) cce/15.0.0      9) cray-dsmml/0.2.2   11) cray-libsci/22.12.1.1  13) DefApps/default
-  2) libfabric/1.15.2.0   4) perftools-base/22.12.0   6) cray-pmi/6.1.8                          8) craype/2.7.19  10) cray-mpich/8.1.23  12) PrgEnv-cray/8.3.3      14) amd-mixed/5.3.0
- 
+  1) craype-x86-trento    4) perftools-base/23.12.0                 7) cce/17.0.0        10) cray-mpich/8.1.28    13) Core/24.07                 16) hsi/default        19) rocm/5.7.1
+  2) libfabric/1.20.1     5) xpmem/2.8.4-1.0_7.3__ga37cbd9.shasta   8) craype/2.7.31.11  11) cray-libsci/23.12.5  14) tmux/3.4                   17) lfs-wrapper/0.0.1
+  3) craype-network-ofi   6) cray-pmi/6.1.13                        9) cray-dsmml/0.2.2  12) PrgEnv-cray/8.5.0    15) darshan-runtime/3.4.4-mpi  18) DefApps
+
 ```
  
-Now it might seem strange there are a number of modules in the list in addition to the `amd-mixed` module you loaded. This is because Frontier loads a default set of modules every time you log in. You will also notice that a number of these default modules start with `cray`. Frontier is an HPE Cray system, and so several software libraries are provided by the Cray software team that are optimized for use on Frontier.
+Now it might seem strange there are a number of modules in the list in addition to the `rocm` module you loaded. This is because Frontier loads a default set of modules every time you log in. You will also notice that a number of these default modules start with `cray`. Frontier is an HPE Cray system, and so several software libraries are provided by the Cray software team that are optimized for use on Frontier.
  
 One of the modules in the above list is `PrgEnv-cray`. This means that the Cray Programming Environment. A Programming Environment is a collection of libraries along with a compiler that are all loaded together. `PrgEnv-cray` loads the Cray Compiling Environment which is the set of C, C++, and Fortran compilers along with libraries compiled with those compilers. When this programming environment is loaded, the Cray compilers are available for use. Also available are PrgEnv-gnu and PrgEnv-amd, which loads the GNU and AMD compilers respectively, along with reloading any libraries to load the libraries compiled with the currently loaded compiler.
  
@@ -350,15 +369,17 @@ For example, if you load PrgEnv-gnu, you will see the following output.
  
 ```
 $ module load PrgEnv-gnu
- 
-Lmod is automatically replacing "cce/15.0.0" with "gcc/12.2.0".
- 
- 
-Lmod is automatically replacing "PrgEnv-cray/8.3.3" with "PrgEnv-gnu/8.3.3".
- 
- 
+
+
+Lmod is automatically replacing "cce/17.0.0" with "gcc-native/12.3".
+
+
+Lmod is automatically replacing "PrgEnv-cray/8.5.0" with "PrgEnv-gnu/8.5.0".
+
+
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-mpich/8.1.23
+  1) cray-libsci/23.12.5     2) cray-mpich/8.1.28     3) darshan-runtime/3.4.4-mpi
+ 
 ```
  
 Here's a list of the useful commands we've seen so far:
@@ -380,6 +401,42 @@ $ cc -o hello hello.c
 For C code, you will use the `cc` compiler wrapper. For C++, you will use the `CC` compiler wrapper. And for Fortran you will use `ftn`. This applies for any programming environment you may be using.  The compiler wrapper automatically includes the necessary header files and libraries needed for MPI so you don't have to explicitly link the MPI libraries. There are nuances to this that aren't covered here, such as when you're compiling for both MPI and GPU functionality. See more information about compiling in [the Frontier documentation](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#compiling).
  
 You can run `cc -craype-verbose` to get a full picture of what the compiler wrapper is doing when compiling.
+
+## Building And Using Containers (Subil)
+
+Containers are a tool to package up your application along with its dependencies into a single
+artifact. This artifact can be run just like any other application on an HPC system. Your packaged
+application will not depend on the presence of libraries on the host since they all are packaged
+with the application in the container. This also makes it easier to distribute the application to
+team members and collaborators (provided they are working on the same system or using the same
+CPU+GPU architecture if they're on a different system).
+
+On Frontier, we provide Apptainer to build containers and also to run the containers you build. We
+will focus on a simple Frontier specific example. For a basic rundown on how to write an Apptainer
+.def file that will be used to build a container, see here: https://apptainer.org/docs/user/1.3/quick_start.html#apptainer-definition-files
+
+The OLCF documentation has more detailed examples on using Apptainer on Frontier: https://docs.olcf.ornl.gov/software/containers_on_frontier.html
+
+We will look at the LAMMPS example from the
+[olcf_container_examples](https://github.com/olcf/olcf_containers_examples) repository:
+https://github.com/olcf/olcf_containers_examples/tree/main/frontier/containers_on_frontier_docs/apptainer_wrappers_lammps/gpu
+. This example is covered in the [Containers on Frontier
+docs](https://docs.olcf.ornl.gov/software/containers_on_frontier.html#apptainer-modules).
+
+
+OLCF provides several prebuilt base container images that you can use as a starting point. You can
+see the list in [this
+table](https://docs.olcf.ornl.gov/software/containers_on_frontier.html#olcf-base-images-apptainer-modules).
+
+Create a file named `lammps.def` with the following content:
+```
+```
+
+Build the container image by running the command
+```
+apptainer build lammps.sif lammps.def
+```
+
 
 ## Submitting and Running Jobs with Slurm (Subil)
 
