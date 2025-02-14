@@ -401,9 +401,14 @@ srun -N1 --tasks-per-node=8 --gpus-per-task=1 --gpu-bind=closest ./hello
 ```
 ## Srun and hello_jobstep
 
-The proper job layout is important for getting the best perforamce on Frontier. In this next section we will illustrate how to check your job layout with a thead mapping program called hello_jobstep. 
+A proper job layout is crucial for optimal performance on Frontier. This section demonstrates how to verify your job layout using a thread-mapping tool called `hello_jobstep`.
 
-Direct your browser to the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
+
+#Clone and Compile `hello_jobstep`
+
+Clone the repository and follow the compilation instructions in the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
+
+To do  that:
 
 ```
 git clone https://code.ornl.gov/olcf/hello_jobstep.git
@@ -411,35 +416,58 @@ git clone https://code.ornl.gov/olcf/hello_jobstep.git
 
 cd hello_jobstep
 ```
-Follow the instructions to compile the code given in the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
 
-You can use this program to check your job's layout on a single node before run at scale. 
+You can use this program to check your job's layout on a single node before running at scale. 
+
+# Understanding GPU Affinity on Frontier
 
 The Frontier documentation has a detailed section covering the options you can use with srun to control your job.
 
 For this hands-on exercise we will focus on the GPU affinity because it is a feature specific to frontier. 
 
-First, let's look at a Frontier node diagram [here in the documentation](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes). It shows how the L3 cache regions and CPU cores are connected with Frontier's GPUs. You can see that each L3 region is most closely linked with a specific GPU.
+Before running the job, review the Frontier node diagram [here in the documentation](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes). It shows how L3 cache regions and CPU cores are linked to specific GPUs.
 
-For example, hardware threads 0-9 are in the L3 region most closely bound to GPU 4. 
-Get an interactive job for 30 minutes on Frontier.
+For instance, hardware threads 0–9 belong to the L3 region most closely connected to GPU 4.
+
+
+Two common approaches for assigning MPI ranks:
+
+- **Round-robin (`-m block:cyclic`)**: Distributes tasks in packed blocks across nodes and assigns them in a cyclic manner across L3 caches.
+- **Packed (`-m block:block`)**: Distributes tasks in packed blocks across nodes and keeps them in packed blocks within L3 caches.
+
+We will examine the `-m block:block` case because it demonstrates how the default layout may assign tasks to L3 regions and GPUs that are farther apart than optimal, potentially reducing node performance.
+
+Request an interactive job for 15 minutes:
 
 ```
-salloc -A <project_id> -t 30 -p <parition> -N 2
+salloc -A <project_id> -t 15 -p <parition> -N 2
 
 cd hello_jobstep
 ```
-We are going to explore how to ensure that we use the GPU closest to the L3 region containing our specified hardware thread.
+Submit the following job: 
+
+```
 OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 ./hello_jobstep | sort
+``` 
 
-We'll run a jon with the following options 
--N 1  1 node 
--n8 launch eight MPI tasks 
--c1, indicates we are assigning 1 logical core per MPI task.
--m block:block distribute the tasks in a block layout across nodes (default), and in a block layout across L3 sockets
---ntasks-per-gpu=1 Request that there is task invoked for every GPU.
+Here is what the options mean: 
 
-Submit the job and pay attention to which GPUs are used with which hardware thread. 
+
+| Option              | Description                                                |
+|---------------------|------------------------------------------------------------|
+| `-N 1`              | Use **1 node**                                             |
+| `-n 8`              | Launch **8 MPI tasks**                                     |
+| `-c 1`              | Assign **1 logical core per MPI task**                     |
+| `-m block:block`    | Distribute tasks in a **block layout across nodes and L3 caches** |
+| `--ntasks-per-gpu=1` | Ensure **one task per GPU**                                |
+
+
+
+When the job has finished open the output file and the [Frontier node diagram](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes.)
+
+Note which GPUs are used with which hardware thread. 
+
+*Example Output:*
 
 ```
 OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 ./hello_jobstep | sort
@@ -452,7 +480,10 @@ MPI 005 - OMP 000 - HWT 006 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 5 - Bus_
 MPI 006 - OMP 000 - HWT 007 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 6 - Bus_ID d9
 MPI 007 - OMP 000 - HWT 009 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 7 - Bus_ID de
 ```
-Notice that the hardware threads (HWT) are systematically bound to GPUs, but in some L3 regions, certain hardware threads are linked to GPUs that are farther from their region than would be ideal.
+
+Observe how hardware threads (HWT) are mapped to GPUs. In some cases, tasks are assigned to GPUs that are farther from their L3 region than ideal, which can degrade performance.
+
+#Using --gpu-bind=closest for Optimal Affinity
 
 The `--gpu-bind=closest` flag will ensure that the job binds the hardware threads to the GPU that is most closely connected to their L3 cache.
 
