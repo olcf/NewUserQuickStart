@@ -404,7 +404,7 @@ srun -N1 --tasks-per-node=8 --gpus-per-task=1 --gpu-bind=closest ./hello
 A proper job layout is crucial for optimal performance on Frontier. This section demonstrates how to verify your job layout using a thread-mapping tool called `hello_jobstep`.
 
 
-#Clone and Compile `hello_jobstep`
+### Clone and Compile `hello_jobstep`
 
 Clone the repository and follow the compilation instructions in the [hello_jobstep repo](https://code.ornl.gov/olcf/hello_jobstep).
 
@@ -419,7 +419,7 @@ cd hello_jobstep
 
 You can use this program to check your job's layout on a single node before running at scale. 
 
-# Understanding GPU Affinity on Frontier
+### Understanding GPU Affinity on Frontier
 
 The Frontier documentation has a detailed section covering the options you can use with srun to control your job.
 
@@ -483,7 +483,7 @@ MPI 007 - OMP 000 - HWT 009 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 7 - Bus_
 
 Observe how hardware threads (HWT) are mapped to GPUs. In some cases, tasks are assigned to GPUs that are farther from their L3 region than ideal, which can degrade performance.
 
-#Using --gpu-bind=closest for Optimal Affinity
+### Using --gpu-bind=closest for Optimal Affinity
 
 The `--gpu-bind=closest` flag will ensure that the job binds the hardware threads to the GPU that is most closely connected to their L3 cache.
 
