@@ -481,9 +481,9 @@ MPI 006 - OMP 000 - HWT 007 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 6 - Bus_
 MPI 007 - OMP 000 - HWT 009 - Node frontier05586 - RT_GPU_ID 0 - GPU_ID 7 - Bus_ID de
 ```
 
-Observe how hardware threads (HWT) are mapped to GPUs. In some cases, tasks are assigned to GPUs that are farther from their L3 region than ideal, which can degrade performance.
+Observe how hardware threads (HWT) are mapped to GPUs (GPU_ID). In some cases, tasks are assigned to GPUs that are farther from their L3 region than ideal, which can degrade performance.
 
-### Using --gpu-bind=closest for Optimal Affinity
+### Using `--gpu-bind=closest` for Optimal Affinity
 
 The `--gpu-bind=closest` flag will ensure that the job binds the hardware threads to the GPU that is most closely connected to their L3 cache.
 
