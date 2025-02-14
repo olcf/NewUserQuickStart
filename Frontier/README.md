@@ -461,7 +461,7 @@ submitting a regular job otherwise.
 
 Here's a job script that runs LAMMPS from the LAMMPS container you built in the last section.
 
-```
+``` 
 #!/usr/bin/env bash
 
 #SBATCH -A STF007 
@@ -477,11 +477,8 @@ module load apptainer-enable-mpi apptainer-enable-gpu
 
 srun -N 2 -n 16 --gpus-per-task=1 --gpu-bind=closest --unbuffered  apptainer exec lammps.sif lmp -k on g 1 -sf kk -pk kokkos gpu/aware on -in /lustre/orion/stf007/world-shared/ij.in
 ```
-
-
-
-
-## Srun and hello_jobstep
+  
+## Srun and hello_jobstep (Suzanne) 
 
 A proper job layout is crucial for optimal performance on Frontier. This section demonstrates how to verify your job layout using a thread-mapping tool called `hello_jobstep`.
 
@@ -581,76 +578,75 @@ to convince yourself that the hardware threads are now bound to the GPU closest 
 
 For more information about how to control the job layout, see out in depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
 
-# Python on Frontier (Suzanne)  
+## Python at OLCF (Suzanne)  
 
-In high-performance computing, Python is heavily used to analyze scientific data on the system.
-OLCF has a "Python on OLCF Systems" guide within the software guide. To find it, go to [https://docs.olcf.ornl.gov](https://docs.olcf.ornl.gov)> Software> Python on OLCF Systems. [Link](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems).
+In high-performance computing, Python plays a vital role in analyzing scientific data. OLCF provides a [Python on OLCF Systems guide](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems) within the Software Guide. This guide explains how to load the latest Python versions, manage your environment, and run Python on Frontier and Andes.
 
-It tells you how to load the latest versions of python, manage your environment and run python on Frontier and Andes.
+## Goals
 
-Goals:
-
-## Basic Python Hands-on (Suzanne)
-
-* Create a new virtual environment using conda
-* Install mpi4py from source
-* Test our build with a Python script
-
-## Setting up the environment
+- Create a new virtual environment using conda.
+- Install `mpi4py` from source.
+- Test the build with a Python script.
+- Understand tips for running parallel python jobs on Frontier
 
 ### Base Environment
 
-Loading a module sets up a base python environment on each of our systems. Custom packages like numpy and scipy are not included in the base environment on most of our resources. We are going to use the "Python on OLCF Systems" guide for this exercise.
+Loading a module sets up a base Python environment on each system. Note that custom packages like `numpy` and `scipy` are typically not included in the base environment. For this exercise, refer to the ["Python on OLCF Systems" guide](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems).
 
-Go to docs.olcf.ornl.gov> Software> [Python on OLCF Systems Base Environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment).
+### Hands-on List the Packages in the Base Environment 
 
-Select the tab for the resource you are on and follow the instructions to list the packages. If you are using Odo follow the Frontier instructions.
+1. Visit the [Python on OLCF Systems Base Environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment) page in the Software Guide.
+2. Navigate to `docs.olcf.ornl.gov` > **Software** > **Python on OLCF Systems Base Environments**.
+3. Select the tab for the resource you are using.
+4. Follow the instructions to list the available packages.
+5. If you are using Odo, follow the Frontier-specific instructions.
 
-For example, for Frontier/Odo you would do.
+For example, on Frontier/Odo you would run:
 
-```
-$ module load miniforge3/23.11.0
-$ conda list
+```bash
+module load miniforge3/23.11.0
+conda list
 ```
 ### Setting up a Custom Environment
 
-Suppose you want to install the `numpy` package. If you do that in your base environment, it could get messy as you install more packages. It is a best practice to setup a custom environment that contains consistent versions of all the packages you use for each particular project.
+Suppose you want to install the numpy package. Installing packages in your base environment can lead to conflicts as you add more packages. It is best practice to set up a custom environment that contains consistent versions of all the packages you use for each project.
 
-This next hands-on walks you through setting up a custom environment that we will use later in the training.
+### Best Practices for Custom Conda Environments
 
-For your future refrence, open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). You will see tabs under "To create and activate an environment:" that have instructions for creating custom enviroments on each of our resouces.
+Both Frontier and Andes mount the home and project areas, an environment built for one machine cannot be assumed to work seamlessly on the other, so it is important to have an organization structure for your python environments from the start.
 
-For this exercise we will create a custom environment called *mpi4py_env* in your /ccs/proj/<<your_project_id>>. If you are on Odo, you will use /ccsopen/proj/<<your_project_id>>.
+Best Practices: 
+
+- **Store in Project Areas:** Place your custom conda environments in your user project areas on NFS. This prevents them from being purged and makes them shareable with your project team.
+- **Identify by Machine:** Include the machine name in the environment name or store environments in a directory named for that machine.
+- **Keep It Organized:** Save your conda environments in a `.conda` folder to clearly identify them and avoid cluttering your directory listings.
+- **Use Source Activate:** ALWAYS use `Source Activate’ even when Python prompts  you to use ‘conda activate’. NEVER user`conda activate’ on OLCF machines. `conda activate’ can put options in your configuration files, which are shared between all the machines, but those options will not work universally on all the machines you use. 
 
 
-For example on Frontier:
+For your future reference, open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). You will see tabs under "To create and activate an environment:" that have instructions for creating custom environments on each of our resources.
 
+### Custom Python Environment Hands-on
 
-Next, we will load the gnu compiler module (most Python packages assume GCC):
+This hands-on exercise will walk you through setting up a custom environment that we will use later in the training. We will create a custom environment called *mpi4py_env* in your /ccs/proj/<<your_project_id>>. If you are on Odo, you will use /ccsopen/proj/<<your_project_id>>.
+
+Most Python packages assume GCC, so we will load the the gnu compiler module. 
 
 ```bash
 $ module load PrgEnv-gnu
 $ module load miniforge3
 ```
+Use `conda create` to make the *mpi4py_env* following the Python Best Practices.
 
-We are in a "base" conda environment, but we need to create a new environment using the `conda create` command.
-It is highly recommended to create new environments in the "Project Home" directory (on Frontier, this is /ccs/proj/<YOUR_PROJECT_ID>/<YOUR_USER_ID>). This space avoids purges and allows for potential collaboration within your project.
 ```
-$ conda create -p /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env python=3.10.13
+$ conda create -p /ccs/proj/<your_project_id>/<your_user_id>/.conda/frontier/mpi4py_env python=3.10.13
 ```
 
 The "-p" flag specifies the desired path and name of your new virtual environment. The directory structure is case sensitive, so be sure to insert "<your_project_id>" ad as lowercase. Directories will be created if they do not exist already (provided you have write-access in that location).
 
 
-A Note on Organization:
-
-I chose to create a `.conda` directory to keep my Python environments organized and separate from a plain directory listing. Within `.conda`, I created a `frontier` subdirectory to store all my environments specifically for Frontier. While both Frontier and Andes mount the home and project areas, an environment built for one machine cannot be assumed to work seamlessly on the other, so it is important to have an orgaization strucutre for your python envoriments from the start.
-
-
 After following the prompts for creating your new environment, the installation should be successful, and you will see something similar to:
 
 ```
-
 Preparing transaction: done
 Verifying transaction: done
 Executing transaction: done
@@ -663,7 +659,6 @@ Executing transaction: done
 #
 #     $ conda deactivate
 ```
-
 Due to the specific nature of conda on Frontier, we will be using `source activate` instead of `conda activate` to activate our new environment:
 
 ```bash
@@ -678,7 +673,7 @@ $ conda env list
 
 # conda environments:
 #
-base                     /autofs/nccs-svm1_sw/frontier/miniforge3/23.11.0
+base              ≈       /autofs/nccs-svm1_sw/frontier/miniforge3/23.11.0
                       *  /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
 ```
 
@@ -708,7 +703,7 @@ To do so, we will be submitting a job to the batch queue with "submit_hello.sbat
 
 This part of the hands-on covers the [How to Run](https://docs.olcf.ornl.gov/software/python/index.html#how-to-run) section of the Python on OLCF system Guide. 
 
-The example below is for Frontier, but if you are using Andes or Odo you can use the guide linked above to understand how to ajust the commands accordingly. 
+The example below is for Frontier, but if you are using Andes or Odo you can use the guide linked above to understand how to adjust the commands accordingly. 
 
 
 To get to this script 
@@ -750,7 +745,7 @@ source activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/m
 srun -n42 python3 -u hello_mpi.py
 ```
 
-Now lets uset the example script to edit the one for our exercies. 
+Use the example script as a guide to edit the batch script for our exercise.
 
 Open the submit_hello.sbatch 
 ```
@@ -787,12 +782,12 @@ Congratulations! You have the tools and knowledge you need to start using python
  
 * Globus is a fast and reliable way to move files between OLCF systems and between OLCF and other institutions.
 * It has a convenient Web-interface at globus.org that you log into with a username and password.
-* Transfers are done by activating “Collections” which are portals in to the OLCF's file systems and to those of participating institutions.
+* Transfers are done by activating “Collections” which are portals into the OLCF's file systems and to those of participating institutions.
 * Globus is the recommended way to move files between OLCF systems and between OLCF and exterior systems.
  
 For this exercise we will setup your globus.org username and password. You can skip this if you have a globus ID.
 
-Note: Globus is not controlled by OLCF and its help and login pages and option change without warning. This hands-on is based on Globus pages from 05-02-24. Even if the specific Globus pages chanage, this tutorial should be close to what is needed to get a globus username and password.
+Note: Globus is not controlled by OLCF and its help and login pages and option change without warning. This hands-on is based on Globus pages from 05-02-24. Even if the specific Globus pages change, this tutorial should be close to what is needed to get a globus username and password.
  
 ### Hands-on GlobusID
  
