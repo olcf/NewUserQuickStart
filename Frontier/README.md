@@ -620,7 +620,7 @@ Best Practices:
 - **Store in Project Areas:** Place your custom conda environments in your user project areas on NFS. This prevents them from being purged and makes them shareable with your project team.
 - **Identify by Machine:** Include the machine name in the environment name or store environments in a directory named for that machine.
 - **Keep It Organized:** Save your conda environments in a `.conda` folder to clearly identify them and avoid cluttering your directory listings.
-- **Use Source Activate:** ALWAYS use `Source Activate’ even when Python prompts  you to use ‘conda activate’. NEVER user`conda activate’ on OLCF machines. `conda activate’ can put options in your configuration files, which are shared between all the machines, but those options will not work universally on all the machines you use. 
+- **Use Source Activate:** ALWAYS use `Source Activate` even when Python prompts  you to use `conda activate`. NEVER user `conda activate` on OLCF machines. `conda activate` can put options in your configuration files, which are shared between all the machines, but those options will not work universally on all the machines you use. 
 
 
 For your future reference, open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). You will see tabs under "To create and activate an environment:" that have instructions for creating custom environments on each of our resources.
