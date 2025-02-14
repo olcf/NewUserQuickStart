@@ -454,8 +454,33 @@ Here is a simple job script named `submit.sl`
 #SBATCH -N 1
 
 srun -N1 --tasks-per-node=8 --gpus-per-task=1 --gpu-bind=closest ./hello
+```
+
+Submitting a job that uses container requires loading an additional module, but is mostly similar to
+submitting a regular job otherwise.
+
+Here's a job script that runs LAMMPS from the LAMMPS container you built in the last section.
 
 ```
+#!/usr/bin/env bash
+
+#SBATCH -A STF007 
+#SBATCH -J lammps_container
+#SBATCH -o %j.out
+#SBATCH -N 2
+#SBATCH -t 00:20:00
+
+module reset
+module load PrgEnv-gnu
+module load olcf-container-tools
+module load apptainer-enable-mpi apptainer-enable-gpu
+
+srun -N 2 -n 16 --gpus-per-task=1 --gpu-bind=closest --unbuffered  apptainer exec lammps.sif lmp -k on g 1 -sf kk -pk kokkos gpu/aware on -in /lustre/orion/stf007/world-shared/ij.in
+```
+
+
+
+
 ## Srun and hello_jobstep
 
 A proper job layout is crucial for optimal performance on Frontier. This section demonstrates how to verify your job layout using a thread-mapping tool called `hello_jobstep`.
