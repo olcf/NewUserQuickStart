@@ -58,6 +58,8 @@ If your SSH operation succeeds, you should be placed in your home directory on F
 [subil@login05 ~]$ pwd
 /ccs/home/subil
 ```
+
+## TODO: add git clone of newuserquickstart repository
  
  ## Authentication with RSA tokens (Subil)
  
@@ -198,6 +200,8 @@ ls
 
  
 ## Finding and Building Software (Subil)
+
+TODO: update outputs for modules after Tuesday downtime
 
 Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment
  
