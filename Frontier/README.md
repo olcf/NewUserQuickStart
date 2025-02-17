@@ -745,6 +745,8 @@ source activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/m
 srun -n42 python3 -u hello_mpi.py
 ```
 
+The srun in this example has`-n42`, which means launch 42 MPI tasks per node. 
+
 Use the example script as a guide to edit the batch script for our exercise.
 
 Open the submit_hello.sbatch 
