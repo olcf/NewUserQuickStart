@@ -759,9 +759,10 @@ vi submit_hello.sbatch
 * close and save the file. 
 
 To submit the batch script from a fresh shell: 
+
 ```
 sbatch --export=NONE submit_hello.sbatch
-``
+```
 
 Once the batch job makes its way through the queue, it will run the "hello_mpi.py" script with 42 MPI tasks.
 If mpi4py is working properly, in `mpi4py-<JOB_ID>.out` you should see output similar to:
@@ -774,7 +775,7 @@ Hello from MPI rank 40 !
 Hello from MPI rank 0 !
 Hello from MPI rank 1 !
 Hello from MPI rank 32 !
-
+```
 Congratulations! You have the tools and knowledge you need to start using python on Frontier! 
 
 
