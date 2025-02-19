@@ -93,6 +93,32 @@ If you find that you keep entering the PASSCODE correctly but it fails to log yo
  
 ## User Guides Overview (Suzanne)
 OLCF has users guides for its compute systems, data management tools and polices. They have examples that cover the basics that you need to know to run on our system. Let's start with a hands-on to help you find and navigate those guides.
+
+### User Guide Hands-on
+1.	Open Andes Guide: Raise your virtual hand when it is open. 
+
+2.	Name one visualization tool available on Andes. 
+
+3.	What Andes Batch Queue has the longest available run time? 
+
+Close the Andes system guide on the left and open the Frontier User Guide. 
+Raise your virtual hand when it is open. 
+
+1.	Name one profiling application available on Frontier described in the guide. 
+
+2.	Find the Thread mapping examples in the running jobs section; What is the Srun command that ensures that the MPI tasks will be distributed across sockets in a cyclic (round-robin) manner? 
+
+3.	Find the Tips and Tricks section; read the name of one Tip listed in that section. 
+
+4.	Find the Known Issue section. Raise your virtual hand when you find it. 
+
+Close the Frontier guide and open the software guide. 
+
+1.	Find the ML/AI guide on Frontier 
+
+2.	Find Installing Pytorch on Frontier 
+
+3.	Find the containers on Frontier section 
  
  
 ### Hands-on User Guide Cipher
@@ -523,7 +549,7 @@ We will examine the `-m block:block` case because it demonstrates how the defaul
 Request an interactive job for 15 minutes:
 
 ```
-salloc -A <project_id> -t 15 -p <parition> -N 2
+salloc -A <project_id> -t 15 -p <parition> -N 1
 
 cd hello_jobstep
 ```
@@ -546,7 +572,7 @@ Here is what the options mean:
 
 
 
-When the job has finished open the output file and the [Frontier node diagram](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes.)
+When the job has finished open the output file and the [Frontier node diagram](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#low-noise-mode-layout)
 
 Note which GPUs are used with which hardware thread. 
 
@@ -576,7 +602,7 @@ Run the job again with `--gpu-bind=closest`.
 OMP_NUM_THREADS=1 srun -N1 -n8 -c1 -m block:block --ntasks-per-gpu=1 --gpu-bind=closest ./hello_jobstep | sort
 
 ```
-Look at the output and the [Frontier Node Diagram](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#frontier-compute-nodes)
+Look at the output and the [Frontier Node Diagram](https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#low-noise-mode-layout)
 to convince yourself that the hardware threads are now bound to the GPU closest to their L3 cheche religion.
 
 
