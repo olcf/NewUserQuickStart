@@ -59,9 +59,21 @@ If your SSH operation succeeds, you should be placed in your home directory on F
 /ccs/home/subil
 ```
 
-## TODO: add git clone of newuserquickstart repository
+## Clone the NewUserQuickStart repository
+
+Parts of this new user training will have hands on portions. So clone this repository into your home
+directory with
+
+```
+git clone https://github.com/olcf/NewUserQuickStart
+```
+
+And navigate to the Frontier directory
+```
+cd Frontier
+```
  
- ## Authentication with RSA tokens (Subil)
+## Authentication with RSA tokens (Subil)
  
 In an earlier section, we covered logging into Frontier or Odo using SSH and with your RSA token. Let's talk a bit more about what we're doing here.
  
@@ -218,12 +230,12 @@ If 'hipcc' is not a typo you can use command-not-found to lookup the package tha
     cnf hipcc
 $ module load rocm
 $ hipcc --version
-HIP version: 5.7.31921-1949b1621
-AMD clang version 17.0.0 (https://github.com/RadeonOpenCompute/llvm-project roc-5.7.1 23382 f3e174a1d286158c06e4cc8276366b1d4bc0c914)
+HIP version: 6.2.41134-65d174c3e
+AMD clang version 18.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-6.2.4 24392 1e2c94795ee0d6ab8e2ff3035965a6b74e11b475)
 Target: x86_64-unknown-linux-gnu
 Thread model: posix
-InstalledDir: /opt/rocm-5.7.1/llvm/bin
-Configuration file: /opt/rocm-5.7.1/llvm/bin/clang++.cfg
+InstalledDir: /opt/rocm-6.2.4/lib/llvm/bin
+Configuration file: /opt/rocm-6.2.4/lib/llvm/bin/clang++.cfg
 ```
  
 If you want to use a specific version of the ROCm software stack, you can check which versions are available by running `module spider rocm`. (Note: module spider output will show 
@@ -231,7 +243,6 @@ colors when you actually use it on the terminal).
  
 ```
 $ module spider rocm
- 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 (OLCF SPIDER): Modules in RED are not supported by ORNL!    (for non-colorized output, set LMOD_COLORIZE=0)
   To learn more about unsupported modules see: https://docs.olcf.ornl.gov/software/UMS/index.html
@@ -260,12 +271,13 @@ For example:
     $ module spider Foo/1.2.3
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  
+ 
 ```
 You can see the full list of modules available to load by simply executing `module spider` without a module name given.
  
 ```
 $ module spider
- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 (OLCF SPIDER): Modules in RED are not supported by ORNL!    (for non-colorized output, set LMOD_COLORIZE=0)
   To learn more about unsupported modules see: https://docs.olcf.ornl.gov/software/UMS/index.html
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -294,7 +306,7 @@ And you can load a specific version of a module like rocm 6.0.0 specifying the v
 $ module load rocm/6.0.0
 ```
  
-If a specific version number is not specified, it will load a system defined default version (in the case of rocm, the default version loaded is 5.7.1).
+If a specific version number is not specified, it will load a system defined default version (in the case of rocm, the default version loaded is 6.2.4).
  
  
 `module load` does a few things, chief among which is it updates some environment variables that the OS uses to look for software or libraries. You can see information about a module and a summary of what changes are made when you execute a `module show` operation.
@@ -302,11 +314,11 @@ If a specific version number is not specified, it will load a system defined def
 ```
 $ module show rocm
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-   /opt/cray/pe/lmod/modulefiles/core/rocm/5.7.1.lua:
+   /opt/cray/pe/lmod/modulefiles/core/rocm/6.2.4.lua:
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 unsetenv("CRAY_LMOD_AMD_CONTROL_TK_LOAD")
-help([[5.7.1
-/opt/rocm-5.7.1
+help([[6.2.4
+/opt/rocm-6.2.4
 This modulefile defines the system paths and environment
 variables needed to use the ROCm Toolkit. The ROCm modulefile
 enables ROC Profiler, ROC Tracer, HIP, and ROCr.
@@ -322,34 +334,34 @@ Mixed compiler modules (such as amd-mixed) do not extend the CPE Lmod
 hierarchy and can be loaded with core compilers (such as cce).
 
 ===================================================================
-To see AMD/5.7.1 release information,
+To see AMD/6.2.4 release information,
   visit https://rocmdocs.amd.com/en/latest
 ===================================================================
 
 To make this the default version, execute:
-/opt/admin-pe/set_default_craypkg/set_default_rocm_5.7.1
+/opt/admin-pe/set_default_craypkg/set_default_rocm_6.2.4
 
 Certain components, files or programs contained within this package or
 product are Copyright 2021-2023 Hewlett Packard Enterprise Development LP.
 
 ]])
 whatis("Defines the system paths and environment variables required for the ROCm Toolkit.")
-setenv("CRAY_ROCM_DIR","/opt/rocm-5.7.1")
-setenv("CRAY_ROCM_PREFIX","/opt/rocm-5.7.1")
-setenv("CRAY_ROCM_VERSION","5.7.1")
-setenv("ROCM_PATH","/opt/rocm-5.7.1")
-setenv("HIP_LIB_PATH","/opt/rocm-5.7.1/lib")
-prepend_path("PATH","/opt/rocm-5.7.1/bin")
-prepend_path("MANPATH","/opt/rocm-5.7.1/share/man")
-prepend_path("CMAKE_PREFIX_PATH","/opt/rocm-5.7.1/lib/cmake/hip")
-setenv("CRAY_ROCM_INCLUDE_OPTS","-I/opt/rocm-5.7.1/include -I/opt/rocm-5.7.1/include/rocprofiler -I/opt/rocm-5.7.1/include/roctracer -I/opt/rocm-5.7.1/include/hip -D__HIP_PLATFORM_AMD__")
-setenv("CRAY_ROCM_POST_LINK_OPTS"," -L/opt/rocm-5.7.1/lib -L/opt/rocm-5.7.1/lib/rocprofiler -L/opt/rocm-5.7.1/lib/roctracer -lamdhip64")
-prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.7.1/lib")
-prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.7.1/lib/rocprofiler")
-prepend_path("LD_LIBRARY_PATH","/opt/rocm-5.7.1/lib/roctracer")
+setenv("CRAY_ROCM_DIR","/opt/rocm-6.2.4")
+setenv("CRAY_ROCM_PREFIX","/opt/rocm-6.2.4")
+setenv("CRAY_ROCM_VERSION","6.2.4")
+setenv("ROCM_PATH","/opt/rocm-6.2.4")
+setenv("HIP_LIB_PATH","/opt/rocm-6.2.4/lib")
+prepend_path("PATH","/opt/rocm-6.2.4/bin")
+prepend_path("MANPATH","/opt/rocm-6.2.4/share/man")
+prepend_path("CMAKE_PREFIX_PATH","/opt/rocm-6.2.4/lib/cmake/hip")
+setenv("CRAY_ROCM_INCLUDE_OPTS","-I/opt/rocm-6.2.4/include -I/opt/rocm-6.2.4/include/rocprofiler -I/opt/rocm-6.2.4/include/roctracer -I/opt/rocm-6.2.4/include/hip -D__HIP_PLATFORM_AMD__")
+setenv("CRAY_ROCM_POST_LINK_OPTS"," -L/opt/rocm-6.2.4/lib -L/opt/rocm-6.2.4/lib/rocprofiler -L/opt/rocm-6.2.4/lib/roctracer -lamdhip64")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-6.2.4/lib")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-6.2.4/lib/rocprofiler")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-6.2.4/lib/roctracer")
 append_path("PE_PRODUCT_LIST","CRAY_ROCM")
 prepend_path("PKG_CONFIG_PATH","/usr/lib64/pkgconfig")
-prepend_path("PE_PKGCONFIG_LIBS","rocm-5.7.1")
+prepend_path("PE_PKGCONFIG_LIBS","rocm-6.2.4")
 ```
  
  
@@ -359,9 +371,9 @@ At anytime you can check the modules that are currently loaded by running `modul
 $ module list
  
 Currently Loaded Modules:
-  1) craype-x86-trento    4) perftools-base/23.12.0                 7) cce/17.0.0        10) cray-mpich/8.1.28    13) Core/24.07                 16) hsi/default        19) rocm/5.7.1
-  2) libfabric/1.20.1     5) xpmem/2.8.4-1.0_7.3__ga37cbd9.shasta   8) craype/2.7.31.11  11) cray-libsci/23.12.5  14) tmux/3.4                   17) lfs-wrapper/0.0.1
-  3) craype-network-ofi   6) cray-pmi/6.1.13                        9) cray-dsmml/0.2.2  12) PrgEnv-cray/8.5.0    15) darshan-runtime/3.4.4-mpi  18) DefApps
+  1) craype-x86-trento    4) perftools-base/24.11.0           7) cce/18.0.1        10) cray-mpich/8.1.31    13) Core/24.07                 16) hsi/default        19) rocm/6.2.4
+  2) libfabric/1.22.0     5) xpmem/2.10.6-1.2_gfaa90a94be64   8) craype/2.7.33     11) cray-libsci/24.11.0  14) tmux/3.4                   17) lfs-wrapper/0.0.1
+  3) craype-network-ofi   6) cray-pmi/6.1.15                  9) cray-dsmml/0.3.0  12) PrgEnv-cray/8.6.0    15) darshan-runtime/3.4.6-mpi  18) DefApps
 
 ```
  
@@ -373,17 +385,14 @@ For example, if you load PrgEnv-gnu, you will see the following output.
  
 ```
 $ module load PrgEnv-gnu
+Lmod is automatically replacing "cce/18.0.1" with "gcc-native/13.2".
 
 
-Lmod is automatically replacing "cce/17.0.0" with "gcc-native/12.3".
-
-
-Lmod is automatically replacing "PrgEnv-cray/8.5.0" with "PrgEnv-gnu/8.5.0".
+Lmod is automatically replacing "PrgEnv-cray/8.6.0" with "PrgEnv-gnu/8.6.0".
 
 
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-libsci/23.12.5     2) cray-mpich/8.1.28     3) darshan-runtime/3.4.4-mpi
- 
+  1) cray-libsci/24.11.0     2) cray-mpich/8.1.31     3) darshan-runtime/3.4.6-mpi
 ```
  
 Here's a list of the useful commands we've seen so far:
@@ -434,6 +443,19 @@ table](https://docs.olcf.ornl.gov/software/containers_on_frontier.html#olcf-base
 
 Create a file named `lammps.def` with the following content:
 ```
+Bootstrap: docker
+From: savannah.ornl.gov/olcf-container-images/frontier/ubuntu/gnu/cpe:24.11
+
+%post
+    wget https://github.com/lammps/lammps/archive/refs/tags/stable_2Aug2023_update3.tar.gz
+    tar xzf stable_2Aug2023_update3.tar.gz
+    cmake -S lammps-stable_2Aug2023_update3/cmake -B lammps_build -D CMAKE_INSTALL_PREFIX=/opt/lammps -D CMAKE_CXX_COMPILER=hipcc \
+                -D PKG_KOKKOS=yes -D Kokkos_ARCH_HOSTARCH=yes -D Kokkos_ARCH_GPUARCH=yes -D Kokkos_ENABLE_HIP=yes
+    cmake --build lammps_build --target install -j8
+    rm -r stable_2Aug2023_update3.tar.gz lammps-stable_2Aug2023_update3 lammps_build
+
+%environment
+    export PATH="/opt/lammps/bin:$PATH"
 ```
 
 Build the container image by running the command
