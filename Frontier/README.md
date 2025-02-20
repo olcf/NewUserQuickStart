@@ -574,7 +574,7 @@ We will examine the `-m block:block` case because it demonstrates how the defaul
 Request an interactive job for 15 minutes:
 
 ```
-salloc -A <project_id> -t 15 -p <parition> -N 1
+salloc -A <project_id> -t 15 -p batch -N 1
 
 cd hello_jobstep
 ```
