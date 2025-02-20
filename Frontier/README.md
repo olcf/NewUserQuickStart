@@ -70,6 +70,7 @@ git clone https://github.com/olcf/NewUserQuickStart
 
 And navigate to the Frontier directory
 ```
+cd NewUserQuickStart
 cd Frontier
 ```
  
@@ -242,7 +243,6 @@ ls
  
 ## Finding and Building Software (Subil)
 
-TODO: update outputs for modules after Tuesday downtime
 
 Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment
  
@@ -430,7 +430,7 @@ Here's a list of the useful commands we've seen so far:
 `module list` - show list of currently loaded modules
 `module spider` - show list of modules and their versions, or if a module name is specified, show the versions of those modules that are available to load
  
-Building software:
+### Building software:
  
 To compile your C, C++, or Fortran code, you will not invoke the compiler command directly but instead you will invoke the Cray provided compiler wrappers.
  
