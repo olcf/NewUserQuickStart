@@ -107,30 +107,33 @@ If you find that you keep entering the PASSCODE correctly but it fails to log yo
 OLCF has users guides for its compute systems, data management tools and polices. They have examples that cover the basics that you need to know to run on our system. Let's start with a hands-on to help you find and navigate those guides.
 
 ### User Guide Hands-on
-1.	Open Andes Guide: Raise your virtual hand when it is open. 
+Open a browser tab and go to https://docs.olcf.ornl.gov. 
+Select the "Systems" option in the left menu bar. 
+
+1.	Open Andes guide: Raise your virtual hand when it is open. 
 
 2.	Name one visualization tool available on Andes. 
 
-3.	What Andes Batch Queue has the longest available run time? 
+3.	What Andes batch queue has the longest available run time? 
 
-Close the Andes system guide on the left and open the Frontier User Guide. 
+Close the Andes system guide on the left and open the Frontier user guide. 
 Raise your virtual hand when it is open. 
 
-1.	Name one profiling application available on Frontier described in the guide. 
+1.	Name one profiling application available on Frontier that is described in the guide. 
 
-2.	Find the Thread mapping examples in the running jobs section; What is the Srun command that ensures that the MPI tasks will be distributed across sockets in a cyclic (round-robin) manner? 
+2.	Find the Thread Mapping examples in the running jobs section; What is the `srun` command that ensures that the MPI tasks will be distributed across sockets in a cyclic (round-robin) manner? 
 
-3.	Find the Tips and Tricks section; read the name of one Tip listed in that section. 
+3.	Find the Tips and Tricks section; Read the name of one tip listed in that section. 
 
 4.	Find the Known Issue section. Raise your virtual hand when you find it. 
 
-Close the Frontier guide and open the software guide. 
+Close the Frontier guide and open the Software guide. 
 
 1.	Find the ML/AI guide on Frontier 
 
 2.	Find Installing Pytorch on Frontier 
 
-3.	Find the containers on Frontier section 
+3.	Find the Containers on Frontier section 
  
  
 ### Hands-on User Guide Cipher
