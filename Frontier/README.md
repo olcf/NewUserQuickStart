@@ -942,7 +942,7 @@ You can access Globus collections, that you have credentials for, at institution
 
 ## More New User Trainings (Suzanne)
 
-[February 2024 New User Training](https://www.olcf.ornl.gov/calendar/frontier-training-workshop-february-2024/)
+[Frontier Training workshop](https://www.olcf.ornl.gov/calendar/frontier-training-workshop-february-2023/)
 
 ## Training Opportunities (Suzanne)
  
