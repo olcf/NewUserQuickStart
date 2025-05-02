@@ -532,6 +532,9 @@ module load apptainer-enable-mpi apptainer-enable-gpu
 
 srun -N 2 -n 16 --gpus-per-task=1 --gpu-bind=closest --unbuffered  apptainer exec lammps.sif lmp -k on g 1 -sf kk -pk kokkos gpu/aware on -in /lustre/orion/stf007/world-shared/ij.in
 ```
+
+## Job Scipt Generater in Myolcf (NEW!) 
+Wirte quick section here pointing them there and then just tell them to do Hello_jobstep on thier own. 
   
 ## Srun and hello_jobstep (Suzanne) 
 
