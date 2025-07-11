@@ -1,4 +1,4 @@
-# Welcome to Hands-on New User training (Suzanne)
+# Welcome to Hands-on New User training (Subil)
  
 This training is designed to introduce you to the Oak Ridge Leadership Computing Facility and its resources. Also you should never be more than 20 minutes away from and hands-on exercise. For this training you will want to have a browser window open and an ssh terminal open.
 
@@ -17,7 +17,7 @@ https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#system-overview
 You can also watch [this video giving a more detailed overview of the Frontier hardware](https://vimeo.com/840551316).
 
  
-## Hands-on Finding Jupyter terminal (Subil)
+## Hands-on Finding Jupyter terminal (Tony)
 If you do not have an ssh terminal:
 1. Open and tab on your browser and direct it to https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html#access.
 2. Then follow the directions there to access the moderate Jupyter hub if you are a Frontier user. IF you are using Odo or Ascent follow the directions for the Open Jupyter hub. In either case, choose one of the CPU labs.
@@ -25,7 +25,7 @@ If you do not have an ssh terminal:
  
 There are many more uses for OLCF Jupyter Hub and you can find them in the Jupyter at OLCF guide. https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html
  
-## How to login to Frontier (Subil)
+## How to login to Frontier (Tony)
  
 Once you have a terminal open (either through Jupyter or by opening a terminal program on your computer), You can login to frontier by executing the following command
  
@@ -74,7 +74,7 @@ cd NewUserQuickStart
 cd Frontier
 ```
  
-## Authentication with RSA tokens (Subil)
+## Authentication with RSA tokens (Tony)
  
 In an earlier section, we covered logging into Frontier or Odo using SSH and with your RSA token. Let's talk a bit more about what we're doing here.
  
@@ -104,7 +104,7 @@ If your PASSCODE has failed twice i.e. you are being prompted to enter your PASS
 If you find that you keep entering the PASSCODE correctly but it fails to log you in, its possible you may have been locked out. Send an email to help@olcf.ornl.gov with the information on what you are seeing. If your account is locked, the OLCF Help Desk can unlock it for you.
 
  
-## User Guides Overview (Suzanne)
+## User Guides Overview (Subil)
 OLCF has users guides for its compute systems, data management tools and polices. They have examples that cover the basics that you need to know to run on our system. Let's start with a hands-on to help you find and navigate those guides.
 
 ### User Guide Hands-on
@@ -174,7 +174,7 @@ Key: https://docs.olcf.ornl.gov, Look to the left menu bar. GO!
 When you are done, raise your virtual hand.
  
 
-## Storage at OLCF (Suzanne)
+## Storage at OLCF (Subil)
 
 <br>
 <center>
@@ -195,7 +195,7 @@ Longer term storge is available in OLCF’s nearline storge system called Kronos
 
 See the Kronos section of our [Data Storage and Transfers guide](https://docs.olcf.ornl.gov/data/index.html#kronos-nearline-archival-storage-system)
 
-## Hands-on Find Your Storage Areas (Suzanne) 
+## Hands-on Find Your Storage Areas (Subil) 
 
 Login to Frontier and go to your individual  user storage called “scratch”: 
 
@@ -241,7 +241,7 @@ ls
  
 
  
-## Finding and Building Software (Subil)
+## Finding and Building Software (Tony)
 
 
 Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#programming-environment
@@ -533,10 +533,10 @@ module load apptainer-enable-mpi apptainer-enable-gpu
 srun -N 2 -n 16 --gpus-per-task=1 --gpu-bind=closest --unbuffered  apptainer exec lammps.sif lmp -k on g 1 -sf kk -pk kokkos gpu/aware on -in /lustre/orion/stf007/world-shared/ij.in
 ```
 
-## Job Scipt Generater in Myolcf (NEW!) 
+## Job Script Generater in Myolcf (Tony) 
 Wirte quick section here pointing them there and then just tell them to do Hello_jobstep on thier own. 
   
-## Srun and hello_jobstep (Suzanne) 
+## Srun and hello_jobstep
 
 A proper job layout is crucial for optimal performance on Frontier. This section demonstrates how to verify your job layout using a thread-mapping tool called `hello_jobstep`.
 
@@ -636,7 +636,7 @@ to convince yourself that the hardware threads are now bound to the GPU closest 
 
 For more information about how to control the job layout, see out in depth video tutorial (From February 2024 New User Training): [recording](https://vimeo.com/918365102?share=copy) (skip to 2:27:00 mark), [slides](https://www.olcf.ornl.gov/wp-content/uploads/9.-Slurm-on-Frontier_Hagerty.pdf)
 
-## Python at OLCF (Suzanne)  
+## Python at OLCF (Tony)  
 
 In high-performance computing, Python plays a vital role in analyzing scientific data. OLCF provides a [Python on OLCF Systems guide](https://docs.olcf.ornl.gov/software/python/index.html#python-on-olcf-systems) within the Software Guide. This guide explains how to load the latest Python versions, manage your environment, and run Python on Frontier and Andes.
 
@@ -839,7 +839,7 @@ Hello from MPI rank 32 !
 Congratulations! You have the tools and knowledge you need to start using python on Frontier! 
 
 
-## Globus (Suzanne)
+## Globus (Subil)
  
 * Globus is a fast and reliable way to move files between OLCF systems and between OLCF and other institutions.
 * It has a convenient Web-interface at globus.org that you log into with a username and password.
@@ -943,11 +943,11 @@ You can access Globus collections, that you have credentials for, at institution
  
 [OLCF Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html#data-storage-and-transfers)
 
-## More New User Trainings (Suzanne)
+## More New User Trainings (Subil)
 
 [Frontier Training workshop](https://www.olcf.ornl.gov/calendar/frontier-training-workshop-february-2023/)
 
-## Training Opportunities (Suzanne)
+## Training Opportunities (Subil)
  
 - Keep an eye out for upcoming trainings on our [Training Calendar](https://www.olcf.ornl.gov/for-users/training/training-calendar)
 - Missed a training? All our trainings are recorded and are listed in the [Training Archive](https://docs.olcf.ornl.gov/training/training_archive.html)
