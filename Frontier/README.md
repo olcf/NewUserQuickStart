@@ -945,7 +945,8 @@ You can access Globus collections, that you have credentials for, at institution
 
 ## More New User Trainings (Subil)
 
-[Frontier Training workshop](https://www.olcf.ornl.gov/calendar/frontier-training-workshop-february-2023/)
+- [Frontier Training workshop](https://www.olcf.ornl.gov/calendar/frontier-training-workshop-february-2023/)
+- [OLCF Best Practices](https://www.olcf.ornl.gov/calendar/2025-frontier-best-management-practices/)
 
 ## Training Opportunities (Subil)
  
