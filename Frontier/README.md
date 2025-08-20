@@ -545,7 +545,7 @@ You can use the generator to make submission scripts for your jobs on Frontier u
 
 It's a step-by-step process you can fill out like such:
 
-![image](Frontier/images/job_script_generator.png)
+![image](images/job_script_generator.png)
 
 After your script is generated, you can simply click "Copy" on the output and paste it into your `sbatch` script.  
 
