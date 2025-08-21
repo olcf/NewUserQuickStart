@@ -533,9 +533,27 @@ module load apptainer-enable-mpi apptainer-enable-gpu
 srun -N 2 -n 16 --gpus-per-task=1 --gpu-bind=closest --unbuffered  apptainer exec lammps.sif lmp -k on g 1 -sf kk -pk kokkos gpu/aware on -in /lustre/orion/stf007/world-shared/ij.in
 ```
 
-## Job Script Generater in Myolcf (Tony) 
-Wirte quick section here pointing them there and then just tell them to do Hello_jobstep on thier own. 
-  
+## Job Script Generator in myOLCF (Tony) 
+
+You can find the OLCF Job Script Generator here: 
+
+https://my.olcf.ornl.gov/script-generator
+
+Or from the home page at https://my.olcf.ornl.gov/ at the top-right of the screen. It is not necessary to log in or have an OLCF account.
+
+You can use the generator to make submission scripts for your jobs on Frontier using OLCF recommended configurations
+
+It's a step-by-step process you can fill out like such:
+
+![image](images/job_script_generator.png)
+
+After your script is generated, you can simply click "Copy" on the output and paste it into your `sbatch` script.  
+
+### Job Step Viewer
+The Job Step Viewer tool from Summit is back in development for Frontier, and is coming soon for your layout visualization needs!
+
+With Job Script Generator and Job Step Viewer you can look at how recommended layouts get placed on Frontier.
+
 ## Srun and hello_jobstep
 
 A proper job layout is crucial for optimal performance on Frontier. This section demonstrates how to verify your job layout using a thread-mapping tool called `hello_jobstep`.
