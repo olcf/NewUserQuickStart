@@ -185,7 +185,7 @@ When you are done, raise your virtual hand.
 
 OLCF has a Network Files system (NFS) that you land on when you login. This is a small secure filesystem that is provisioned to hold your most important data. This is the best place for your executables and small important data. It is backed up. 
 
-OLCF also has a large parallel filesystem, Orion Luster, for Frontier that you should use to hold your large production data for simulation campaigns while you are running. Orion is not backed up and data older than 90 days are purged. 
+OLCF also has a large parallel filesystem, Orion Lustre, for Frontier that you should use to hold your large production data for simulation campaigns while you are running. Orion is not backed up and data older than 90 days are purged. 
 
 OLCF storage systems have different areas designated for induvial user storage and project level storage that is controlled by the file permissions. Please make sure that data that is to be shared with multiple project members in in the project storage. This especially important as people leave your project. 
 
@@ -473,7 +473,7 @@ table](https://docs.olcf.ornl.gov/software/containers_on_frontier.html#olcf-base
 Create a file named `lammps.def` with the following content:
 ```
 Bootstrap: docker
-From: savannah.ornl.gov/olcf-container-images/frontier/ubuntu/gnu/cpe:24.11
+From: savannah.ornl.gov/olcf-container-images/cpe:24.11_gnu_opensuse
 
 %post
     wget https://github.com/lammps/lammps/archive/refs/tags/stable_2Aug2023_update3.tar.gz
@@ -909,7 +909,7 @@ In this exercise we will access the parallel filesystem using Globus:
  
 * Frontier users: 
 
-You can reach Orion Luster from the “OLCF DTN (Globus 5)” Collection. You do so by entering the path to them in the Path bar.
+You can reach Orion Lustre from the “OLCF DTN (Globus 5)” Collection. You do so by entering the path to them in the Path bar.
  
 Path to Orion `/gpfs/orion/<<your_project_ID>>`
 
