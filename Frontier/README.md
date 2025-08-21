@@ -478,6 +478,7 @@ From: savannah.ornl.gov/olcf-container-images/cpe:24.11_gnu_opensuse
 %post
     wget https://github.com/lammps/lammps/archive/refs/tags/stable_2Aug2023_update3.tar.gz
     tar xzf stable_2Aug2023_update3.tar.gz
+    zypper install -y cmake
     cmake -S lammps-stable_2Aug2023_update3/cmake -B lammps_build -D CMAKE_INSTALL_PREFIX=/opt/lammps -D CMAKE_CXX_COMPILER=hipcc \
                 -D PKG_KOKKOS=yes -D Kokkos_ARCH_HOSTARCH=yes -D Kokkos_ARCH_GPUARCH=yes -D Kokkos_ENABLE_HIP=yes
     cmake --build lammps_build --target install -j8
