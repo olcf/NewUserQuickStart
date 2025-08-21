@@ -38,7 +38,7 @@ Replace `<your username>` with your actual username.
 If you are using Odo, execute the following instead
  
 ```
-$ ssh <your username>@login1.odo.olcf.ornl.gov
+$ ssh <your username>@odo.olcf.ornl.gov
 ```
  
 After you press enter, you will be asked to enter your PASSCODE
