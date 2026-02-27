@@ -527,11 +527,10 @@ Here's a job script that runs LAMMPS from the LAMMPS container you built in the 
 #SBATCH -t 00:20:00
 
 module reset
-module load PrgEnv-gnu
 module load olcf-container-tools
 module load apptainer-enable-mpi apptainer-enable-gpu
 
-srun -N 2 -n 16 --gpus-per-task=1 --gpu-bind=closest --unbuffered  apptainer exec lammps.sif lmp -k on g 1 -sf kk -pk kokkos gpu/aware on -in /lustre/orion/stf007/world-shared/ij.in
+srun -N 2 -n 16 --gpus-per-task=1 --gpu-bind=closest --unbuffered  apptainer --silent exec lammps.sif lmp -k on g 1 -sf kk -pk kokkos gpu/aware on -in /lustre/orion/stf007/world-shared/ij.in
 ```
 
 ## Job Script Generator in myOLCF (Tony) 
