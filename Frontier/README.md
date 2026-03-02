@@ -292,6 +292,12 @@ $ module spider rocm
       rocm/6.2.0
       rocm/6.2.4
       rocm/6.3.1
+      rocm/6.4.0
+      rocm/6.4.1
+      rocm/6.4.2
+      rocm/7.0.2
+      rocm/7.1.1
+      rocm/7.2.0
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 For detailed information about a specific module use the module's full name.
@@ -408,20 +414,23 @@ Currently Loaded Modules:
  
 Now it might seem strange there are a number of modules in the list in addition to the `rocm` module you loaded. This is because Frontier loads a default set of modules every time you log in. You will also notice that a number of these default modules start with `cray`. Frontier is an HPE Cray system, and so several software libraries are provided by the Cray software team that are optimized for use on Frontier.
  
-One of the modules in the above list is `PrgEnv-cray`. This means that the Cray Programming Environment. A Programming Environment is a collection of libraries along with a compiler that are all loaded together. `PrgEnv-cray` loads the Cray Compiling Environment which is the set of C, C++, and Fortran compilers along with libraries compiled with those compilers. When this programming environment is loaded, the Cray compilers are available for use. Also available are PrgEnv-gnu and PrgEnv-amd, which loads the GNU and AMD compilers respectively, along with reloading any libraries to load the libraries compiled with the currently loaded compiler.
+One of the modules in the above list is `PrgEnv-cray`. This is the Cray Programming Environment. A Programming Environment is a collection of libraries along with a compiler that are all loaded together. `PrgEnv-cray` loads the Cray Compiling Environment which is the set of C, C++, and Fortran compilers along with libraries compiled with those compilers. When this programming environment is loaded, the Cray compilers are available for use. Also available are PrgEnv-gnu and PrgEnv-amd, which loads the GNU and AMD compilers respectively, along with reloading any libraries to load the libraries compiled with the currently loaded compiler.
  
 For example, if you load PrgEnv-gnu, you will see the following output.
  
 ```
 $ module load PrgEnv-gnu
-Lmod is automatically replacing "cce/18.0.1" with "gcc-native/13.2".
+Lmod is automatically replacing "cce/18.0.1" with "gcc-native/14.2".
 
 
 Lmod is automatically replacing "PrgEnv-cray/8.6.0" with "PrgEnv-gnu/8.6.0".
 
 
+Inactive Modules:
+  1) darshan-runtime
+
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-libsci/24.11.0     2) cray-mpich/8.1.31     3) darshan-runtime/3.4.6-mpi
+  1) cray-libsci/24.11.0     2) cray-mpich/8.1.31
 ```
  
 Here's a list of the useful commands we've seen so far:
