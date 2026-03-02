@@ -6,9 +6,6 @@
 #SBATCH -p batch
 #SBATCH -N 1
 
-# TODO: un-comment for Odo
-# unset SLURM_EXPORT_ENV
-
 date
 
 module load PrgEnv-gnu

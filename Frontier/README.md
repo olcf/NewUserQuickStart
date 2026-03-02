@@ -706,7 +706,8 @@ Best Practices:
 - **Store in Project Areas:** Place your custom conda environments in your user project areas on NFS. This prevents them from being purged and makes them shareable with your project team.
 - **Identify by Machine:** Include the machine name in the environment name or store environments in a directory named for that machine.
 - **Keep It Organized:** Save your conda environments in a `.conda` folder to clearly identify them and avoid cluttering your directory listings.
-- **Use Source Activate:** ALWAYS use `Source Activate` even when Python prompts  you to use `conda activate`. NEVER user `conda activate` on OLCF machines. `conda activate` can put options in your configuration files, which are shared between all the machines, but those options will not work universally on all the machines you use. 
+- **Source Activate:** You can always use `source activate` even when Python prompts you to use `conda activate`. `conda activate` will modify shell configurations and may cause `PATH` problems on Andes.
+- **Conda Activate** You can ONLY use `conda activate` on Frontier by default. Frontier's `miniforge3` module has been modified to overcome previous obstacles in using `conda activate`. You can use `conda activate` on Odo **ONLY** if you first activate the base environment `conda activate base`.
 
 
 For your future reference, open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). You will see tabs under "To create and activate an environment:" that have instructions for creating custom environments on each of our resources.
@@ -757,12 +758,13 @@ Executing transaction: done
 > In previous releases, the specific nature of conda on Frontier caused issue which led to the use of `source activate` instead of `conda activate` to activate environments.
 > This has since been mitigated, and you should now use `conda activate` on Frontier.
 > 
-> **On Odo you must still use `source activate`**
+> On Odo you can use `conda activate` if you first `conda activate base`.
 
 Frontier
 ```bash
 $ conda activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/odo/mpi4py_env
 ```
+
 Odo
 ```bash
 $ source activate /ccsopen/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
@@ -818,15 +820,6 @@ cd python_hands-on
 On Frontier Odo, and Andes, you're already on a compute node once inside a batch job.
 
 Use srun only for parallel-enabled Python; don't use it for serial applications.
- 
-> Note: 
-> 
-> On Odo, $PATH issues can occur if submitting from a non-fresh login shell, leading to the wrong environment being detected.
-> 
-> To prevent this:
-> * Use `--export=NONE` when submitting a job.
-> * Unset SLURM_EXPORT_ENV in your job script before calling srun.
-> * Load modules and activate your environment inside the batch script.
 
 An example batch script for this is provided below:
 
@@ -838,9 +831,6 @@ An example batch script for this is provided below:
 #SBATCH -t 0:10:00
 #SBATCH -p batch
 #SBATCH -N 1
-
-# TODO: un-comment for Odo
-# unset SLURM_EXPORT_ENV
 
 date
 
@@ -870,21 +860,14 @@ vi submit_hello.sbatch
 ```
 
 * Edit the second line after `-A` to your project ID
-* Note the `unset SLURM_EXPORT_ENV` line which pertains to Odo usage
 * Note the lines that reload modules
 * Edit the source activate line to activate the mpi4p_env we created together. 
-* close and save the file. 
+* Save and close the file. 
 
 To submit the batch script from a fresh shell: 
 
-Frontier
 ```
 sbatch submit_hello.sbatch
-```
-
-Odo
-```
-sbatch --export=NONE submit_hello.sbatch
 ```
 
 Once the batch job makes its way through the queue, it will run the "hello_mpi.py" script with 42 MPI tasks.
