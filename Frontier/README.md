@@ -690,7 +690,7 @@ Loading a module sets up a base Python environment on each system. Note that cus
 For example, on Frontier/Odo you would run:
 
 ```bash
-module load miniforge3/23.11.0
+module load miniforge3/23.11.0-0
 conda list
 ```
 ### Setting up a Custom Environment
@@ -723,8 +723,14 @@ $ module load miniforge3
 ```
 Use `conda create` to make the *mpi4py_env* following the Python Best Practices.
 
+Frontier
 ```
-$ conda create -p /ccs/proj/<your_project_id>/<your_user_id>/.conda/frontier/mpi4py_env python=3.10.13
+$ conda create -p /ccs/proj/<your_project_id>/<your_user_id>/.conda/frontier/mpi4py_env python=3.12
+```
+
+Odo
+```
+$ conda create -p /ccs/proj/<your_project_id>/<your_user_id>/.conda/odo/mpi4py_env python=3.12
 ```
 
 The "-p" flag specifies the desired path and name of your new virtual environment. The directory structure is case sensitive, so be sure to insert "<your_project_id>" ad as lowercase. Directories will be created if they do not exist already (provided you have write-access in that location).
@@ -745,10 +751,21 @@ Executing transaction: done
 #
 #     $ conda deactivate
 ```
-Due to the specific nature of conda on Frontier, we will be using `source activate` instead of `conda activate` to activate our new environment:
 
+> Note:
+> 
+> In previous releases, the specific nature of conda on Frontier caused issue which led to the use of `source activate` instead of `conda activate` to activate environments.
+> This has since been mitigated, and you should now use `conda activate` on Frontier.
+> 
+> **On Odo you must still use `source activate`**
+
+Frontier
 ```bash
-$ source activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
+$ conda activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/odo/mpi4py_env
+```
+Odo
+```bash
+$ source activate /ccsopen/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
 ```
 
 The path to the environment should now be displayed in "( )" at the beginning of your terminal lines, which indicate that you are currently using that specific conda environment.
@@ -802,11 +819,14 @@ On Frontier Odo, and Andes, you're already on a compute node once inside a batch
 
 Use srun only for parallel-enabled Python; don't use it for serial applications.
  
-$PATH issues can occur if submitting from a non-fresh login shell, leading to the wrong environment being detected.
- To prevent this:
- * Use --export=NONE when submitting a job.
- * Unset SLURM_EXPORT_ENV in your job script before calling srun.
- * Load modules and activate your environment inside the batch script.
+> Note: 
+> 
+> On Odo, $PATH issues can occur if submitting from a non-fresh login shell, leading to the wrong environment being detected.
+> 
+> To prevent this:
+> * Use `--export=NONE` when submitting a job.
+> * Unset SLURM_EXPORT_ENV in your job script before calling srun.
+> * Load modules and activate your environment inside the batch script.
 
 An example batch script for this is provided below:
 
@@ -819,16 +839,23 @@ An example batch script for this is provided below:
 #SBATCH -p batch
 #SBATCH -N 1
 
-unset SLURM_EXPORT_ENV
+# TODO: un-comment for Odo
+# unset SLURM_EXPORT_ENV
 
 date
 
 module load PrgEnv-gnu
 module load miniforge3
 
+# Frontier
 # TODO: build your own environment with mpi4py using the instructions above!
-# source activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
-source activate /lustre/orion/stf007/world-shared/new-user-training/mpi4py_env
+# conda activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
+conda activate /lustre/orion/stf007/world-shared/new-user-training/mpi4py_env
+
+# Odo
+# TODO: build your own environment with mpi4py using the instructions above!
+# source activate activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/odo/mpi4py_env
+# source activate /gpfs/wolf2/olcf/stf007/world-shared/new-user-training/mpi4py_env
 
 srun -n42 python3 -u hello_mpi.py
 ```
@@ -840,16 +867,22 @@ Use the example script as a guide to edit the batch script for our exercise.
 Open the submit_hello.sbatch 
 ```
 vi submit_hello.sbatch 
-
 ```
+
 * Edit the second line after `-A` to your project ID
-* Note the `unset SLURM_EXPORT_ENV` line 
+* Note the `unset SLURM_EXPORT_ENV` line which pertains to Odo usage
 * Note the lines that reload modules
 * Edit the source activate line to activate the mpi4p_env we created together. 
 * close and save the file. 
 
 To submit the batch script from a fresh shell: 
 
+Frontier
+```
+sbatch submit_hello.sbatch
+```
+
+Odo
 ```
 sbatch --export=NONE submit_hello.sbatch
 ```
@@ -866,7 +899,7 @@ Hello from MPI rank 0 !
 Hello from MPI rank 1 !
 Hello from MPI rank 32 !
 ```
-Congratulations! You have the tools and knowledge you need to start using python on Frontier! 
+Congratulations! You have the tools and knowledge you need to start using Python on Frontier! 
 
 
 ## Globus (Subil)
