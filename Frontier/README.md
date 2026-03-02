@@ -251,8 +251,8 @@ Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/front
 Frontier supports a large number of users from a wide range of scientific disciplines. Different users have different software needs. Some users might need to use different versions of the same software. In order to accommodate this, Frontier uses Lmod. Lmod manages software installed on Frontier in the form of 'modules'. You can get access to a specific software or package or library you need by 'loading' the specific module (provided it is available on Frontier).
  
  
-For example, if you want to use the `hipcc` compiler which is part of AMD's ROCm software stack, you need to first load the `rocm` module. The command is the same as what you did earlier to load miniforge
- 
+For example, if you want to use the `hipcc` compiler which is part of AMD's ROCm software stack, you need to first load the `rocm` module.
+
 ```
 $ hipcc --version
 If 'hipcc' is not a typo you can use command-not-found to lookup the package that contains it, like this:
@@ -690,7 +690,7 @@ Loading a module sets up a base Python environment on each system. Note that cus
 For example, on Frontier/Odo you would run:
 
 ```bash
-module load miniforge3/23.11.0-0
+module load miniforge3
 conda list
 ```
 ### Setting up a Custom Environment
@@ -706,8 +706,8 @@ Best Practices:
 - **Store in Project Areas:** Place your custom conda environments in your user project areas on NFS. This prevents them from being purged and makes them shareable with your project team.
 - **Identify by Machine:** Include the machine name in the environment name or store environments in a directory named for that machine.
 - **Keep It Organized:** Save your conda environments in a `.conda` folder to clearly identify them and avoid cluttering your directory listings.
-- **Source Activate:** You can always use `source activate` even when Python prompts you to use `conda activate`. `conda activate` will modify shell configurations and may cause `PATH` problems on Andes.
-- **Conda Activate** You can ONLY use `conda activate` on Frontier by default. Frontier's `miniforge3` module has been modified to overcome previous obstacles in using `conda activate`. You can use `conda activate` on Odo **ONLY** if you first activate the base environment `conda activate base`.
+- **Source Activate:** You can always use `source activate` even when Python prompts you to use `conda activate`.
+- **Conda Activate** You can use `conda activate` on Frontier, Odo, and Andes by default if you are using the *default* `miniforge3` module. Frontier and Odo's `miniforge3` modules have been modified to overcome previous obstacles in using `conda activate`.
 
 
 For your future reference, open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). You will see tabs under "To create and activate an environment:" that have instructions for creating custom environments on each of our resources.
@@ -731,10 +731,10 @@ $ conda create -p /ccs/proj/<your_project_id>/<your_user_id>/.conda/frontier/mpi
 
 Odo
 ```
-$ conda create -p /ccs/proj/<your_project_id>/<your_user_id>/.conda/odo/mpi4py_env python=3.12
+$ conda create -p /ccsopen/proj/<your_project_id>/<your_user_id>/.conda/odo/mpi4py_env python=3.12
 ```
 
-The "-p" flag specifies the desired path and name of your new virtual environment. The directory structure is case sensitive, so be sure to insert "<your_project_id>" ad as lowercase. Directories will be created if they do not exist already (provided you have write-access in that location).
+The "-p" flag specifies the desired path and name of your new virtual environment. The directory structure is case sensitive, so be sure to insert "<your_project_id>" as lowercase. Directories will be created if they do not exist already (provided you have write-access in that location).
 
 
 After following the prompts for creating your new environment, the installation should be successful, and you will see something similar to:
@@ -756,19 +756,13 @@ Executing transaction: done
 > Note:
 > 
 > In previous releases, the specific nature of conda on Frontier caused issue which led to the use of `source activate` instead of `conda activate` to activate environments.
-> This has since been mitigated, and you should now use `conda activate` on Frontier.
-> 
-> On Odo you can use `conda activate` if you first `conda activate base`.
+> This has since been mitigated, and you should now use `conda activate` on Frontier and Odo.
 
-Frontier
+
 ```bash
-$ conda activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/odo/mpi4py_env
+$ conda activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
 ```
 
-Odo
-```bash
-$ source activate /ccsopen/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
-```
 
 The path to the environment should now be displayed in "( )" at the beginning of your terminal lines, which indicate that you are currently using that specific conda environment.
 If you check with `conda env list`, you should see that the `*` marker is next to your new environment, which means that it is currently active:
@@ -850,7 +844,7 @@ conda activate /lustre/orion/stf007/world-shared/new-user-training/mpi4py_env
 srun -n42 python3 -u hello_mpi.py
 ```
 
-The srun in this example has`-n42`, which means launch 42 MPI tasks per node. 
+The srun in this example has`-n42`, which means launch 42 MPI tasks. 
 
 Use the example script as a guide to edit the batch script for our exercise.
 
@@ -861,7 +855,7 @@ vi submit_hello.sbatch
 
 * Edit the second line after `-A` to your project ID
 * Note the lines that reload modules
-* Edit the source activate line to activate the mpi4p_env we created together. 
+* Edit the source activate line to activate the mpi4py_env we created together. 
 * Save and close the file. 
 
 To submit the batch script from a fresh shell: 
@@ -884,6 +878,11 @@ Hello from MPI rank 32 !
 ```
 Congratulations! You have the tools and knowledge you need to start using Python on Frontier! 
 
+### PyTorch at OLCF
+
+PyTorch is not currently provided on any system at OLCF as either a module or part of the base environment.
+If you are interested in building PyTorch, you can refer to our [PyTorch on Frontier](https://docs.olcf.ornl.gov/software/analytics/pytorch_frontier.html) documentation for an up-to-date, step-by-step guide to build our recommended PyTorch environment.
+The guide has multiple examples that you can run to verify your installation and use as a starting point for new AI code.
 
 ## Globus (Subil)
  
