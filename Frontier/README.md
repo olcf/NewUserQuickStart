@@ -251,8 +251,8 @@ Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/front
 Frontier supports a large number of users from a wide range of scientific disciplines. Different users have different software needs. Some users might need to use different versions of the same software. In order to accommodate this, Frontier uses Lmod. Lmod manages software installed on Frontier in the form of 'modules'. You can get access to a specific software or package or library you need by 'loading' the specific module (provided it is available on Frontier).
  
  
-For example, if you want to use the `hipcc` compiler which is part of AMD's ROCm software stack, you need to first load the `rocm` module. The command is the same as what you did earlier to load miniforge
- 
+For example, if you want to use the `hipcc` compiler which is part of AMD's ROCm software stack, you need to first load the `rocm` module.
+
 ```
 $ hipcc --version
 If 'hipcc' is not a typo you can use command-not-found to lookup the package that contains it, like this:
@@ -292,6 +292,12 @@ $ module spider rocm
       rocm/6.2.0
       rocm/6.2.4
       rocm/6.3.1
+      rocm/6.4.0
+      rocm/6.4.1
+      rocm/6.4.2
+      rocm/7.0.2
+      rocm/7.1.1
+      rocm/7.2.0
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 For detailed information about a specific module use the module's full name.
@@ -408,20 +414,23 @@ Currently Loaded Modules:
  
 Now it might seem strange there are a number of modules in the list in addition to the `rocm` module you loaded. This is because Frontier loads a default set of modules every time you log in. You will also notice that a number of these default modules start with `cray`. Frontier is an HPE Cray system, and so several software libraries are provided by the Cray software team that are optimized for use on Frontier.
  
-One of the modules in the above list is `PrgEnv-cray`. This means that the Cray Programming Environment. A Programming Environment is a collection of libraries along with a compiler that are all loaded together. `PrgEnv-cray` loads the Cray Compiling Environment which is the set of C, C++, and Fortran compilers along with libraries compiled with those compilers. When this programming environment is loaded, the Cray compilers are available for use. Also available are PrgEnv-gnu and PrgEnv-amd, which loads the GNU and AMD compilers respectively, along with reloading any libraries to load the libraries compiled with the currently loaded compiler.
+One of the modules in the above list is `PrgEnv-cray`. This is the Cray Programming Environment. A Programming Environment is a collection of libraries along with a compiler that are all loaded together. `PrgEnv-cray` loads the Cray Compiling Environment which is the set of C, C++, and Fortran compilers along with libraries compiled with those compilers. When this programming environment is loaded, the Cray compilers are available for use. Also available are PrgEnv-gnu and PrgEnv-amd, which loads the GNU and AMD compilers respectively, along with reloading any libraries to load the libraries compiled with the currently loaded compiler.
  
 For example, if you load PrgEnv-gnu, you will see the following output.
  
 ```
 $ module load PrgEnv-gnu
-Lmod is automatically replacing "cce/18.0.1" with "gcc-native/13.2".
+Lmod is automatically replacing "cce/18.0.1" with "gcc-native/14.2".
 
 
 Lmod is automatically replacing "PrgEnv-cray/8.6.0" with "PrgEnv-gnu/8.6.0".
 
 
+Inactive Modules:
+  1) darshan-runtime
+
 Due to MODULEPATH changes, the following have been reloaded:
-  1) cray-libsci/24.11.0     2) cray-mpich/8.1.31     3) darshan-runtime/3.4.6-mpi
+  1) cray-libsci/24.11.0     2) cray-mpich/8.1.31
 ```
  
 Here's a list of the useful commands we've seen so far:
@@ -681,7 +690,7 @@ Loading a module sets up a base Python environment on each system. Note that cus
 For example, on Frontier/Odo you would run:
 
 ```bash
-module load miniforge3/23.11.0
+module load miniforge3
 conda list
 ```
 ### Setting up a Custom Environment
@@ -697,7 +706,8 @@ Best Practices:
 - **Store in Project Areas:** Place your custom conda environments in your user project areas on NFS. This prevents them from being purged and makes them shareable with your project team.
 - **Identify by Machine:** Include the machine name in the environment name or store environments in a directory named for that machine.
 - **Keep It Organized:** Save your conda environments in a `.conda` folder to clearly identify them and avoid cluttering your directory listings.
-- **Use Source Activate:** ALWAYS use `Source Activate` even when Python prompts  you to use `conda activate`. NEVER user `conda activate` on OLCF machines. `conda activate` can put options in your configuration files, which are shared between all the machines, but those options will not work universally on all the machines you use. 
+- **Source Activate:** You can always use `source activate` even when Python prompts you to use `conda activate`.
+- **Conda Activate** You can use `conda activate` on Frontier, Odo, and Andes by default if you are using the *default* `miniforge3` module. Frontier and Odo's `miniforge3` modules have been modified to overcome previous obstacles in using `conda activate`.
 
 
 For your future reference, open a new browser tab or window and direct it to [https://docs.olcf.ornl.gov/software/python/index.html#custom-environments](https://docs.olcf.ornl.gov/software/python/index.html#base-environment). You will see tabs under "To create and activate an environment:" that have instructions for creating custom environments on each of our resources.
@@ -714,11 +724,17 @@ $ module load miniforge3
 ```
 Use `conda create` to make the *mpi4py_env* following the Python Best Practices.
 
+Frontier
 ```
-$ conda create -p /ccs/proj/<your_project_id>/<your_user_id>/.conda/frontier/mpi4py_env python=3.10.13
+$ conda create -p /ccs/proj/<your_project_id>/<your_user_id>/.conda/frontier/mpi4py_env python=3.12
 ```
 
-The "-p" flag specifies the desired path and name of your new virtual environment. The directory structure is case sensitive, so be sure to insert "<your_project_id>" ad as lowercase. Directories will be created if they do not exist already (provided you have write-access in that location).
+Odo
+```
+$ conda create -p /ccsopen/proj/<your_project_id>/<your_user_id>/.conda/odo/mpi4py_env python=3.12
+```
+
+The "-p" flag specifies the desired path and name of your new virtual environment. The directory structure is case sensitive, so be sure to insert "<your_project_id>" as lowercase. Directories will be created if they do not exist already (provided you have write-access in that location).
 
 
 After following the prompts for creating your new environment, the installation should be successful, and you will see something similar to:
@@ -736,11 +752,17 @@ Executing transaction: done
 #
 #     $ conda deactivate
 ```
-Due to the specific nature of conda on Frontier, we will be using `source activate` instead of `conda activate` to activate our new environment:
+
+> Note:
+> 
+> In previous releases, the specific nature of conda on Frontier caused issue which led to the use of `source activate` instead of `conda activate` to activate environments.
+> This has since been mitigated, and you should now use `conda activate` on Frontier and Odo.
+
 
 ```bash
-$ source activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
+$ conda activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
 ```
+
 
 The path to the environment should now be displayed in "( )" at the beginning of your terminal lines, which indicate that you are currently using that specific conda environment.
 If you check with `conda env list`, you should see that the `*` marker is next to your new environment, which means that it is currently active:
@@ -792,12 +814,6 @@ cd python_hands-on
 On Frontier Odo, and Andes, you're already on a compute node once inside a batch job.
 
 Use srun only for parallel-enabled Python; don't use it for serial applications.
- 
-$PATH issues can occur if submitting from a non-fresh login shell, leading to the wrong environment being detected.
- To prevent this:
- * Use --export=NONE when submitting a job.
- * Unset SLURM_EXPORT_ENV in your job script before calling srun.
- * Load modules and activate your environment inside the batch script.
 
 An example batch script for this is provided below:
 
@@ -810,39 +826,42 @@ An example batch script for this is provided below:
 #SBATCH -p batch
 #SBATCH -N 1
 
-unset SLURM_EXPORT_ENV
-
 date
 
 module load PrgEnv-gnu
 module load miniforge3
 
+# Frontier
 # TODO: build your own environment with mpi4py using the instructions above!
-# source activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
-source activate /lustre/orion/stf007/world-shared/new-user-training/mpi4py_env
+# conda activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/frontier/mpi4py_env
+conda activate /lustre/orion/stf007/world-shared/new-user-training/mpi4py_env
+
+# Odo
+# TODO: build your own environment with mpi4py using the instructions above!
+# source activate activate /ccs/proj/<<your_project_id>>/<<your_user_id>>/.conda/odo/mpi4py_env
+# source activate /gpfs/wolf2/olcf/stf007/world-shared/new-user-training/mpi4py_env
 
 srun -n42 python3 -u hello_mpi.py
 ```
 
-The srun in this example has`-n42`, which means launch 42 MPI tasks per node. 
+The srun in this example has`-n42`, which means launch 42 MPI tasks. 
 
 Use the example script as a guide to edit the batch script for our exercise.
 
 Open the submit_hello.sbatch 
 ```
 vi submit_hello.sbatch 
-
 ```
+
 * Edit the second line after `-A` to your project ID
-* Note the `unset SLURM_EXPORT_ENV` line 
 * Note the lines that reload modules
-* Edit the source activate line to activate the mpi4p_env we created together. 
-* close and save the file. 
+* Edit the source activate line to activate the mpi4py_env we created together. 
+* Save and close the file. 
 
 To submit the batch script from a fresh shell: 
 
 ```
-sbatch --export=NONE submit_hello.sbatch
+sbatch submit_hello.sbatch
 ```
 
 Once the batch job makes its way through the queue, it will run the "hello_mpi.py" script with 42 MPI tasks.
@@ -857,8 +876,13 @@ Hello from MPI rank 0 !
 Hello from MPI rank 1 !
 Hello from MPI rank 32 !
 ```
-Congratulations! You have the tools and knowledge you need to start using python on Frontier! 
+Congratulations! You have the tools and knowledge you need to start using Python on Frontier! 
 
+### PyTorch at OLCF
+
+PyTorch is not currently provided on any system at OLCF as either a module or part of the base environment.
+If you are interested in building PyTorch, you can refer to our [PyTorch on Frontier](https://docs.olcf.ornl.gov/software/analytics/pytorch_frontier.html) documentation for an up-to-date, step-by-step guide to build our recommended PyTorch environment.
+The guide has multiple examples that you can run to verify your installation and use as a starting point for new AI code.
 
 ## Globus (Subil)
  
