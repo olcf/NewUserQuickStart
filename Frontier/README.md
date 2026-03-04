@@ -10,7 +10,9 @@ We'll begin with an overview of Frontier, our exascale super computer.
 Since it is easiest to do this from pictures, lets go to the Frontier docs:
 https://docs.olcf.ornl.gov/systems/frontier_user_guide.html#system-overview
 
-![image](https://github.com/olcf/NewUserQuickStart/assets/17310566/d02cca71-f95f-44d7-9843-8004cccade7f)
+<img width="1335" height="742" alt="image" src="https://github.com/user-attachments/assets/ccbaca43-672b-480c-9639-891affbe5886" />
+
+
 
 
  
