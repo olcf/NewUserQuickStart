@@ -225,7 +225,206 @@ ls
 
 ## Programming and Compiling (HPC) (Tony)
 
+Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/lux_user_guide.html#programming-environment
+
 ### Lmod
+
+[//]: # (todo: is this section accurate enough?)
+Lux supports users from a wide range of scientific disciplines. 
+Different users have different software needs. 
+Some users might need to use different versions of the same software. 
+In order to accommodate this, Lux uses Lmod. 
+Lmod manages software installed on Lux in the form of 'modules'. 
+You can get access to a specific software or package or library you need by 'loading' the specific module (provided it is available on Lux).
+
+For example, if you want to use the `hipcc` compiler which is part of AMD's ROCm software stack, you may want to consider the version of the default loaded `rocm` module.
+
+```shell
+$ hipcc --version
+HIP version: 7.2.53211-97f5574fe2
+AMD clang version 22.0.0git (https://github.com/RadeonOpenCompute/llvm-project roc-7.2.4 26084 f58b06dce1f9c15707c5f808fd002e18c2accf7e)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /opt/rocm-7.2.4/lib/llvm/bin
+Configuration file: /opt/rocm-7.2.4/lib/llvm/bin/clang++.cfg
+
+$ module load rocm/7.14.0
+...
+$ hipcc --version
+HIP version: 7.14.60850-0000000
+AMD clang version 23.0.0git (https://github.com/ROCm/llvm-project.git 46fcb339fb61119b337f973c7ca9e710a319fdd0+PATCHED:440716f8b87be9d8e20ed910e10e5b6d14d57cf6)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /opt/rocm-7.14.0/lib/llvm/bin
+Configuration file: /opt/rocm-7.14.0/lib/llvm/bin/clang++.cfg
+```
+
+If you want to use a specific version of the ROCm software stack, you can check which versions are available by running `module spider rocm`.
+```shell
+$ module spider rocm
+
+------------------------------------------------------------------------------------------------------------------------------------------
+  rocm:
+------------------------------------------------------------------------------------------------------------------------------------------
+     Versions:
+        rocm/7.2.4
+        rocm/7.14.0
+
+------------------------------------------------------------------------------------------------------------------------------------------
+  For detailed information about a specific "rocm" package (including how to load the modules) use the module's full name.
+  Note that names that have a trailing (E) are extensions provided by other modules.
+  For example:
+
+     $ module spider rocm/7.14.0
+------------------------------------------------------------------------------------------------------------------------------------------
+```
+
+You can see the full list of modules available to load by simply executing `module spider` without a module name given.
+
+```shell
+$ module spider
+
+------------------------------------------------------------------------------------------------------------------------------------------
+The following is a list of the modules and extensions currently available:
+------------------------------------------------------------------------------------------------------------------------------------------
+  DefApps: DefApps
+
+  amd-llvm: amd-llvm/7.2.4, amd-llvm/7.14.0
+
+  amdblis: amdblis/5.3
+
+  amdlibflame: amdlibflame/5.3
+
+  aocl-compression: aocl-compression/5.3
+
+  aocl-crypto: aocl-crypto/5.3
+
+  aocl-libmem: aocl-libmem/5.3
+
+  aocl-sparse: aocl-sparse/5.3
+
+  binutils: binutils/2.46.1
+
+  cmake: cmake/3.31.11
+
+  core: core/1
+
+  gcc: gcc/14.4.0
+
+  git: git/2.53.0
+
+  git-lfs: git-lfs/3.7.1
+
+
+<truncated for space>
+```
+
+And you can load a specific version of a module like rocm 7.14.0 specifying the version number in the `module load` command like so:
+
+```shell
+$ module load rocm/7.14.0
+```
+
+If a specific version number is not specified, it will load a system defined default version (in the case of `rocm`, the default version loaded is 7.2.4).
+
+
+`module load` does a few things, chief among which is it updates some environment variables that the OS uses to look for software or libraries.
+You can see information about a module and a summary of what changes are made when you execute a `module show` operation.
+
+```shell
+$ module show rocm
+------------------------------------------------------------------------------------------------------------------------------------------
+   /sw/lux/modules/rocm/7.2.4.lua:
+------------------------------------------------------------------------------------------------------------------------------------------
+help([[ROCm Toolkit v7.2.4]])
+whatis("Defines the system paths and environment variables required for the ROCm Toolkit.")
+setenv("ROCM_PATH","/opt/rocm-7.2.4")
+setenv("HIP_LIB_PATH","/opt/rocm-7.2.4/lib")
+prepend_path("PATH","/opt/rocm-7.2.4/bin")
+prepend_path("MANPATH","/opt/rocm-7.2.4/share/man")
+prepend_path("CMAKE_PREFIX_PATH","/opt/rocm-7.2.4/lib/cmake/hip")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-7.2.4/lib")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-7.2.4/lib/rocprofiler")
+prepend_path("LD_LIBRARY_PATH","/opt/rocm-7.2.4/lib/roctracer")
+prepend_path("PKG_CONFIG_PATH","/usr/lib64/pkgconfig")
+```
+
+At any time you can check the modules that are currently loaded by running `module list`
+
+```shell
+$ module list
+
+Currently Loaded Modules:
+  1) xalt/3.2.4   3) tmux/3.6a        5) rocm/7.2.4   7) openmpi/5.0.10   9) DefApps
+  2) core/1       4) amd-llvm/7.2.4   6) ucx/1.22.0   8) ucc/1.8.0
+```
+
+> [!NOTE]
+> For a more compact, or machine-readable output, try `module -t list` (`-t` is for terse).
+
+You may notice that there are some modules you have not explicitly loaded in the list, in addition to modules such as `rocm` that you have loaded.
+This is because Lux loads a default set of modules every time you log in.
+Chief among the default modules is a `rocm` version, namely `rocm/7.2.4`.
+Lux as a machine contains most of its computational power in its AMD GPUs (MI355X).
+Thus, compiling and programming GPU codes is of such importance that a tested ROCm module is loaded by default.
+
+Unlike Frontier, Lux programming environments are more free-form collections of modules.
+Programming environments typically consist of a compiler and some basic dependencies, such as MPI and ROCm.
+
+You can find existing programming environments on Lux utilizing the Lmod command `module avail`.
+
+```shell
+$ module avail
+
+---------------------------------------------- [ amd-llvm/7.2.4, rocm/7.2.4, openmpi/5.0.10 ] -----------------------------------------------
+   cp2k/2026.1    lammps/20260704    osu-micro-benchmarks/7.5.2
+
+---------------------------------------------------- [ amd-llvm/7.2.4, openmpi/5.0.10 ] -----------------------------------------------------
+   amdfftw/5.3    amdscalapack/5.3    hdf5/1.14.6    netcdf-c/4.10.0    netcdf-fortran/4.6.2
+
+------------------------------------------------------ [ amd-llvm/7.2.4, rocm/7.2.4 ] -------------------------------------------------------
+   kokkos/5.1.1    mpich/5.0.1    openmpi/5.0.10 (L)
+
+<snip>
+
+---------------------------------------------------------------- [ core/1 ] -----------------------------------------------------------------
+   aocl-compression/5.3    binutils/2.46.1    git/2.53.0            patchelf/0.17.2    rust/1.96.0
+   aocl-crypto/5.3         cmake/3.31.11      hpcviewer/2026.1.1    pciutils/3.7.0     tmux/3.6a    (L)
+   aocl-libmem/5.3         git-lfs/3.7.1      libdrm/2.4.131        python/3.14.5      vim/9.2.0000
+
+------------------------------------------------------------- [ Base Modules ] --------------------------------------------------------------
+   DefApps        (L)      amd-llvm/7.14.0        gcc/14.4.0             rocm/7.2.4  (L,D)    xalt/3.2.4 (L)
+   amd-llvm/7.2.4 (L,D)    core/1          (L)    miniforge3/26.3.2-3    rocm/7.14.0
+```
+
+The delimiter row is your “programming environment” as a list of modules and the modules underneath are optional modules that are managed by the programming environment.
+These rows list modules currently loaded, and so `module avail` shows your current "programming environment."
+
+The bottom two delimiter rows, `core/1` and `Base Modules` are basic modules that can be loaded and sometimes replace existing loaded modules.
+
+For example, if you loaded `rocm/7.14.0` in the example below, you would have see the following output.
+
+```shell
+$ module load rocm/7.14.0
+
+Inactive Modules:
+  1) openmpi
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) ucc/1.8.0     2) ucx/1.22.0
+
+The following have been reloaded with a version change:
+  1) rocm/7.2.4 => rocm/7.14.0
+```
+
+You can find more information about programming environments on Lux on our [User Guide - Programming Envrionment](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#id3)
+
+Here's a list of the useful commands we've seen so far:
+`module load` - load a module so that it becomes available to use
+`module show` - show more information about a particular module
+`module list` - show list of currently loaded modules
+`module spider` - show list of modules and their versions, or if a module name is specified, show the versions of those modules that are available to load
+`module avail` - view available modules for our current programming environment
 
 ### Compiling
 
