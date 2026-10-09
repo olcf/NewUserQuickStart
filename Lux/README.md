@@ -133,7 +133,93 @@ OLCF has users guides for its compute systems, data management tools and polices
 They have examples that cover the basics that you need to know to run on our system. 
 Let's start with a hands-on to help you find and navigate those guides.
 
-## Filesystems
+### OLCF User Guide Hands On
+Open a browser tab and go to https://docs.olcf.ornl.gov.
+Select the "Systems" option in the left menu bar.
+
+1.	Open Rike guide: Raise your virtual hand when it is open.
+
+2.	Name one visualization tool available on Riker.
+
+3.	What Riker batch queue has the longest available run time?
+
+Close the Riker system guide on the left and open the Lux user guide.
+Raise your virtual hand when it is open.
+
+1.	Name one profiling application available on Lux that is described in the guide.
+
+2.	Find the Thread Mapping examples in the running jobs section; What is the `srun` command that ensures that the MPI tasks will be distributed across sockets in a cyclic (round-robin) manner?
+
+3.	Find the Tips and Tricks section; Read the name of one tip listed in that section.
+
+[//]: # (todo - Containers, Torch)
+
+## Filesystems and Storage
+
+### Overview
+
+OLCF has a Network Files system (NFS) that you land on when you login.
+This is a small secure filesystem that is provisioned to hold your most important data.
+This is the best place for your executables and small important data. It is backed up.
+
+OLCF also has a large parallel filesystem, Orion Lustre, for Lux that you should use to hold your large production data for simulation campaigns or machine learning data and models while you are running.
+Orion is not backed up and data older than 90 days are purged.
+
+OLCF storage systems have different areas designated for induvial user storage and project level storage that is controlled by the file permissions. 
+Please make sure that data that is to be shared with multiple project members is in the project storage.
+This becomes especially important as people leave your project.
+
+For details see our [Data Storage and Transfers Guide]( https://docs.olcf.ornl.gov/data/index.html).
+
+Longer term storge is available in OLCF’s nearline storge system called Kronos.
+Kronos is mounted on the moderate security enclave Data Transfer Nodes (`dtn.ccs.ornl.gov`) and is accessible via Globus at the “OLCF Kronos” collection.
+Standard UNIX commands and tools can also be used to interact with Kronos (scp, rsync, etc.).
+
+See the Kronos section of our [Data Storage and Transfers guide](https://docs.olcf.ornl.gov/data/index.html#kronos-nearline-archival-storage-system)
+
+### Hands-on Storage Areas
+
+Login to Lux and go to your individual user storage called “scratch”:
+
+Lux (Orion) :
+
+```
+cd /lustre/orion/[projid]/scratch/[userid]
+ls
+```
+
+You can also do:
+
+```
+cd $MEMBERWORK/[projid]
+ls
+```
+
+Now let’s look at the project level storage, proj-shared:
+
+```
+cd /lustre/orion/[projid]/proj-shared/
+ls
+
+```
+
+You can also do:
+```
+cd $PROJWORK/[projid]/
+ls
+```
+
+And for sharing between projects:
+```
+cd /lustre/orion/[projid]/world-shared/
+ls
+```
+
+You can also do:
+```
+cd $WORLDWORK/[projid]
+ls
+```
 
 ### Best practices (Jordan)
 
