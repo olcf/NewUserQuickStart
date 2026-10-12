@@ -417,6 +417,11 @@ The following have been reloaded with a version change:
   1) rocm/7.2.4 => rocm/7.14.0
 ```
 
+> [!NOTE]
+> In the above example, you can see that the `openmpi` module was marked as "Inactive".
+> If you need an MPI implementation, you should ensure that your loaded version of ROCm has a corresponding compiler suite.
+> For example `gcc` or `amd-llvm/${ROCM_VERSION}`. In the case above, you could use `module load amd-llvm/7.14.0`
+
 You can find more information about programming environments on Lux on our [User Guide - Programming Envrionment](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#id3)
 
 Here's a list of the useful commands we've seen so far:
