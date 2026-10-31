@@ -440,8 +440,112 @@ Here's a list of the useful commands we've seen so far:
 
 ### Building containers (Subil?)
 
+Containers are a tool to package up your application along with its dependencies into a single
+artifact. This artifact can be run just like any other application on an HPC system. Your packaged
+application will not depend on the presence of libraries on the host since they all are packaged
+with the application in the container. This also makes it easier to distribute the application to
+team members and collaborators (provided they are working on the same system or using the same
+CPU+GPU architecture if they're on a different system).
+
+On Lux, we provide Podman and Apptainer to build container images. If you are familiar with Docker, you can use the same commands with Podman. Any containers built with Podman should be converted to the Apptainer format for running on Lux HPC.
+
+There are examples in the [olcf_container_examples repository](https://github.com/olcf/olcf_container_examples) which you can use for reference.
+ 
 #### Podman
+
+Before building any containers, you need to set up the `~/.config/containers/storage.conf` file. Run
+the below command to set it up.
+
+```
+cat > $HOME/.config/containers/storage.conf <<EOF
+[storage]
+driver = "overlay"
+graphroot = "/tmp/${USER}-containers"
+rootless_storage_path = "/tmp/${USER}-containers"
+
+[storage.options]
+pull_options = {use_hard_links = "true", enable_partial_images = "true"}
+
+
+[storage.options.vfs]
+ignore_chown_errors = "true"
+EOF
+```
+
+
+To build a container with Podman, write a Dockerfile, for example:
+
+
+```
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get upgrade
+RUN apt-get install vim
+```
+
+You can build this container image on Lux by running the below.
+
+```
+podman build --network=host -t docker.io/<your username>/myubuntu:latest . 
+```
+
+The `docker.io/...` naming is not mandatory. You can name it whatever you want. But you want to use
+the full URL of a registry if you are intending to push this image to a registry later.
+
+The `--network=host` flag is necessary. Otherwise, the `podman build` will fail.
+
+You can login to DockerHub with `podman login docker.io` and enter your username and password when
+prompted. Then you can push your image to Dockerhub with `podman push docker.io/<your username>/myubuntu:latest`.
+
+
+Podman cannot be used as a runtime so any Podman image you build must be converted to Apptainer's
+SIF format. You can do so by the following commands:
+
+``` 
+podman save -o myubuntu.tar docker.io/<your username>/myubuntu:latest
+apptainer build myubuntu.sif docker-archive://myubuntu.tar
+```
+
+
+
 #### Apptainer
+
+You can use Apptainer to build and run containers on Lux. Apptainer uses a different syntax for its
+definition (.def) files compared to Docker/Podman's Dockerfile syntax. It also creates images in a
+format called SIF that is not compatible with Docker/Podman. Apptainer can use images from
+Dockerhub as its base to build apptainer SIF images. However, SIF images created with Apptainer cannot be pushed to
+Dockerhub or other registries to be pulled and used with Docker/Podman. 
+
+As an example, create the following file `ubuntu.def`:
+
+```
+Bootstrap: docker
+From: rocm/dev-ubuntu-24.04:7.14.1-full
+
+%environment
+    # Point to rocm locations
+    export ROCM_PATH=/opt/rocm
+    export LD_LIBRARY_PATH="/opt/rocm/lib:/opt/rocm/lib64:$LD_LIBRARY_PATH"
+    export PATH="/opt/rocm/bin:$PATH"
+    
+
+%post
+# By default you start at the root '/' location in the container images filesystem
+ls
+
+# Installing some prerequisites
+
+apt-get update && apt-get install -y \
+  wget less gfortran vim sudo gzip tar make autoconf automake 
+```
+
+And build with `apptainer build ubuntu.sif ubuntu.def`.
+
+This downloads the Ubuntu developer container from the ROCm Dockerhub repository, installs a few
+packages, sets up environment variables, and creates a SIF file `ubuntu.sif` in the current
+directory. Apptainer images are these .sif files. They exist as regular files and can be placed
+anywhere on the filesystem (unlike Docker images, which need to have a specific location and cannot
+be stored on parallel filesystems like Lustre).
 
 ## Running Jobs
 
@@ -451,22 +555,55 @@ Here's a list of the useful commands we've seen so far:
 
 ### Example: Container (Subil?)
 
+TODO: I want to update the lux pytorch container example to include libionic in the container rather
+than the messy apptainer binds we are doing now.
+
 ## Lux Kubernetes (Subil)
+
+In addition to a traditional HPC system, Lux provides a Kubernetes instance. Rancher is provided as
+an interface to intereract with Kubernetes. This instance can be used for long running persistent services (such as managing a database) as
+well as GPU jobs associated with those services. 
 
 ### Rancher
 
-https://console.apps.slate-mod.ccs.ornl.gov/dashboard/home
+You can navigate to the Rancher web interface through https://console.apps.slate-mod.ccs.ornl.gov/dashboard/home
+
+You will select Lux from among the options presented to be dropped into the Lux Kubernetes
+interface. 
+
+You can create Kubernetes objects such as Pods, Deployments, Services by navigating to the
+appropriate option from the sidebar and clicking on the Create button. Rancher has a robust web
+interface to allow creation of objects using the GUI.
+
+
+[!WARNING]
+The features under the 'Apps' option in the sidebar do not work and are not expected to be
+supported. The best practice is to bring your own applications, either created through the web
+interface or through the `kubectl` CLI.
 
 * Kubeconfig
 
 ### CLI
 
-* `kubectl`
-* `rancher-cli` (ignore if not in docs)
+If you wish to interact with Kubernetes through the command line, you can use the [`kubectl` CLI
+tool](https://kubernetes.io/releases/download/#kubectl). You can download it locally or you can ssh
+to the Lux login node where it is already installed.
 
-## Image Registry (Subil)
+Before you can use `kubectl`, you need to set up the config file. 
 
-Harbor https://harbor.ccs.ornl.gov/harbor/projects
+* Go to the [Rancher Lux interface](https://console.apps.slate-mod.ccs.ornl.gov/dashboard/c/c-828bj/explorer) and 
+and click on the button in the top navbar that says 'Copy KubeConfig to clipboard'. This will copy
+the configuration you need into your clipboard that you can then paste.
+* Go to your terminal where you wish to use `kubectl` (either on your own computer or after logging
+  into the Lux login node), and create the file `~/.kube/config`.
+* Paste the contents of your clipboard into this file.
+
+Run the command `kubectl auth whoami` to make sure you are now logged in on the command line.
+
+[!WARNING]
+This KubeConfig credential expires every 24 hours. So you will need to repeat the above steps if 24
+hours have passed. 
+
 
 ## Globus
  
