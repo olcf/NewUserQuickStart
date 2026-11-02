@@ -433,8 +433,59 @@ Here's a list of the useful commands we've seen so far:
 
 ### Compiling
 
+To compile your C,C++, or Fortran code, you will need to invoke the correct compiler.
+You can find a list of compilers on our user guide here: https://docs.olcf.ornl.gov/systems/lux_user_guide.html#compiling
+You can find various versions of the compilers listed by using what you learned about `lmod` above!
+
+Below, you can find some examples of how to compile:
+
 #### Hello, world
+
+For a "Hello, world" on Lux, you can use whatever compiler you prefer.
+The default loaded compiler module is `amd-llvm`, and so you can compile the following source code with either `amdclang` or `amdclang++`:
+
+```c
+# include <stdio.h>
+
+int main(int argc, char* argv[]) {
+  printf("Hello, world!\n");
+}
+```
+
+You can compile the above with either of the following commands:
+
+```shell
+# C compiler
+amdclang hello_world.c
+# C++ compiler
+amdclang++ hello_world.c
+```
+
 #### Hello, MPI
+
+To effectively use a supercomputer such as Lux, you should use a scalable processing model.
+Lux was built with RCCL as its main model, but MPI can still be scaled (more on that later).
+`openmpi` and `mpich` are both available on Lux, but `openmpi` is preferred.
+Below is an example of a GPU-aware MPI program (from our documentation).
+
+A simple GPU-aware MPI program can be found at `compile_examples/gpu-aware.cpp`.
+GPU-aware programs should be compiled with either `hipcc` or `amdclang++`, but non-GPU MPI programs can use `mpicc`.
+
+You can compile it with the following, and you should be able to substitute any compatible modules listed in our documentation here: https://docs.olcf.ornl.gov/systems/lux_user_guide.html#understanding-the-compatibility-of-compilers-rocm-mpi-and-rccl
+
+```bash
+module load rocm/7.2.4
+module load amd-llvm/7.2.4
+module load openmpi
+
+hipcc -std=c++11 --offload-arch=gfx950 -I${ROCM_PATH}/include -I${MPI_DIR}/include -c compile_examples/gpu-aware.cpp
+hipcc -L${ROCM_PATH}/lib -lamdhip64 -L${MPI_DIR}/lib -lmpi gpu-aware.o -o gpu-aware
+```
+
+> [!NOTE]
+> In the above example, we specify which `lmod` modules to load - ROCm GPU library version, AMD compiler version, and MPI implementation.
+> It is best practice to specify and load versions for each of your dependencies at compile time and run time.
+
 #### Hello, RCCL
 #### Hello, jobstep
 
