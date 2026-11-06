@@ -487,6 +487,23 @@ hipcc -L${ROCM_PATH}/lib -lamdhip64 -L${MPI_DIR}/lib -lmpi gpu-aware.o -o gpu-aw
 > It is best practice to specify and load versions for each of your dependencies at compile time and run time.
 
 #### Hello, RCCL
+
+RCCL is the primary scalable processing model for Lux, and the one which it was designed to best accomodate.
+
+A simple RCCL all-reduce "Hello, world!" can be found in `compile_examples/rccl-hello.cpp`.
+
+This program is simple to compile using `hipcc`, the compiler provided by the ROCm module.
+
+Lux's most compatible RCCL setup can be found included with the `rocm/7.14.0` module.
+
+```bash
+module load rocm/7.14.0
+module load amd-llvm/7.14.0
+
+hipcc -I${ROCM_PATH}/include --offload-arch=gfx950 -c compile_examples/rccl-hello.cpp
+hipcc --offload-arch=gfx950 -lrccl rccl-hello.o -o rccl-hello
+```
+
 #### Hello, jobstep
 
 ### Building containers (Subil?)
