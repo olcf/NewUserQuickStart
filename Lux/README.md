@@ -623,8 +623,22 @@ be stored on parallel filesystems like Lustre).
 
 ### Example: Container (Subil?)
 
-TODO: I want to update the lux pytorch container example to include libionic in the container rather
-than the messy apptainer binds we are doing now.
+In the simplest case, running containers on Lux HPC looks pretty much like running regular applications:
+you write a batch script and submit it. It's just that your `srun` line will invoke `apptainer exec`
+instead of the application directly e.g. `srun -N1 -n1 apptainer exec ubuntu.sif echo hello`.
+
+Of course, your actual applications will be more complex than that. The [olcf_container_examples
+repository](https://github.com/olcf/olcf_containers_examples) has examples showing how to build and
+run containers on Lux HPC.
+
+Clone the repository and navigate to the Pytorch example directory and look at the README for an
+explanation:
+
+```
+git clone https://github.com/olcf/olcf_containers_examples
+cd lux/pytorch/amdrocmregistry
+```
+
 
 ## Lux Kubernetes (Subil)
 
@@ -649,7 +663,6 @@ The features under the 'Apps' option in the sidebar do not work and are not expe
 supported. The best practice is to bring your own applications, either created through the web
 interface or through the `kubectl` CLI.
 
-* Kubeconfig
 
 ### CLI
 
@@ -671,6 +684,22 @@ Run the command `kubectl auth whoami` to make sure you are now logged in on the 
 [!WARNING]
 This KubeConfig credential expires every 24 hours. So you will need to repeat the above steps if 24
 hours have passed. 
+
+Look at our `Kubernetes docs <https://docs.olcf.ornl.gov/systems/lux_user_guide.html>`_ for further information about the basics and at the
+`olcf_kubernetes_examples <https://github.com/olcf/olcf_container_examples>`_ repository for some examples (and feel to free to contribute if you think
+you have a useful example to share).
+
+### Some things to remember
+
+- On Kubernetes, you will have two namespaces ``<project id>-cpu`` and ``<project id>-gpu``
+- The namespaces are shared by the whole project, so make sure you are not overlapping names and
+  labels if multiple people are working on independent applications in the same namespace
+- The ``<project id>-gpu`` namespace is given a certain number of GPU hours per project, and GPU usage is tracked.
+- The GPU namespace only supports `Jobs
+  <https://docs.olcf.ornl.gov/systems/lux_user_guide.html#jobs>`_ and not other types of Kubernetes objects. And it does not
+  support CPU applications. So if you need persistent services that interact with the GPU, you need
+  to have them run on the CPU namespace and launch Jobs on the GPU namespace to perform any GPU
+  tasks. 
 
 
 ## Globus
