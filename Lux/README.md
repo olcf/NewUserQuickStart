@@ -717,6 +717,8 @@ If you need sole access to allocated nodes, use the ``--exclusive`` flag. With t
 
 ### Example: PyTorch
 
+For this example we will use a pre-built PyTorch conda environment to demonstrate how to submit and run a batch job. If you would like to view how the environment was built, please see `pytorch_hands_on/build.sh`. Otherwise, let's turn our attention to `pytorch_hands_on/
+
 ### Example: Container (Subil?)
 
 In the simplest case, running containers on Lux HPC looks pretty much like running regular applications:
