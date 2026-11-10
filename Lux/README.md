@@ -702,6 +702,18 @@ be stored on parallel filesystems like Lustre).
 
 ### Slurm
 
+On Lux, all computational work runs as Slurm jobs, which typically include a batch submission script, an executable, input files, and the output files produced during execution. To acquire compute resources for running Slurm jobs, you use either ``sbatch`` or ``salloc``. The typical workflow is to:
+
+1) Prepare code and inputs
+2) Write a batch script
+3) Submit it with ``sbatch``
+  - Alternatively, use ``salloc`` if you need interactive compute access, e.g., if you're debugging.
+4) Optionally monitor it before and during execution with ``squeue --me``
+
+Lux is a node-shared Slurm cluster, meaning multiple users can share the same physical compute node as long as their requested resources do not overlap. Resources are allocated in GPU-based chunks: each requested GPU includes 16 CPU cores and 375 GB of memory, reflecting the node layout of 128 cores, 3 TB RAM, and 8 GPUs per node. Therefore, it is required you specify the number of GPUs for your job using the ``--gpus`` flag. Please familarize yourself with the Lux node diagram, so you have a firm understanding of compute resource allocations. Diagram of node sharing [here](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#:~:text=Sharing%20Compute%20nodes).
+
+If you need sole access to allocated nodes, use the ``--exclusive`` flag. With the ``--exclusive`` flag, you do not need to specify the number of GPUs required by your job, since all will be given by default.
+
 ### Example: PyTorch
 
 ### Example: Container (Subil?)
