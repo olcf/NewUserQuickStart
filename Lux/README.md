@@ -13,9 +13,21 @@ We'll begin with an overview of Lux, our AMD-based supercomputer built on HPE Pr
 Since it is easiest to do this from pictures, lets go to the Lux docs:
 https://docs.olcf.ornl.gov/systems/lux_user_guide.html#system-overview
 
+<br/>
+<div style="text-align: center">
+<img src="images/lux_overview.png">
+</div>
+<br/>
+<br/>
+<div style="text-align: center">
+<img src="images/lux_node.png" style="text-align: center">
+</div>
+
 ## Getting a project
 
 Lux allocations are distributed by means of [Genesis Mission](https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission) RFA projects, Director's Discretion, or AMD partners.
+
+Each year, about half of Lux's time is allocated by DOE programs.
 
 ### Getting access to Lux
 
