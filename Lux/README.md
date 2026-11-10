@@ -570,6 +570,25 @@ hipcc --offload-arch=gfx950 -lrccl rccl-hello.o -o rccl-hello
 
 #### Hello, jobstep
 
+OLCF's "Hello, jobstep" program can show you how Slurm works to place jobs on nodes.
+You can find ["Hello, jobstep" here](https://code.ornl.gov/olcf/hello_jobstep/-/tree/master?ref_type=heads)
+This can be helpful for fine-tuning a submit line for optimized performance through resource proximity.
+This code uses MPI, OpenMP, and HIP to show exactly which cores and GPUs are assigned for each MPI rank.
+
+You can follow these instructions to build "Hello, jobstep":
+
+```bash
+git clone https://code.ornl.gov/olcf/hello_jobstep.git
+cd hello_jobstep
+
+module load rocm/7.2.4
+module load amd-llvm/7.2.4
+module load openmpi
+
+hipcc -std=c++11 -fopenmp --offload-arch=gfx950 -I${ROCM_PATH}/include -I${MPI_DIR}/include -c hello_jobstep.cpp
+hipcc -fopenmp -L${ROCM_PATH}/lib -lamdhip64 -L${MPI_DIR}/lib -lmpi hello_jobstep.o -o hello_jobstep
+```
+
 ### Building containers (Subil?)
 
 Containers are a tool to package up your application along with its dependencies into a single
