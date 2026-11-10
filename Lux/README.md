@@ -1,8 +1,9 @@
 # Welcome to Hands-on New User training (Tony)
  
 This training is designed to introduce you to the Oak Ridge Leadership Computing Facility and its resources. 
-Also you should never be more than 20 minutes away from and hands-on exercise. 
+You should never be more than 20 minutes away from and hands-on exercise. 
 For this training you will want to have a browser window open and an ssh terminal open.
+Attendees interested in access to Lux who do not yet have access are encouraged follow along with examples and learn about what Lux has to offer, and an overview of how it works.
 
  
 ## Resources Overview (Tony)
@@ -14,9 +15,13 @@ https://docs.olcf.ornl.gov/systems/lux_user_guide.html#system-overview
 
 ## Getting a project
 
-Lux allocations are distributed by means of [Genesis Mission](https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission) RFA projects.
+Lux allocations are distributed by means of [Genesis Mission](https://www.energy.gov/undersecretaryforscience/genesis-mission/genesis-mission) RFA projects, Director's Discretion, or AMD partners.
 
 ### Getting access to Lux
+
+* RFA Team PI's can request access to Lux on the Genesis Mission Consortium page through RTI: https://partnerships.genesismissionconsortium.org/user/login
+* Project proposals are welcome at OLCF under a Director's Discretion application: https://docs.olcf.ornl.gov/accounts/accounts_and_projects.html#what-are-the-differences-between-project-types
+* AMD allows partners to access the public & private partnership allocation. If you are interested please see https://www.olcf.ornl.gov/olcf-resources/compute-systems/lux/ and reach out to OLCFpartner@ornl.gov
 
 ## Projects and accounts
 
@@ -489,11 +494,11 @@ The following have been reloaded with a version change:
 You can find more information about programming environments on Lux on our [User Guide - Programming Envrionment](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#id3)
 
 Here's a list of the useful commands we've seen so far:
-`module load` - load a module so that it becomes available to use
-`module show` - show more information about a particular module
-`module list` - show list of currently loaded modules
-`module spider` - show list of modules and their versions, or if a module name is specified, show the versions of those modules that are available to load
-`module avail` - view available modules for our current programming environment
+* `module load` - load a module so that it becomes available to use
+* `module show` - show more information about a particular module
+* `module list` - show list of currently loaded modules
+* `module spider` - show list of modules and their versions, or if a module name is specified, show the versions of those modules that are available to load
+* `module avail` - view available modules for our current programming environment
 
 ### Compiling
 
