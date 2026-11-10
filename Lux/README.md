@@ -717,7 +717,58 @@ If you need sole access to allocated nodes, use the ``--exclusive`` flag. With t
 
 ### Example: PyTorch
 
-For this example we will use a pre-built PyTorch conda environment to demonstrate how to submit and run a batch job. If you would like to view how the environment was built, please see `pytorch_hands_on/build.sh`. Otherwise, let's turn our attention to `pytorch_hands_on/
+For this example we will use a pre-built PyTorch conda environment to demonstrate how to submit and run a batch job. If you would like to view how the environment was built, please see `pytorch_hands_on/build.sh`. Otherwise, let's turn our attention to `pytorch_hands_on/submit_pytorch.sbatch`.
+
+The first line for every batch submission script must start with an interpreter directive or shebang. In our case, we are using ``#!/bin/bash``. The lines with prefixed with ``#SBATCH`` prefixes are known as sbatch directives and they control how resources are allocated to your job. The same directives can be passed as command line arguments to ``sbatch``; however, for simplicity and reproducibility, sbatch directives are most commonly used.
+
+```
+#!/bin/bash
+#SBATCH -A PROJECT_ID
+#SBATCH -J ddp_test
+#SBATCH -o logs/ddp_test-%j.o
+#SBATCH -e logs/ddp_test-%j.e
+#SBATCH -t 00:05:00
+#SBATCH -p batch
+#SBATCH -N 2
+#SBATCH --exclusive
+```
+These next set of lines control our environment by loading the appropriate modules for running our conda environment and job script. It is good to specify specific versions of modules in case the default versions change. The ``miniforge3`` module will enable us to use conda-related commands such as building and activating environments. If you are not familiar with ``miniforge``, think of it as an open-source Anaconda. 
+
+```
+# Load modules
+module load rocm/7.2.4
+module load miniforge3/26.3.2-3
+
+# Activate your environment
+### TODO: change to world-shared dir ###
+conda activate $(pwd)/lux_torch_env
+```
+This next section is where we handle setting environment variables. The `MASTER_ADDR` is used by PyTorch DDP to communicate which node's IP address belongs to the head node (i.e., rank 0). We capture this programmatically by running ``hostname -i`` in a sub-shell since the IP address will change depending on the node's you are allocated.
+
+ The MIOpen-related variables are needed on OLCF systems to bypass errors when running PyTorch.
+ ```
+# Get address of head node
+export MASTER_ADDR=$(hostname -i)
+
+# Needed to bypass MIOpen, Disk I/O Errors
+export MIOPEN_USER_DB_PATH="/tmp/my-miopen-cache"
+export MIOPEN_CUSTOM_CACHE_DIR=${MIOPEN_USER_DB_PATH}
+rm -rf ${MIOPEN_USER_DB_PATH}
+mkdir -p ${MIOPEN_USER_DB_PATH}
+```
+Finally, we launch our job using ``srun``. It is helpful if we are explicit about the resource requirements of our job in the ``srun`` command. The reason for this is that it gives us modularity over a job's layout, and it will feel natural to bundle multiple sub-jobs in a single batch submission (not shown here). 
+
+> [!NOTE] 
+> SLURM requires the number of GPUs be specified for running jobs in an allocation.
+> In the case of multi-node jobs and running independent sub-jobs across nodes, specifying 
+> ``--gpus-per-node`` as an sbatch directive can be helpful.
+
+```
+srun -N $SLURM_NNODES -n 16 --gpus 16 --gpus-per-node 8 --cpus-per-task=16  python3 -W ignore -u ./lux_microbench.py --batch-size 1024 --master_addr=$MASTER_ADDR --master_port=3442
+```
+
+Notice how SLURM_NNODES can be used, but it is not defined anywhere. That is because when running in a SLURM job, some SLURM job-specific environment variables are set automatically. There are many, but the full documentation can be found on the sbatch documentation page [here](https://slurm.schedmd.com/sbatch.html). 
+
 
 ### Example: Container (Subil?)
 
