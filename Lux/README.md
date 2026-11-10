@@ -137,7 +137,7 @@ Let's start with a hands-on to help you find and navigate those guides.
 Open a browser tab and go to https://docs.olcf.ornl.gov.
 Select the "Systems" option in the left menu bar.
 
-1.	Open Rike guide: Raise your virtual hand when it is open.
+1.	Open Riker guide: Raise your virtual hand when it is open.
 
 2.	Name one visualization tool available on Riker.
 
@@ -221,7 +221,71 @@ cd $WORLDWORK/[projid]
 ls
 ```
 
-### Best practices (Jordan)
+### Lustre (Orion) Best Practices (Jordan)
+
+1) **Prefer data access over metadata access, especially on large directories.**
+
+    Metadata operations are expensive on Lustre.
+    * Avoid: 
+      - ``ls -l``, ``ls --color``,``ls -R``, ``find``, ``du``, ``df``
+      - frequent ``stat()``, ``open()``, ``openat()``
+    * Prefer:
+      - ``ls``, ``ls -l filename``
+      - ``lfs find`` instead of ``find``
+
+2) **Avoid wildcards on huge directories.**
+    * Commands like ``rm *.txt`` or ``cp *.dat``, etc. can trigger expensive directory scans. 
+    * If possible, generate an explicit file list and process files from that list.
+3) **Organize files across subdirectories.**
+    * Do not place thousands of files in one directory. This creates lock contention on the parent directory and overloads metadata servers.
+    * Rule of thumb: split files across multiple subdirectories. 
+      - Example: $90{,}000$ files $\rightarrow \sqrt{90{,}000} \approx 300$ directories with about $300$ files each.
+
+4) **Avoid small files**
+    * Lustre performs best with large files; ideally files are larger than 1 GB.
+    * Better options:
+      - Combine small files into larger files
+      - Use formats like HDF5, ADIOS2, or NetCDF
+      - Archive many small files into tar files
+      - Copy small working sets to node-local /tmp or /mnt/bb/$SLURM_JOBID if usin the [NVMe](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#nvme) at job start, then clean up at the end
+
+5) **Use large I/O buffers**
+    * Small repetitive reads/writes are inefficient.
+    * Recommended
+      - Buffer sizes $\ge 1$ MB
+      - Aggregate many small operations into fewer large ones
+      - Use MPI-IO collective buffering when available
+    Also avoid repeatedly opening a file, appending a small amount, and closing it. Open once, do the I/O, then close.
+
+6) **Reduce parallel contention**
+    * Performance drops when many processes:
+      - open the same file at once
+      - append to the same file
+      - access the same file region simultaneously
+
+    * Best practice:
+      - Let one master rank open/stat shared files and broadcast data or metadata to other ranks
+      - Use read-only access when possible: O_RDONLY
+      - If atime updates are unnecessary, use O_RDONLY | O_NOATIME 
+
+7) **Stripe only when it helps**
+
+    Lustre can split large files across multiple OSTs for parallel access.
+    * Check striping:
+      - ``lfs getstripe filename``
+    * Set striping
+      - ``lfs setstripe -s 64m -c 4 bigfile``
+
+      Use striping for large parallel files. Keep I/O stripe-aligned when possible. For small files or files used by only one process, use a stripe count of 1.
+
+8) **Avoid installing software on Lustre**
+
+    Software trees (including Python environments) contain many small files and can overload metadata services. Build or stage software in local storage when possible. Executables may also be more reliable from local or cached filesystems.
+      * Please see an example of how to sbcast conda environments [here](https://docs.olcf.ornl.gov/software/python/sbcast_conda.html).
+
+9) **Back up your data**
+
+    Lustre is not a backup system and all untouched files after 90 days will be purged. Always keep regular copies in a safe location (NFS, [Kronos](https://docs.olcf.ornl.gov/data/index.html#kronos-nearline-archival-storage-system), locally, etc.).
 
 ## Programming and Compiling (HPC) (Tony)
 
