@@ -169,13 +169,16 @@ Raise your virtual hand when it is open.
 
 3.	Find the Tips and Tricks section; Read the name of one tip listed in that section.
 
-[//]: # (todo - Containers, Torch)
+4.  Find the Containers section; What is the primary runtime for Lux HPC?
+
+
+[//]: # (todo - Torch)
 
 ## Filesystems and Storage
 
 ### Overview
 
-OLCF has a Network Files system (NFS) that you land on when you login.
+OLCF has a Network File System (NFS) that you land on when you login.
 This is a small secure filesystem that is provisioned to hold your most important data.
 This is the best place for your executables and small important data. It is backed up.
 
@@ -192,7 +195,7 @@ Longer term storge is available in OLCF’s nearline storge system called Kronos
 Kronos is mounted on the moderate security enclave Data Transfer Nodes (`dtn.ccs.ornl.gov`) and is accessible via Globus at the “OLCF Kronos” collection.
 Standard UNIX commands and tools can also be used to interact with Kronos (scp, rsync, etc.).
 
-See the Kronos section of our [Data Storage and Transfers guide](https://docs.olcf.ornl.gov/data/index.html#kronos-nearline-archival-storage-system)
+See the Kronos section of our [Data Storage and Transfers Guide](https://docs.olcf.ornl.gov/data/index.html#kronos-nearline-archival-storage-system)
 
 ### Hands-on Storage Areas
 
@@ -205,13 +208,6 @@ cd /lustre/orion/[projid]/scratch/[userid]
 ls
 ```
 
-You can also do:
-
-```
-cd $MEMBERWORK/[projid]
-ls
-```
-
 Now let’s look at the project level storage, proj-shared:
 
 ```
@@ -220,21 +216,9 @@ ls
 
 ```
 
-You can also do:
-```
-cd $PROJWORK/[projid]/
-ls
-```
-
 And for sharing between projects:
 ```
 cd /lustre/orion/[projid]/world-shared/
-ls
-```
-
-You can also do:
-```
-cd $WORLDWORK/[projid]
 ls
 ```
 
@@ -606,7 +590,7 @@ hipcc -std=c++11 -fopenmp --offload-arch=gfx950 -I${ROCM_PATH}/include -I${MPI_D
 hipcc -fopenmp -L${ROCM_PATH}/lib -lamdhip64 -L${MPI_DIR}/lib -lmpi hello_jobstep.o -o hello_jobstep
 ```
 
-### Building containers (Subil?)
+### Building containers (Subil)
 
 Containers are a tool to package up your application along with its dependencies into a single
 artifact. This artifact can be run just like any other application on an HPC system. Your packaged
