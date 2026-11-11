@@ -777,8 +777,8 @@ module load rocm/7.2.4
 module load miniforge3/26.3.2-3
 
 # Activate your environment
-### TODO: change to world-shared dir ###
-conda activate $(pwd)/lux_torch_env
+# conda activate $(pwd)/lux_torch_env
+conda activate /lustre/orion/world-shared/stf007/jwine/lux-new-user/lux_torch_env
 ```
 This next section is where we handle setting environment variables. The `MASTER_ADDR` is used by PyTorch DDP to communicate which node's IP address belongs to the head node (i.e., rank 0). We capture this programmatically by running ``hostname -i`` in a sub-shell since the IP address will change depending on the node's you are allocated.
 
@@ -805,6 +805,27 @@ srun -N $SLURM_NNODES -n 16 --gpus 16 --gpus-per-node 8 --cpus-per-task=16  pyth
 ```
 
 Notice how SLURM_NNODES can be used, but it is not defined anywhere. That is because when running in a SLURM job, some SLURM job-specific environment variables are set automatically. There are many, but the full documentation can be found on the sbatch documentation page [here](https://slurm.schedmd.com/sbatch.html). 
+
+We won't go through the entire `lux_microbench.py` code, but to emphasize their usefulness please have a look at the below code snippet. In the initailization of our DDP process group, we are setting PyTorch native environment variables using those provided by SLURM. 
+
+```
+# Use Slurm env vars
+    os.environ['WORLD_SIZE'] = os.environ['SLURM_NPROCS']
+    os.environ['RANK'] = os.environ['SLURM_PROCID']
+    os.environ['LOCAL_RANK'] = os.environ['SLURM_LOCALID']
+    os.environ['MASTER_ADDR'] = str(args.master_addr)
+    os.environ['MASTER_PORT'] = str(args.master_port)
+    #os.environ['NCCL_SOCKET_IFNAME'] = 'ai0,ai1,ai2,ai3,ai4,ai5,ai6,ai7'  # Network interface names
+
+    world_size = int(os.environ['WORLD_SIZE'])
+    global_rank = int(os.environ['RANK'])
+    local_rank = int(os.environ['LOCAL_RANK'])
+
+    dist.init_process_group(
+        backend="nccl",
+        init_method='env://',
+    )
+```
 
 
 ### Example: Container (Subil)

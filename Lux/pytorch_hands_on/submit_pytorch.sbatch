@@ -13,8 +13,8 @@ module load rocm/7.2.4
 module load miniforge3/26.3.2-3
 
 # Activate your environment
-### TODO: change to world-shared dir ###
-conda activate $(pwd)/lux_torch_env
+# conda activate $(pwd)/lux_torch_env
+conda activate /lustre/orion/world-shared/stf007/jwine/lux-new-user/lux_torch_env
 
 # Get address of head node
 export MASTER_ADDR=$(hostname -i)
