@@ -629,8 +629,8 @@ To build a container with Podman, write a Dockerfile, for example:
 ```
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get upgrade
-RUN apt-get install vim
+RUN apt-get -y update && apt-get -y upgrade
+RUN apt-get -y install vim
 ```
 
 You can build this container image on Lux by running the below.
@@ -685,7 +685,7 @@ ls
 
 # Installing some prerequisites
 
-apt-get update && apt-get install -y \
+apt-get -y update && apt-get install -y \
   wget less gfortran vim sudo gzip tar make autoconf automake 
 ```
 
