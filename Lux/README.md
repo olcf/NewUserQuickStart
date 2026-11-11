@@ -614,11 +614,12 @@ Before building any containers, you need to set up the `~/.config/containers/sto
 the below command to set it up.
 
 ```
+mkdir -p $HOME/.config/containers
 cat > $HOME/.config/containers/storage.conf <<EOF
 [storage]
 driver = "overlay"
-graphroot = "/tmp/${USER}-containers"
-rootless_storage_path = "/tmp/${USER}-containers"
+graphroot = "/tmp/containers/$USER"
+rootless_storage_path = "/tmp/containers/$USER"
 
 [storage.options]
 pull_options = {use_hard_links = "true", enable_partial_images = "true"}
@@ -832,6 +833,11 @@ In addition to a traditional HPC system, Lux provides a Kubernetes instance. Ran
 an interface to intereract with Kubernetes. This instance can be used for long running persistent services (such as managing a database) as
 well as GPU jobs associated with those services. 
 
+> [!NOTE]
+> For now you need to set up an ssh proxy and hop through that with your browser to access your Rancher dashboard. 
+> You can find [instructions for this in the Lux Kubernetes
+> documentation](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#navigating-to-the-rancher-dashboard).
+
 ### Rancher
 
 You can navigate to the Rancher web interface through https://console.apps.slate-mod.ccs.ornl.gov/dashboard/home
@@ -844,10 +850,10 @@ appropriate option from the sidebar and clicking on the Create button. Rancher h
 interface to allow creation of objects using the GUI.
 
 
-[!WARNING]
-The features under the 'Apps' option in the sidebar do not work and are not expected to be
-supported. The best practice is to bring your own applications, either created through the web
-interface or through the `kubectl` CLI.
+> [!WARNING]
+> The features under the 'Apps' option in the sidebar do not work and are not expected to be
+> supported. The best practice is to bring your own applications, either created through the web
+> interface or through the `kubectl` CLI.
 
 
 ### CLI
@@ -867,25 +873,101 @@ the configuration you need into your clipboard that you can then paste.
 
 Run the command `kubectl auth whoami` to make sure you are now logged in on the command line.
 
-[!WARNING]
-This KubeConfig credential expires every 24 hours. So you will need to repeat the above steps if 24
-hours have passed. 
+> [!WARNING]
+> This KubeConfig credential expires every 24 hours. So you will need to repeat the above steps if 24
+> hours have passed. 
 
 Look at our `Kubernetes docs <https://docs.olcf.ornl.gov/systems/lux_user_guide.html>`_ for further information about the basics and at the
 `olcf_kubernetes_examples <https://github.com/olcf/olcf_container_examples>`_ repository for some examples (and feel to free to contribute if you think
 you have a useful example to share).
 
-### Some things to remember
+### Important Info about Namespaces 
 
 - On Kubernetes, you will have two namespaces ``<project id>-cpu`` and ``<project id>-gpu``
 - The namespaces are shared by the whole project, so make sure you are not overlapping names and
   labels if multiple people are working on independent applications in the same namespace
+- Any workload on Kubernetes is running under a specific namespace.
+- The CPU namespace allows persistent services, but does not have GPU access. 
 - The ``<project id>-gpu`` namespace is given a certain number of GPU hours per project, and GPU usage is tracked.
 - The GPU namespace only supports `Jobs
   <https://docs.olcf.ornl.gov/systems/lux_user_guide.html#jobs>`_ and not other types of Kubernetes objects. And it does not
   support CPU applications. So if you need persistent services that interact with the GPU, you need
   to have them run on the CPU namespace and launch Jobs on the GPU namespace to perform any GPU
   tasks. 
+
+### CPU Example: Running a Pod
+
+A Pod is the smallest unit of computing in Kubernetes. It can be a container or set of containers
+with shared storage and resources. To deploy a simple hello-world Pod, create the file `pod.yaml`
+with the following contents
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: <project>-cpu # replace this
+  name: hello-pod
+  labels:
+    app: hello-pod
+spec:
+  containers:
+    - image: rancher/hello-world
+      name: hello-pod
+      ports:
+        - containerPort: 80
+  restartPolicy: Never
+```
+
+- You can use `kubectl` to create this Pod by running `kubectl apply -f pod.yaml`.
+- You can check the status of the Pod by running `kubectl -n <namespace> get pods`.
+- You can see the output by running `kubectl -n stf007-cpu port-forward hello-pod 8000:80` and then
+  navigating to `localhost:8000` in the browser.
+- You can delete the Pod with `kubectl -n <namespace> delete pod hello-pod`.
+
+> [!NOTE]
+> Remember that namespaces are shared with the whole project. If there is already a Pod named
+> `hello-pod` in your namespace, you will need to change the name.
+
+
+### GPU Example: Running a Job
+
+You can only run Jobs on the GPU resources in Lux Kubernetes. Jobs are similar to HPC batch jobs, in
+that you request the number of GPUs you require and the timelimit. It is used to perform one off tasks. It starts a Pod with your application
+container and the command to run and runs it to completion (or until the timelimit runs out).
+
+Create a file `job.yaml` with the following contents:
+
+```
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: <project>-gpu # replace this
+  annotations:
+    lux.olcf.ornl.gov/walltime: 60m
+  name: torch-job-simple
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+        - image: "docker.io/subilabrahamornl/sampletorch:latest"
+          name: gpu-pod
+          workingDir: /opt
+          command: ["python3", "torch_mnist.py", "--accel"]
+          resources:
+            limits:
+              amd.com/gpu: 1
+            requests:
+              amd.com/gpu: 1
+      restartPolicy: Never
+```
+
+- You can use `kubectl` to create this Pod by running `kubectl apply -f job.yaml`.
+- You can check the status of the Pod by running `kubectl -n <namespace> get jobs`.
+- Since this is running a Pod underneath, look for the Pod with `kubectl -n <namespace> get pods`
+  and look at the logs of the running pod with `kubectl -n <namespace> logs -f <pod name>` .
+- You can check the GPU usage of your namespace with `kubectl -n <namespace> get
+  projectallocations`.
 
 
 ## Globus
