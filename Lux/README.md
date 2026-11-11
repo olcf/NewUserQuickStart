@@ -174,7 +174,7 @@ Raise your virtual hand when it is open.
 
 [//]: # (todo - Torch)
 
-## Filesystems and Storage
+## Filesystems and Storage (Tony)
 
 ### Overview
 
@@ -703,7 +703,7 @@ be stored on parallel filesystems like Lustre).
 
 ## Running Jobs
 
-### Slurm
+### Slurm (Tony)
 
 On Lux, all computational work runs as Slurm jobs, which typically include a batch submission script, an executable, input files, and the output files produced during execution. To acquire compute resources for running Slurm jobs, you use either ``sbatch`` or ``salloc``. The typical workflow is to:
 
@@ -749,7 +749,7 @@ OMP_NUM_THREADS=8 srun -N2 -n4 -c8 --gpus-per-node 2 --gpus-per-task=1 ./hello_j
 
 Finally, we can submit the job with `sbatch submit_hello.sbatch` and check out the output in a (newly created) `./out` directory to complete step 3.
 
-### Example: PyTorch
+### Example: PyTorch (Jordan)
 
 For this example we will use a pre-built PyTorch conda environment to demonstrate how to submit and run a batch job. If you would like to view how the environment was built, please see `pytorch_hands_on/build.sh`. Otherwise, let's turn our attention to `pytorch_hands_on/submit_pytorch.sbatch`.
 
