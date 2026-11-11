@@ -48,9 +48,9 @@ User accounts are associated with projects.
 
 ## Login (Tony)
 
-These steps assume you have already performed your first-time setup for your RSA token as documented here:
+These steps assume you have already performed your first-time setup for your RSA token.
 
-https://docs.olcf.ornl.gov/connecting/index.html#activating-a-new-securid-fob
+If this is your first time ever logging in and you've not set your PIN before, follow the steps in [Activating a New SecurID Fob in the docs](https://docs.olcf.ornl.gov/connecting/index.html#activating-a-new-securid-fob).
 
 ### Hands-on Finding Jupyter terminal (Tony)
 If you do not have an ssh terminal:
@@ -83,8 +83,6 @@ Type in your PIN followed by the six digits shown on your RSA token in one conti
 You will not see anything being typed on screen, THIS IS NORMAL. 
 SSH does not give you any visual feedback when typing your PASSCODE, but it is still receiving your key presses. 
 Just type the full PASSCODE on your keyboard normally and press enter.
- 
-If this is your first time ever logging in and you've not set your PIN before, follow the steps in [Activating a New SecurID Fob in the docs](https://docs.olcf.ornl.gov/connecting/index.html#activating-a-new-securid-fob).
  
 If your SSH operation succeeds, you should be placed in your home directory on Lux
  
