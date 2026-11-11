@@ -153,13 +153,13 @@ if __name__ == '__main__':
 
     num_gpus_per_rank = torch.cuda.device_count()
 
-    # Use Slurm env vars instead of MPI
+    # Use Slurm env vars
     os.environ['WORLD_SIZE'] = os.environ['SLURM_NPROCS']
     os.environ['RANK'] = os.environ['SLURM_PROCID']
     os.environ['LOCAL_RANK'] = os.environ['SLURM_LOCALID']
     os.environ['MASTER_ADDR'] = str(args.master_addr)
     os.environ['MASTER_PORT'] = str(args.master_port)
-    #os.environ['NCCL_SOCKET_IFNAME'] = 'ai0,ai1,ai2,ai3,ai4,ai5,ai6,ai7'  # keep this for testing
+    #os.environ['NCCL_SOCKET_IFNAME'] = 'ai0,ai1,ai2,ai3,ai4,ai5,ai6,ai7'  # Network interface names
 
     world_size = int(os.environ['WORLD_SIZE'])
     global_rank = int(os.environ['RANK'])
