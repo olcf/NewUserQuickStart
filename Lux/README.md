@@ -590,6 +590,8 @@ hipcc -std=c++11 -fopenmp --offload-arch=gfx950 -I${ROCM_PATH}/include -I${MPI_D
 hipcc -fopenmp -L${ROCM_PATH}/lib -lamdhip64 -L${MPI_DIR}/lib -lmpi hello_jobstep.o -o hello_jobstep
 ```
 
+Make sure to execute `cd ..` to get back to this repository's directories!
+
 ### Building containers (Subil)
 
 Containers are a tool to package up your application along with its dependencies into a single
@@ -711,9 +713,41 @@ On Lux, all computational work runs as Slurm jobs, which typically include a bat
   - Alternatively, use ``salloc`` if you need interactive compute access, e.g., if you're debugging.
 4) Optionally monitor it before and during execution with ``squeue --me``
 
-Lux is a node-shared Slurm cluster, meaning multiple users can share the same physical compute node as long as their requested resources do not overlap. Resources are allocated in GPU-based chunks: each requested GPU includes 16 CPU cores and 375 GB of memory, reflecting the node layout of 128 cores, 3 TB RAM, and 8 GPUs per node. Therefore, it is required you specify the number of GPUs for your job using the ``--gpus`` flag. Please familarize yourself with the Lux node diagram, so you have a firm understanding of compute resource allocations. Diagram of node sharing [here](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#:~:text=Sharing%20Compute%20nodes).
+Lux is a node-shared Slurm cluster, meaning multiple users can share the same physical compute node as long as their requested resources do not overlap. Resources are allocated in GPU-based chunks: each requested GPU includes 16 CPU cores and 375 GB of memory, reflecting the node layout of 128 cores, 3 TB RAM, and 8 GPUs per node. Therefore, it is required you specify the number of GPUs for your job using the ``--gpus`` flag. Please familiarize yourself with the Lux node diagram, so you have a firm understanding of compute resource allocations. Diagram of node sharing [here](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#:~:text=Sharing%20Compute%20nodes).
 
 If you need sole access to allocated nodes, use the ``--exclusive`` flag. With the ``--exclusive`` flag, you do not need to specify the number of GPUs required by your job, since all will be given by default.
+
+More details about running with Slurm on Lux can be found on our [User Guide - Running](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#running-jobs) and examples can be found on our [User Guide - Process Mapping Examples](https://docs.olcf.ornl.gov/systems/lux_user_guide.html#process-and-thread-mapping-examples).
+
+> [!NOTE]
+> When running you may see errors such as 
+> ```bash
+> srun: error: Unable to create step for job $SLURM_JOB_ID: Invalid generic resource (gres) specification
+> ```
+> In cases like this you will need to specify how many GPUs you are allocating explicitly, with either `--gpus (-G)` or `--gpus-per-node` in your `srun` line.
+
+
+Previously, we completed the first step of the workflow defined above in our "compiling" section.
+Below we can see an example Slurm batch submit script for the "Hello, jobstep", satisfying step 2 of the workflow:
+
+`submit_hello.sbatch`
+```bash
+#!/bin/bash
+
+#SBATCH --account <project id>
+#SBATCH --partition batch
+#SBATCH --time 10:00
+#SBATCH --nodes 2
+#SBATCH --gpus-per-node 2
+
+module load rocm/7.2.4
+module load amd-llvm/7.2.4
+module load openmpi
+
+OMP_NUM_THREADS=8 srun -N2 -n4 -c8 --gpus-per-node 2 --gpus-per-task=1 ./hello_jobstep/hello_jobstep
+```
+
+Finally, we can submit the job with `sbatch submit_hello.sbatch` and check out the output in a (newly created) `./out` directory to complete step 3.
 
 ### Example: PyTorch
 
@@ -770,7 +804,7 @@ srun -N $SLURM_NNODES -n 16 --gpus 16 --gpus-per-node 8 --cpus-per-task=16  pyth
 Notice how SLURM_NNODES can be used, but it is not defined anywhere. That is because when running in a SLURM job, some SLURM job-specific environment variables are set automatically. There are many, but the full documentation can be found on the sbatch documentation page [here](https://slurm.schedmd.com/sbatch.html). 
 
 
-### Example: Container (Subil?)
+### Example: Container (Subil)
 
 In the simplest case, running containers on Lux HPC looks pretty much like running regular applications:
 you write a batch script and submit it. It's just that your `srun` line will invoke `apptainer exec`
