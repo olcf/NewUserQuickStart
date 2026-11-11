@@ -52,13 +52,6 @@ These steps assume you have already performed your first-time setup for your RSA
 
 If this is your first time ever logging in and you've not set your PIN before, follow the steps in [Activating a New SecurID Fob in the docs](https://docs.olcf.ornl.gov/connecting/index.html#activating-a-new-securid-fob).
 
-### Hands-on Finding Jupyter terminal (Tony)
-If you do not have an ssh terminal:
-1. Open and tab on your browser and direct it to https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html#access.
-2. Then follow the directions there to access the moderate JupyterHub if you are a Lux user and choose one of the CPU labs.
-3. Once you are in, find the "terminal icon". Now you will be ready to do the first hands-on.
- 
-There are many more uses for OLCF Jupyter Hub and you can find them in the Jupyter at OLCF guide. https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html
  
 ### How to login to Lux (Tony)
  
@@ -172,7 +165,7 @@ Raise your virtual hand when it is open.
 
 3.	Find the Tips and Tricks section; Read the name of one tip listed in that section.
 
-4.  Find the Containers section; What is the primary runtime for Lux HPC?
+4.  Find the Containers section; What is the primary container runtime for Lux HPC?
 
 
 [//]: # (todo - Torch)
@@ -297,7 +290,6 @@ Documentation on modules and compilers: https://docs.olcf.ornl.gov/systems/lux_u
 
 ### Lmod
 
-[//]: # (todo: is this section accurate enough?)
 Lux supports users from a wide range of scientific disciplines. 
 Different users have different software needs. 
 Some users might need to use different versions of the same software. 
