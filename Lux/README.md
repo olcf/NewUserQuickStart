@@ -1,4 +1,4 @@
-# Welcome to the Lux Hands-on New User training (Tony)
+# Welcome to the Lux Hands-on New User Training (Tony)
  
 This training is designed to introduce you to the Oak Ridge Leadership Computing Facility and its resources. 
 You should never be more than 20 minutes away from and hands-on exercise. 
@@ -47,6 +47,11 @@ Projects have associated machines, allocations, and services.
 User accounts are associated with projects.
 
 ## Login (Tony)
+
+These steps assume you have already performed your first-time setup for your RSA token as documented here:
+
+https://docs.olcf.ornl.gov/connecting/index.html#activating-a-new-securid-fob
+
 ### Hands-on Finding Jupyter terminal (Tony)
 If you do not have an ssh terminal:
 1. Open and tab on your browser and direct it to https://docs.olcf.ornl.gov/services_and_applications/jupyter/overview.html#access.
@@ -76,7 +81,7 @@ Enter PASSCODE:
  
 Type in your PIN followed by the six digits shown on your RSA token in one continuous sequence (no spaces). 
 You will not see anything being typed on screen, THIS IS NORMAL. 
-SSH does give you any visual feedback when typing your PASSCODE, but it is still receiving your key presses. 
+SSH does not give you any visual feedback when typing your PASSCODE, but it is still receiving your key presses. 
 Just type the full PASSCODE on your keyboard normally and press enter.
  
 If this is your first time ever logging in and you've not set your PIN before, follow the steps in [Activating a New SecurID Fob in the docs](https://docs.olcf.ornl.gov/connecting/index.html#activating-a-new-securid-fob).
