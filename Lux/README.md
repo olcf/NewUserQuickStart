@@ -598,7 +598,7 @@ CPU+GPU architecture if they're on a different system).
 
 On Lux, we provide Podman and Apptainer to build container images. If you are familiar with Docker, you can use the same commands with Podman. Any containers built with Podman should be converted to the Apptainer format for running on Lux HPC.
 
-There are examples in the [olcf_container_examples repository](https://github.com/olcf/olcf_container_examples) which you can use for reference.
+Documentation can be found [on the Containers on Lux page in the OLCF docs](https://docs.olcf.ornl.gov/software/containers_on_lux.html). There are examples in the [olcf_container_examples repository](https://github.com/olcf/olcf_container_examples) which you can use for reference.
  
 #### Podman
 
