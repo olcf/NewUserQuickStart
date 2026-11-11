@@ -1,4 +1,4 @@
-# Welcome to Hands-on New User training (Tony)
+# Welcome to the Lux Hands-on New User training (Tony)
  
 This training is designed to introduce you to the Oak Ridge Leadership Computing Facility and its resources. 
 You should never be more than 20 minutes away from and hands-on exercise. 
